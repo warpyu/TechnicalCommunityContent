@@ -1,4 +1,4 @@
-# Community Content - Xamarin # 
+# Community Content - Xamarin #
 
 Each sub-folder provides content for one session.  You may also see additional folders with materials that are shared between sessions.  The sessions will refer to those folders.
 
