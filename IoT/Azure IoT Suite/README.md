@@ -14,7 +14,13 @@ Sessions may include:
 - a PowerPoint deck including notes
 - demo instructions including for setup prior to the session and in-session delivery
 - where applicable, hands-on-lab (HOL) instructions for attendees, which can be done under presenter supervision during a session, shown as another presentation by the presenter or taken away by attendees
-- Presenter training videos
+- Presenter training videos (as applicable) - see below
+
+## Case Studies ##
+
+**For real life case studies on IOT with Microsoft Technologies, please go to [https://microsoft.github.io/techcasestudies/#technology=IoT](https://microsoft.github.io/techcasestudies/#technology=IoT "https://microsoft.github.io/techcasestudies/#technology=IoT")**
+
+## Session Videos ##
 
 Session 1
 
@@ -22,15 +28,12 @@ Session 1
 																		
 Session 2
 
-[Demo 1](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-1) [Demo 2](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-2) [Demo 3](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-3) [Demo 4](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-4) [Demo 5](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-5) [Demo 6](https://channel9.msdn.com/Blogs/MVP-VisualStudio-Dev/Community-Content-Presenter-Training-Xamarin-Session-2-Demo-6)
+[Demo 1](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-1) [Demo 2](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-2) [Demo 3](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-3) [Demo 4](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-4) [Demo 5](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-2-Demo-5) 
 
 Session 3
 
 [Demo 2](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-3-Demo-2) [Demo 3](https://channel9.msdn.com/Blogs/MVP-Azure/Community-Content-Presenter-Training-IoT-Session-3-Demo-3)
 
-## Case Studies ##
-
-**For real life case studies on IOT with Microsoft Technologies, please go to [https://microsoft.github.io/techcasestudies/#technology=IoT](https://microsoft.github.io/techcasestudies/#technology=IoT "https://microsoft.github.io/techcasestudies/#technology=IoT")**
 
 
 
