@@ -8,19 +8,20 @@ Each session presentation is intended to last around 45-minutes, allowing time f
 
 The sessions should be delivered in order either one event at a time, or as a set during a single event.
 
-## Presenter Training ##
+## Session Content ##
 
-Sessions may include:
+Each session may include one or more of:
 - a PowerPoint deck including notes
 - demo instructions including for setup prior to the session and in-session delivery
 - where applicable, hands-on-lab (HOL) instructions for attendees, which can be done under presenter supervision during a session, shown as another presentation by the presenter or taken away by attendees
-- Presenter training videos (as applicable) - see below
+
+You will also find below, links to presenter training videos, providing examples (where appropriate) of how to present session content. Note that the demo script files may content content and notes more recent than the video.  
 
 ## Case Studies ##
 
 **For real life case studies on IOT with Microsoft Technologies, please go to [https://microsoft.github.io/techcasestudies/#technology=IoT](https://microsoft.github.io/techcasestudies/#technology=IoT "https://microsoft.github.io/techcasestudies/#technology=IoT")**
 
-## Session Videos ##
+## Presenter Training Videos ##
 
 Session 1
 
