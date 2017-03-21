@@ -35,6 +35,12 @@ Session 3
 [Demo 1](https://channel9.msdn.com/Blogs/MVP-VisualStudio-Dev/Community-Content-Presenter-Training-Xamarin-Session-3-Demo-1) [Demo 2](https://channel9.msdn.com/Blogs/MVP-VisualStudio-Dev/Community-Content-Presenter-Training-Xamarin-Session-3-Demo-2) [Demo 3](https://channel9.msdn.com/Blogs/MVP-VisualStudio-Dev/Community-Content-Presenter-Training-Xamarin-Session-3-Demo-3) [Demo 4](https://channel9.msdn.com/Blogs/MVP-VisualStudio-Dev/Community-Content-Presenter-Training-Xamarin-Session-3-Demo-4) [Demo 5](https://channel9.msdn.com/Blogs/MVP-VisualStudio-Dev/Community-Content-Presenter-Training-Xamarin-Session-3-Demo-5) [Demo 6](https://channel9.msdn.com/Blogs/MVP-VisualStudio-Dev/Community-Content-Presenter-Training-Xamarin-Session-3-Demo-6)
 
 
+## Additional Resources ##
+The Microsoft Xamarin Team has provided [additional information and presentations related to Xamarin](The Microsoft Xamarin Team has provided additional informations and presentations related to Xamarin. Under the below link you’ll find content related to things like:). You'll find content related to things like:
+- Introduction to Xamarin
+- What’s new in Android, IOS, C#
+- CocosSharp intro – building games with Xamarin
+- And more
 
 
 
