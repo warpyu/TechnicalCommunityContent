@@ -6,7 +6,7 @@ Although there are many commonalities, DevOps implementation will be unique for 
 
 **Getting started: What is DevOps?**
 
-Let’s start with the basics: what is DevOps and these practices you speak of? To start, DevOps is ultimately about modifying business people, process and tools to enable the organization to ship product more quickly, with fewer bugs and greater business alignment. Within DevOps we have a number of key practices; instead of going through all of the details here, I encourage you to read this [fantastic blog post on DevOps Practices](http://www.itproguy.com/devops-practices/) by David Tesar, one of our Technical Evangelists.
+, Let’s start with the basics: what is DevOps and these practices you speak of? To start, DevOps is ultimately about modifying business people, process and tools to enable the organization to ship product more quickly, with fewer bugs and greater business alignment. Within DevOps we have a number of key practices; instead of going through all of the details here, I encourage you to read this [fantastic blog post on DevOps Practices](http://www.itproguy.com/devops-practices/) by David Tesar, one of our Technical Evangelists.
 
 **Learn the fundamentals**
 
@@ -24,7 +24,6 @@ It’s important to get buy-in from those calling the shots and fighting for you
 
 It’s difficult to implement DevOps practices if you don’t truly understand how value flows through your environment. With the Value Stream Mapping exercise, we’ll define how software requirements flow from the customer to the product and development team, and finally out through the IT department. You’ll gain a better understanding of your most critical areas to focus your improvement.
 
-&lt;Insert new Value Stream Mapping video&gt;
 
 **Learn advanced skills**
 
@@ -39,3 +38,5 @@ What comes after the fundamental skills? Well, the advanced skills, of course! I
 **Get hands-on**
 
 You’ve learned the core practices, mastered the fundamentals, gotten your boss on board, and learned all of the advanced skills. I know what you’re thinking: *How do I get my hands dirty?* Well, you’re in luck, because we built out a complete hands-on lab environment on GitHub, based on the [Parts Unlimited app](https://github.com/Microsoft/PartsUnlimitedMRP/tree/master/docs) from the Phoenix Project—the book that helped inspire the DevOps movement. Use these pre-configured environments to walk through implementation of the practices we’ve discussed.
+
+
