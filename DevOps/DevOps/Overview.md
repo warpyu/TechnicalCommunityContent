@@ -6,7 +6,7 @@ Although there are many commonalities, DevOps implementation will be unique for 
 
 **Getting started: What is DevOps?**
 
-, Let’s start with the basics: what is DevOps and these practices you speak of? To start, DevOps is ultimately about modifying business people, process and tools to enable the organization to ship product more quickly, with fewer bugs and greater business alignment. Within DevOps we have a number of key practices; instead of going through all of the details here, I encourage you to read this [fantastic blog post on DevOps Practices](http://www.itproguy.com/devops-practices/) by David Tesar, one of our Technical Evangelists.
+Let’s start with the basics: what is DevOps and these practices you speak of? To start, DevOps is ultimately about modifying business people, process and tools to enable the organization to ship product more quickly, with fewer bugs and greater business alignment. Within DevOps we have a number of key practices; instead of going through all of the details here, I encourage you to read this [fantastic blog post on DevOps Practices](http://www.itproguy.com/devops-practices/) by David Tesar, one of our Technical Evangelists.
 
 **Learn the fundamentals**
 
@@ -39,5 +39,3 @@ What comes after the fundamental skills? Well, the advanced skills, of course! I
 **Get hands-on**
 
 You’ve learned the core practices, mastered the fundamentals, gotten your boss on board, and learned all of the advanced skills. I know what you’re thinking: *How do I get my hands dirty?* Well, you’re in luck, because we built out a complete hands-on lab environment on GitHub, based on the [Parts Unlimited app](https://github.com/Microsoft/PartsUnlimitedMRP/tree/master/docs) from the Phoenix Project—the book that helped inspire the DevOps movement. Use these pre-configured environments to walk through implementation of the practices we’ve discussed.
-
-
