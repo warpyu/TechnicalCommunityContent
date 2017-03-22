@@ -4,7 +4,7 @@ IN REVIEW - Content may be updated shortly
 
 ## Overview ##
 
-For general information about the fundamentals and value of DevOps, as well as getting started, please see the [overview](overview.md).
+For general information about the fundamentals and value of DevOps, as well as getting started, please see the [Overview](Overview.md).
 
 ## Session Content ##
 
