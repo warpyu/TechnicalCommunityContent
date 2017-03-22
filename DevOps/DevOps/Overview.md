@@ -40,4 +40,4 @@ What comes after the fundamental skills? Well, the advanced skills, of course! I
 
 You’ve learned the core practices, mastered the fundamentals, gotten your boss on board, and learned all of the advanced skills. I know what you’re thinking: *How do I get my hands dirty?* Well, you’re in luck, because we built out a complete hands-on lab environment on GitHub, based on the [Parts Unlimited app](https://github.com/Microsoft/PartsUnlimitedMRP/tree/master/docs) from the Phoenix Project—the book that helped inspire the DevOps movement. Use these pre-configured environments to walk through implementation of the practices we’ve discussed.
 
-&lt;Insert Parts Unlimited video&gt;
+
