@@ -1,14 +1,18 @@
-IN PROGRESS
+IN REVIEW - Content may be updated shortly
 
 # Community Content - DevOps #
+
+## Overview ##
+
+For general information about the fundamentals and value of DevOps, as well as getting started, please see the [overview](overview.md).
+
+## Session Content ##
 
 Each sub-folder provides content for one session.  You may also see additional folders with materials that are shared between sessions.  The sessions will refer to those folders.
 
 Each session presentation is intended to last around 45-minutes, allowing time for Q&A if desired.
 
 The sessions should be delivered in order either one event at a time, or as a set during a single event.
-
-## Session Content ##
 
 Each session may include one or more of:
 - a PowerPoint deck including notes

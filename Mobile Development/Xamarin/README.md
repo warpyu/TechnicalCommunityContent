@@ -36,7 +36,7 @@ Session 3
 
 
 ## Additional Resources ##
-The Microsoft Xamarin Team has [additional information and presentations related to Xamarin](https://onedrive.live.com/?authkey=%21AGVFE8KEynMBCzk&id=E5EDEAE8DF1FB78D%21324&cid=E5EDEAE8DF1FB78D). You'll find content related to things like:
+The Microsoft Xamarin Team has additional information and presentations related to Xamarin (link coming soon). You'll find content related to things like:
 - Introduction to Xamarin
 - What’s new in Android, IOS, C#
 - CocosSharp intro – building games with Xamarin
