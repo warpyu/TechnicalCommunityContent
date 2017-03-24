@@ -12,7 +12,7 @@ Let’s start with the basics: what is DevOps and these practices you speak of? 
 
 Let’s get into the detail of what each practice means. Check out this [DevOps Fundamentals](http://www.talmeida.net/blog/devops-fundamentals-series) video series by another one of our Technical Evangelists, Thiago Almeida. Get a tasty beverage, kick back with Thiago, and learn the fundamental skills you’ll need to tackle your DevOps journey.
 
-[<img src="./media/image1.jpeg" alt="cid:image005.jpg@01D26B1E.6E7EF290" width="517" height="385" />](https://channel9.msdn.com/Series/DevOps-Fundamentals/Introduction-to-DevOps?ocid=player)
+[<img src="./media/image1.jpeg" alt="cid:image005.jpg@01D26B1E.6E7EF290" width="517" height="385" />](https://channel9.msdn.com/Series/DevOps-Fundamentals/Introduction-to-DevOps)
 
 **Convincing your boss**
 
