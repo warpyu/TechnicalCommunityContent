@@ -1,5 +1,5 @@
 <a name="HOLTitle"></a>
-# Microsoft Power BI Embedded #
+# Using Microsoft Power BI Embedded to Show Reports in Cross-Platform Mobile Apps #
 
 ---
 
@@ -8,38 +8,38 @@
 
 [Microsoft Power BI](https://powerbi.microsoft.com/en-us/mobile/) was created to address the data explosion in commercial and academic organizations, the need to analyze that data, and the need for rich, interactive visuals to represent the data and reveal key insights. It contains a suite of tools that assist in the full life cycle of data analysis, from data discovery and collection to data transformation, aggregation, visualization, sharing, and collaboration. Moreover, it allows you to create rich visualizations without writing any code and present them in interactive dashboards.
 
-[Microsoft Power BI Embedded](https://azure.microsoft.com/en-us/services/power-bi-embedded/ "Microsoft Power BI Embedded") is an Azure service that enables ISVs and app developers to surface Power BI data experiences within their applications. As a developer, you've built applications, and those applications have their own users and distinct sets of features. Those apps may also happen to have built-in data elements like charts and reports that can now be powered by Microsoft Power BI Embedded. You don’t need a Power BI account to use your app. You can continue to sign in to your application just like before, and view and interact with Power BI reports without additional licensing. 
+[Microsoft Power BI Embedded](https://azure.microsoft.com/en-us/services/power-bi-embedded/ "Microsoft Power BI Embedded") is an Azure service that enables developers to surface Power BI reports in their apps and Web sites without requiring users to have Power BI accounts of their own. Reports are created in [Power BI Desktop](https://powerbi.microsoft.com/desktop/) and saved as PBIX files. These PBIX files are then imported into Power BI Embedded using APIs provided for that purpose and used to embed interactive charts and graphs. The process is accomplished primarily through calls to REST APIs (or SDKs that wrap those APIs) and is well documented in articles such as [Get started with Microsoft Power BI Embedded](https://docs.microsoft.com/azure/power-bi-embedded/power-bi-embedded-get-started) and [Embed a report in Power BI Embedded](https://docs.microsoft.com/azure/power-bi-embedded/power-bi-embedded-embed-report). What is not so well documented is how to surface Power BI Embedded reports in cross-platform mobile apps such as ones built with [Xamarin](https://www.xamarin.com/). 
 
-In this lab, you wll create a Power BI Embedded workspace that wraps a Power BI workspace, report, and dataset to display real-time Twitter activity in a Xamarin Forms app that runs on iOS, Android, and Windows.
+In this lab, you will use Visual Studio 2017 to create a Xamarin Forms app that runs on iOS, Android, and Windows, and that embeds a report created with Power BI Desktop. The report provides a graphical depiction of Twitter activity in a selected region of the United States. Once running, the report appears to be part of the app itself because it is tightly integrated. The smarts, however, come from Power BI Embedded.
 
 <a name="Objectives"></a>
 ### Objectives ###
 
 In this hands-on lab, you will learn how to:
 
-- Provision a Power BI Embedded workspace collection
+- Create a Power BI Embedded workspace collection
 - Create a Xamarin Forms app in Visual Studio 2017 
-- Write code to create Power BI Embedded reports
-- Write code to track Twitter activity
-- Create an Azure Mobile App as a back-end service
-- Create a Power BI report viewer in an Azure Mobile App
-- View a Power BI report in an app targeting Android, iOS, and Windows
+- Write code to import a Power BI Embedded report
+- Write code to track Twitter activity and stream it to a Power BI dataset
+- Create an Azure Mobile App that hosts a Power BI Embedded report
+- Embed the report a Xamarin Forms app that runs on Android, iOS, and Windows
 
 <a name="Prerequisites"></a>
 ### Prerequisites ###
 
 The following are required to complete this hands-on lab:
 
-- [Visual Studio Community 2017](https://www.visualstudio.com/) or higher with the ".NET desktop development," "Universal Windows Platform development," and "Mobile Development with .NET" workloads installed
+- [Visual Studio Community 2017](https://www.visualstudio.com/) or higher with the following workloads installed:
+	 - .NET desktop development workload
+	 - Universal Windows Platform development workload
+	 - Mobile development with .NET workload
 - An active Microsoft Azure subscription. If you don't have one, [sign up for a free trial](http://aka.ms/WATK-FreeTrial)
 - A Twitter account. If you don't have one, [sign up for free](http://www.twitter.com)
-- Optional: A Microsoft Office 365 account. If you don't have one, [sign up for a free trial](https://products.office.com/en-us/try "https://products.office.com/en-us/try") 
-- Optional: [Microsoft Power BI Desktop]()
 
 If you wish to build and run the iOS version of the app, you also have to have a Mac running OS X 10.11 or higher, and both the Mac and the PC running Visual Studio 2017 require further configuration. For details, see https://developer.xamarin.com/guides/ios/getting_started/installation/windows/.
 
 > Having a Mac and connecting it to Visual Studio is **only required** if you wish to build and run the iOS version of the app. You can run the Android and Windows versions of the app without any further configuration.
-> 
+
 ---
 
 <a name="Exercises"></a>
@@ -47,29 +47,27 @@ If you wish to build and run the iOS version of the app, you also have to have a
 
 This hands-on lab includes the following exercises:
 
-- [Exercise 1: Provision a Power BI Embedded workspace collection](#Exercise1)
-- [Exercise 2: Create a Xamarin Forms solution](#Exercise2)
-- [Exercise 3: Add assets and infrastructure](#Exercise3)
-- [Exercise 4: Write code to create Power BI Embedded reports](#Exercise4)
-- [Exercise 5: Create a Twitter app](#Exercise5)
-- [Exercise 6: Write code to track Twitter activity](#Exercise6)
-- [Exercise 7: Create a Power BI report viewer in an Azure Mobile App](#Exercise7)
-- [Exercise 8: Connect a Xamarin Forms app to a Power BI report viewer](#Exercise8)
-- [Exercise 9: (OPTIONAL) Configure and view a Power BI report in Power BI Desktop](#Exercise9)
+- [Exercise 1: Create a Power BI Embedded workspace collection](#Exercise1)
+- [Exercise 2: Create a Xamarin Forms app](#Exercise2)
+- [Exercise 3: Import a Power BI Embedded report](#Exercise3)
+- [Exercise 4: Register a Twitter app](#Exercise4)
+- [Exercise 5: Write code to track Twitter activity](#Exercise5)
+- [Exercise 6: Create a Power BI report viewer in an Azure Mobile App](#Exercise6)
+- [Exercise 7: Connect the Xamarin Forms app to the report viewer](#Exercise7)
 
 Estimated time to complete this lab: **60** minutes.
 
 <a name="Exercise1"></a>
-## Exercise 1: Provision a Power BI Embedded workspace collection ##
+## Exercise 1: Create a Power BI Embedded workspace collection ##
 
-The first step in leveraging Power BI Embedded is to create a workspace collection. In this exercise, you will create one in the Azure Portal.
+In order to embed a report in a Web site or app with Power BI Embedded, you must first create a Power BI Embedded workspace. And to create a Power BI Embedded workspace, you must first create a Power BI Embedded workspace collection to put it in. Workspaces can only be created programmatically, but workspace collections can be created programmatically or through the Azure Portal. In this exercise, you will use the Azure Portal to create a Power BI Embedded workspace collection.
 
 1. Open the [Azure Portal](https://portal.azure.com) in your browser. If asked to sign in, do so using your Microsoft account.
 2. Click **+ New**, followed by **Intelligence + analytics** and **Power BI Embedded**. 
  
-    ![Creating a Power BI Embedded service](Images/portal-add-new.png)
+    ![Creating a Power BI Embedded workspace collection](Images/portal-add-new.png)
 
-    _Creating a Power BI Embedded service_
+    _Creating a Power BI Embedded workspace collection_
 
 3. Enter a unique name as the **Workspace Collection Name** and make sure a green check mark appears next to it indicating that the name is valid and unique. Under **Resource Group**, select **Create new** and enter "PowerBIResources" (without quotation marks) as the resource-group name. Choose the **Location** nearest you, and accept the default values for all other parameters. Then click **Create**.
  
@@ -97,12 +95,12 @@ The first step in leveraging Power BI Embedded is to create a workspace collecti
 	
     _Copying the access key to the clipboard_ 
 
-A workspace collection has been provisioned, but it currently contains no workspaces. A workspace will be created programmatically  later on in this lab by the Xamarin Forms app that you write.
+This access key is important because it is used to create *access tokens* that enable apps to authenticate to Power BI Embedded and embed reports. Two keys are generated, but only one is needed at any given time. The second key is provided so you can periodically refresh the keys in your apps without interrupting access to the service.
 
 <a name="Exercise2"></a>
-## Exercise 2: Create a Xamarin Forms solution ##
+## Exercise 2: Create a Xamarin Forms app ##
 
-The first step in creating a cross-platform mobile app with Xamarin Forms is to provision a solution in Visual Studio 2017. If you have not installed the workloads listed in the [Prerequisites](#Prerequisites) section, stop now and modify your Visual Studio installation to add these workloads.
+In this exercise, you will create a new Xamarin Forms solution in Visual Studio and add basic infrastructure to customize the app's branding and lay the groundwork for hosting a Power BI Embedded report. If you have not installed the workloads listed in the [Prerequisites](#Prerequisites) section, stop now and modify your Visual Studio installation to add these workloads.
 
 1. Start Visual Studio, and use the **File** -> **New** -> **Project** command to create a new **Cross Platform App** solution named "TwitterBI."   
 
@@ -133,7 +131,7 @@ The first step in creating a cross-platform mobile app with Xamarin Forms is to 
 	
 	_The generated solution_
 
-1. Right-click the **TwitterBI.Android** project in Solution Explorer and select **Properties** from the context menu. Then click **Android Options** and uncheck the **Use Fast Deployment (debug mode only)** box. This option, if enabled, sometimes causes problems with Android emulators in Hyper-V. 
+1. Right-click the **TwitterBI.Android** project in and select **Properties** from the context menu. Then click **Android Options** and uncheck the **Use Fast Deployment (debug mode only)** box. This option, if enabled, sometimes causes problems with Android emulators hosted by Hyper-V. 
 
     ![Disabling fast deployment on Android](Images/disable-fast-deployment.png)
 
@@ -144,15 +142,8 @@ The first step in creating a cross-platform mobile app with Xamarin Forms is to 
     ![Building the solution](Images/vs-build-solution.png)
 
     _Building the solution_
- 
-Now that the solution has been provisioned, the next step is to import image assets to brand the app, and to add shared logic to the PCL project that will be used on all three platforms.
 
-<a name="Exercise3"></a>
-## Exercise 3: Add assets and infrastructure ##
-
-In this exercise, you will replace the generic images for icons, tiles, and other visual assets that Visual Studio created for you with ones that give your app unique branding. You will also add infrastructural code that will be used on all three platforms. 
-
-1. In Solution Explorer, right-click the **TwitterBI (Portable)** project and use the **Add** -> **New Folder** command to add a folder named "Common" to the project.
+1. Right-click the **TwitterBI (Portable)** project and use the **Add** -> **New Folder** command to add a folder named "Common" to the project.
 
     ![Adding a new folder to the PCL project](Images/vs-add-new-folder.png)
 
@@ -200,9 +191,9 @@ In this exercise, you will replace the generic images for icons, tiles, and othe
 
 1. In the "Destination File Exists" dialog, again check **Apply to all items** and then click **Yes**. This will update the default Android assets with custom-branded assets.
  
-    ![Overwriting resources](Images/vs-overwrite-droid-files.png)
+    ![Overwriting existing files](Images/vs-overwrite-droid-files.png)
 
-    _Overwriting resources_
+    _Overwriting existing files_
 
 1. In Solution Explorer, right-click the "Resources" folder in the **TwitterBI.iOS** project and select **Add** -> **Existing Item...**. Then browse to the "Resources\iOS\Resources" folder included with this lab, select all of the files in that folder, and click **Add**.
  
@@ -224,7 +215,7 @@ In this exercise, you will replace the generic images for icons, tiles, and othe
 
     _Adding images to the Windows project_
 
-1. In Solution Explorer, right-click **Package.appxmanifest** in the UWP project and select **View Code**. Replace the ```Applications``` element with this one:
+1. In Solution Explorer, right-click **Package.appxmanifest** in the UWP project and select **View Code**. Replace the ```Applications``` element inside the file with this one:
 
 	```xml
 	<Applications>
@@ -237,10 +228,6 @@ In this exercise, you will replace the generic images for icons, tiles, and othe
 	  </Application>
 	</Applications>
 	```
-
-    ![Updating Package.appxmanifest](Images/vs-updated-apps-manifest.png)
-
-    _Updating Package.appxmanifest_
 
 1. Now it's time to run the app for the first time, starting with the Android version. Ensure that the Android project is selected as the startup project by right-clicking the **TwitterBI.Android** project in Solution Explorer and selecting **Set as StartUp Project**.
  
@@ -288,10 +275,10 @@ The app doesn't do anything yet, but it is branded with splash screens, icons, a
 
 _Branded splash screens and visual assets_ 
 
-<a name="Exercise4"></a>
-## Exercise 4: Import a Power BI Embedded report ##
+<a name="Exercise3"></a>
+## Exercise 3: Import a Power BI Embedded report ##
 
-In this exercise, you will write code to create a Power BI Embedded workspace and import a Power BI report. Then you will run the app and execute the code.
+In this exercise, you will write code to create a Power BI Embedded workspace and import a Power BI report. Then you will run the app and execute the code. These are steps that *every app that hosts a Power BI Embedded report must do*, and that can *only be performed programmatically*.
 
 1. In Solution Explorer, right-click the **TwitterBI** solution and select **Manage NuGet Packages for Solution…**.
 
@@ -299,7 +286,7 @@ In this exercise, you will write code to create a Power BI Embedded workspace an
 	
     _Managing NuGet packages for the solution_ 
 
-1. Click **Browse** in the NuGet Package Manager. Type "Microsoft.Rest.ClientRuntime" into the search box and select the **Microsoft.Rest.ClientRuntime** package. Check the boxes next to the **TwitterBI.Android** and **TwitterBI.iOS** projects and click **Install** to install the package into these projects. If prompted to review changes, click **OK**. If prompted to accept a license, click **I Accept**.
+1. Make sure **Browse** is selected in the NuGet Package Manager. Then type "Microsoft.Rest.ClientRuntime" into the search box and select the **Microsoft.Rest.ClientRuntime** package. Check the boxes next to the **TwitterBI.Android** and **TwitterBI.iOS** projects and click **Install** to install the package into these projects. If prompted to review changes, click **OK**. If prompted to accept a license, click **I Accept**.
 
     ![Installing Microsoft.Rest.ClientRuntime](Images/nuget-rest-client.png)
 	
@@ -337,11 +324,11 @@ In this exercise, you will write code to create a Power BI Embedded workspace an
 	}
 	```
 
-1. Replace *POWER_BI_EMBEDDED_ACCESS_KEY* in the code that you just added with the access key that you saved in Exercise 1, Step 6. 
+1. Replace *POWER_BI_EMBEDDED_ACCESS_KEY* in the code that you just added with the access key that you saved in Exercise 1, Step 6. This is the access key that your code will use to generate an access token for authenticating to Power BI Embedded.
 
-    ![Updating the AccessKey property](Images/vs-updated-accesskey.png)
+    ![Adding the access key](Images/vs-updated-accesskey.png)
 	
-    _Updating the AccessKey property_ 
+    _Adding the access key_ 
  
 1. In Solution Explorer, right-click the **TwitterBI (Portable)** project and use the **Add** -> **New Folder** command to add a folder named "Interfaces" to the project.
 
@@ -437,7 +424,7 @@ In this exercise, you will write code to create a Power BI Embedded workspace an
 	}
 	```
 
-	Unlike most code in a Xamarin Forms solution, Power BI Embedded code cannot be shared across platforms. The ```PowerBIHelper``` class you just added contains methods that exist in shared code, but that delegate to methods in platform-specific code.
+	Unlike most code in a Xamarin Forms solution, Power BI Embedded code is platform-specific and cannot be shared across platforms. The ```PowerBIHelper``` class you just added contains methods that are called from shared code, but that delegate to methods in platform-specific code.
  
 1. Now it's time write the platform-specific code. Begin by right-clicking the **TwitterBI.Android** project and using the **Add** -> **Class** command to add a class file named **PowerBIService.cs** to the project. Then replace the contents of the file with the following code: 
 
@@ -982,7 +969,7 @@ In this exercise, you will write code to create a Power BI Embedded workspace an
 	}
 	```
 
-	Notice that except for the ```using``` statements and ```namespace``` definitions, the ```PowerBIServices``` class in each project looks exactly the same. But the classes that it relies on are platform-specific. 
+	Notice that except for the ```using``` statements and ```namespace``` definitions, the ```PowerBIService``` class in each project looks exactly the same. The classes that it relies on, however, are platform-specific, and were added when you installed **Microsoft.PowerBI.Api** into the iOS, Android, and Windows projects. 
 
 1. Open **MainViewModel.cs** in the **TwitterBI (Portable)** project and replace its contents with the following code:
 
@@ -1079,7 +1066,6 @@ In this exercise, you will write code to create a Power BI Embedded workspace an
 	        public async void ClearWorkspaceAsync()
 	        {
 	            this.IsBusy = true;
-	
 	            await InitializeWorkspaceAsync();
 	
 	            foreach (var reportId in this.ReportIds)
@@ -1093,14 +1079,12 @@ In this exercise, you will write code to create a Power BI Embedded workspace an
 	            }
 	
 	            await InitializeWorkspaceAsync();
-	
 	            this.IsBusy = false;
 	        }
 	
 	        public async Task InitializeWorkspaceAsync()
 	        {
 	            this.IsBusy = true;
-	
 	            var workspaceIds = await Helpers.PowerBIHelper.GetWorkspaceIdsAsync();
 	
 	            this.WorkspaceIds.Clear();
@@ -1125,25 +1109,22 @@ In this exercise, you will write code to create a Power BI Embedded workspace an
 	
 	                var datasetIds = await Helpers.PowerBIHelper.GetDatasetIdsAsync(this.CurrentWorkspaceId);
 	                this.DatasetIds.Clear();
+
 	                foreach (var datasetId in datasetIds)
 	                {
 	                    this.DatasetIds.Add(datasetId);
 	                }
+
 	                this.CurrentDatasetId = this.DatasetIds.FirstOrDefault();
-	                
 	                this.IsDatasetCreated = this.CurrentWorkspaceId != null && this.CurrentReportId != null;
-	                
 	            }
 	
 	            this.IsBusy = false;
-	
 	            return;
 	        }
 	    }
 	}
 	```
-
-	This is the view-model whose properties will be bound to controls in the view to drive the user experience.
 
 1. Open **MainPage.xaml** in the **TwitterBI (Portable)** project and replace its contents with the following XAML:
 
@@ -1221,15 +1202,17 @@ In this exercise, you will write code to create a Power BI Embedded workspace an
 	}
 	```
 
+	Notice the button-click handlers that call ```CreateWorkspaceAsync``` and ```ImportPbixAsync```. This is the code that creates a Power BI Embedded workspace and imports a Power BI Embedded report, and that is *crucial to every app that hosts Power BI Embedded*.
+
 1. Make the Android project the startup project and launch it. Once the app is running, click the **Create Workspace** button to create a Power BI Embedded workspace and add it to the workspace collection that you created in the Azure Portal. 
 
     ![Creating a Power BI Embedded workspace](Images/app-click-create-workspace.png)
 	
     _Creating a Power BI Embedded workspace_ 
 
-1. Next,  click **Import Report Definition** to import a PBIX file containing a report definition The report definition was created ahead of time so you wouldn't have to create it yourself.
+1. Next,  click **Import Report Definition** to import a PBIX file containing a report definition The PBIX file was created ahead of time so you wouldn't have to create it yourself.
 
-	> If you'd like to learn more about report definitions and PBIX files, you will have the opportunity to do so in Exercise 10.
+	> If you'd like to learn how to create reports, see [Using Microsoft Power BI to Explore and Visualize Data](https://github.com/Microsoft/TechnicalCommunityContent/tree/master/Advanced%20Analytics/Power%20BI/Session%202%20-%20Hands%20On). One created, reports can be saved as PBIX files and then imported into Power BI Embedded. For instructions on how to save a report as a PBIX file, see https://powerbi.microsoft.com/en-us/documentation/powerbi-service-export-to-pbix/#download-the-report-as-a-pbix.
 
     ![Importing a Power BI Embedded report definition](Images/app-click-import-definition.png)
 	
@@ -1237,8 +1220,8 @@ In this exercise, you will write code to create a Power BI Embedded workspace an
 
 Now it's time to start populating the dataset that was created when you imported the report definition. This is where things start to get fun, since you'll be viewing real-time Twitter activity in your Power BI Embedded report (and therefore in the app).
 
-<a name="Exercise5"></a>
-## Exercise 5: Create a Twitter app ##
+<a name="Exercise4"></a>
+## Exercise 4: Register a Twitter app ##
 
 In order to access Twitter streams programmatically, you need an access token that allows Twitter to authenticate calls from your app. And in order to get an access token, you must have a Twitter account. If you don't have a Twitter account, go to http://www.twitter.com and create one now.
 
@@ -1262,9 +1245,9 @@ In order to access Twitter streams programmatically, you need an access token th
 
 1. Click **Keys and Access Tokens**.
 
-    ![Activating the "Keys and Access Tokens" tab](Images/twitter-select-keys.png)
+    ![Accessing keys and access tokens](Images/twitter-select-keys.png)
 	
-    _Activating the "Keys and Access Tokens" tab_ 
+    _Accessing keys and access tokens_ 
 
 1. Scroll to the bottom of the page and click **Create my access token**. 
  
@@ -1274,12 +1257,12 @@ In order to access Twitter streams programmatically, you need an access token th
 
 For convenience, leave this page open in your browser because you will need several of the values shown on the page in the next exercise.
 
-<a name="Exercise6"></a>
-## Exercise 6: Write code to track Twitter activity ##
+<a name="Exercise5"></a>
+## Exercise 5: Write code to track Twitter activity ##
 
-In this exercise, you will write code that uses Tweetinvi, a popular Twitter API library, to monitor tweets, and that transmits the latitudes and longitudes that the tweets originate from to a back-end dataset used by the Power BI report that you imported in [Exercise 4](#Exercise4).
+In this exercise, you will write code that uses **TweetinviAPI**, a popular Twitter API library, to monitor tweets, and that transmits the latitudes and longitudes that the tweets originate from to a back-end dataset used by the Power BI report that you imported in [Exercise 3](#Exercise3).
 
-1. In Solution Explorer, right-click the **TwitterBI** solution and select **Manage NuGet Packages for Solution...**. Search for "tweetenvi," and then install **TweetinviAPI** in all four projects. If prompted to review changes, click **OK**.
+1. In Visual Studio's Solution Explorer, right-click the **TwitterBI** solution and select **Manage NuGet Packages for Solution...**. Search for "tweetenvi," and then install **TweetinviAPI** in all four projects. If prompted to review changes, click **OK**.
 
     ![Installing TweetinviAPI](Images/nuget-tweetinvi.png)
 	
@@ -1305,7 +1288,7 @@ In this exercise, you will write code that uses Tweetinvi, a popular Twitter API
 	}	
 	```
 
-1. Replace *TWITTER_CONSUMER_KEY* in the code you just added with the **Consumer Key (API Key)** shown on the Twitter Application Management page open in your browser.
+1. Replace *TWITTER_CONSUMER_KEY* in the code you just added with the **Consumer Key (API Key)** shown on the Twitter developer page open in your browser.
 
 1. Replace *TWITTER_CONSUMER_SECRET* with the **Consumer Secret (API Key)** shown in the browser.
 
@@ -1313,7 +1296,7 @@ In this exercise, you will write code that uses Tweetinvi, a popular Twitter API
 
 1. Replace *TWITTER_ACCESS_TOKEN_SECRET* with the **Access Token Secret** shown in the browser.
 
-1. Open **MainViewModel.cs** in the **TwitterBI (Portable)** project and add the following statements to the ```MainViewModel``` class:
+1. Open **MainViewModel.cs** in the **TwitterBI (Portable)** project and add the following properties and methods to the ```MainViewModel``` class:
 
 	```C#
 	private bool _canStartStreaming;
@@ -1361,7 +1344,7 @@ In this exercise, you will write code that uses Tweetinvi, a popular Twitter API
 	
     _Updating MainPage.xaml.cs_ 
 
-1. Open **MainPage.xaml.cs** in the **TwitterBI (Portable)** project and insert the following code after the ```OnImportReportClicked``` method:
+1. Open **MainPage.xaml.cs** in the **TwitterBI (Portable)** project and insert the following method after the ```OnImportReportClicked``` method:
 
 	```C#
 	private void OnStartStreamingClicked(object sender, EventArgs e)
@@ -1397,7 +1380,7 @@ In this exercise, you will write code that uses Tweetinvi, a popular Twitter API
 	    }
 	}
 	```
-1. Right-click the "Helpers" folder and use the **Add** -> **Class** command to add a class file named **StreamHelper.cs** to the folder. Then replace the contents of this file with the following code: 
+1. Right-click the "Helpers" folder and use the **Add** -> **Class** command to add a class file named **StreamHelper.cs** to the folder. Then replace the contents of the file with the following code: 
 
 	```C#
 	using System;
@@ -1445,7 +1428,7 @@ In this exercise, you will write code that uses Tweetinvi, a popular Twitter API
 	}
 	```
 
-	> Just like Power BI Embedded code, Tweetinvi code is platform-specific. The code you just added allows platform-specific code to be called from PCL code.
+	> Just like Power BI Embedded code, **TweetinviAPI** code is platform-specific. The code you just added allows platform-specific code to be called from shared code.
 
 1. Right-click the **TwitterBI.Android** project and use the **Add** -> **Class** command to add a class file named **StreamService.cs**. Then replace the contents of the file with the following code: 
 
@@ -1617,7 +1600,7 @@ In this exercise, you will write code that uses Tweetinvi, a popular Twitter API
 	}
 	```
 
-1. Launch the Android app and click the **Start Streaming** button to begin streaming real-time Twitter updates to the Power BI Embedded dataset.
+1. Launch the app and click the **Start Streaming** button to begin streaming real-time Twitter updates to the Power BI Embedded dataset.
 
     ![Streaming Twitter updates](Images/app-click-start-streaming.png)
 	
@@ -1627,10 +1610,10 @@ In this exercise, you will write code that uses Tweetinvi, a popular Twitter API
 
 At this point, you're probably wondering what's happening since the app shows no visible representation of Twitter activity. That's because one piece of the puzzle is still missing: the piece that runs in the cloud and serves up a Power BI Embedded report for the app to display.
 
-<a name="Exercise7"></a>
-## Exercise 7: Create a Power BI report viewer in an Azure Mobile App ##
+<a name="Exercise6"></a>
+## Exercise 6: Create a Power BI report viewer in an Azure Mobile App ##
 
-Power BI Embedded services can only be created programmatically, but Power BI reports, with full support for report navigation and filtering tools, can easily be generated and viewed on-the-fly via HTML, by, again, leveraging the Power BI Embedded SDK. Although you could technically create these services in a wide variety of ways, one of the easy mechanisms is to use an Azure Mobile App to serve as a reporting back end.
+In this exercise, you will deploy an Azure Mobile App containing a Web page that hosts the Power BI Embedded report that you imported in [Exercise 3](#Exercise3). This will set the stage for the final exercise, in which you will embed that page in the Xamarin Forms app.
 
 1. In Solution Explorer, right-click the **TwitterBI** solution and use the **Add** -> **New Project...** command to add an **ASP.NET Web Application (.NET Framework)** project to the solution. Name the project "TwitterBIMobile."
  
@@ -1644,7 +1627,7 @@ Power BI Embedded services can only be created programmatically, but Power BI re
 	
     _Creating an Azure Mobile App_
 
-1. Right-click the **TwitterBIMobile** project you just added to the solution and select **Manage NuGet Packages...**. Then find the package named "Microsoft.PowerBI.Core" and install it.
+1. In Solution Explorer, right-click the **TwitterBIMobile** project and select **Manage NuGet Packages...**. Then find the package named "Microsoft.PowerBI.Core" and install it.
 
     ![Installing Microsoft.PowerBI.Core](Images/nuget-pbi-core.png)
 	
@@ -1710,9 +1693,7 @@ Power BI Embedded services can only be created programmatically, but Power BI re
 	            if (!string.IsNullOrEmpty(workspaceId) && !string.IsNullOrEmpty(reportId))
 	            {
 	                var token = PowerBIToken.CreateReportEmbedToken(Common.PowerBIConstants.WorkspaceCollectionName, workspaceId, reportId, "R", new string[] { "R" }, "Report.Read");
-	
 	                var accessToken = token.Generate(Common.PowerBIConstants.AccessKey);
-	
 	                ViewBag.ReportId = reportId;
 	                ViewBag.AccessToken = accessToken;
 	            }
@@ -1723,13 +1704,13 @@ Power BI Embedded services can only be created programmatically, but Power BI re
 	}
 	```
 
-1. Right-click the "Views\Reports" folder and select **Add** -> **New Scaffolding Item...** Select the **MVC 5 View** and click **Add**.
+1. Right-click the project's "Views\Reports" folder and select **Add** -> **New Scaffolding Item...** Select **MVC 5 View** and click **Add**.
 
     ![Adding a view](Images/vs-add-new-view.png)
 	
     _Adding a view_
 
-1. Enter "Index" as the view name and click **Add**.
+1. Enter "Index" as the view name and click **Add** to add a file named **Index.cshtml** to the project.
 
     ![Naming the view](Images/vs-add-index-view.png)
 	
@@ -1849,11 +1830,7 @@ Power BI Embedded services can only be created programmatically, but Power BI re
 	</configuration>
 	```
 
-1. One of the primary benefits of Power BI Embedded is that you can embed visualizations in your apps, and people who use the apps don't have to have Power BI accounts. All access and activity for reports uses your Power BI Embedded Access Key created when you provisioned your Power BI Embedded Workspace Collection. In order to ensure authorization for view reports via your new report viewer you will need to use the same Power BI Embedded Access Key used in Exercise 4.
-
-	Open **CoreConstants.cs** in the "Common" folder of the **TwitterBI (Portable)** project. 
-
-1. Copy the value of the ```AccessKey``` property in the ```PowerBIConstants``` class to the clipboard.    
+1. Open **CoreConstants.cs** in the "Common" folder of the **TwitterBI (Portable)** project. Copy the value of the ```AccessKey``` property in the ```PowerBIConstants``` class to the clipboard.    
  
     ![Copying the access key](Images/vs-original-access-key.png)
 	
@@ -1877,7 +1854,7 @@ Power BI Embedded services can only be created programmatically, but Power BI re
 	
     _Publishing the Azure Mobile App_
 
-1. In the "Create App Service" dialog, select the **PowerBIResources** resource group and click **Create**.
+1. In the "Create App Service" dialog, select the **PowerBIResources** resource group that you created for the workspace collection in [Exercise 1](#Exercise1), and click **Create**.
 
     ![Creating an Azure App Service](Images/vs-click-create-service.png)
 	
@@ -1891,12 +1868,10 @@ Power BI Embedded services can only be created programmatically, but Power BI re
 
 Leave the browser open, because you will be returning to this page in the next exercise. Now it's time to experience what you've worked so hard for: viewing real-time Twitter activity in a Power BI report in your Twitter BI app.
 
-<a name="Exercise8"></a>
-## Exercise 8: Connect a Xamarin Forms app to a Power BI report viewer ##
+<a name="Exercise7"></a>
+## Exercise 7: Connect the Xamarin Forms app to the report viewer ##
 
-Since you created your Power BI report viewer in HTML, you can easily view the report, as well as all the cool report navigation, zooming, and various views on any device, including an app created in Xamarin Forms targeting iOS, Android or Windows. The code to view an HTML report is extremely simple, and, as long as the viewer can generate a key using your Power BI Embedded Access Key, can be viewed by any user.
-
-In this exercise you will be connecting Twitter BI app to your back end Power BI report viewer to view reports directly in the app.
+In the final exercise, you will add a page to the Xamarin Forms app that contains a ```WebView``` control, and connect the ```WebView``` control to the page in the Azure Mobile App that you deployed in the previous exercise so the report is visible in the Xamarin Forms app. It has been a long journey, but you have almost arrived at the destination.
 
 1. In Solution Explorer, right-click the **TwitterBI (Portable)** project and use the **Add** -> **New Item...** command to add a blank page named **ViewReportPage.xaml** to the project.
  
@@ -1934,7 +1909,7 @@ In this exercise you will be connecting Twitter BI app to your back end Power BI
 	```C#
 	public static class AzureMobileConstants
 	{
-		public static string MobileServiceUrl = "AZURE_MOBILE_APP_URL";
+	    public static string MobileServiceUrl = "AZURE_MOBILE_APP_URL";
 	}
 	```
 
@@ -1991,7 +1966,7 @@ In this exercise you will be connecting Twitter BI app to your back end Power BI
     }
 	```
 
-1. Now it's time to see some results. Launch the Android version of the app and click **Start Streaming**. Let it run for 3 or 4 minutes, and then click **View Activity**.
+1. Now it's time to see some results. Launch the app and click **Start Streaming**. Let it run for 3 or 4 minutes, and then click **View Activity**.
 
 	![Viewing Twitter activity in the app](Images/app-view-activity.png)
 	
@@ -2009,77 +1984,12 @@ In this exercise you will be connecting Twitter BI app to your back end Power BI
 	
 	_Switching to Statistics view_
 
-Play with the app and notice that you can even filter results based on latitude and longitude. And it could just as easily be hosted in a Web page as in a mobile app because in the end, it's just HTML.
-
-<a name="Exercise9"></a>
-## Exercise 9: (OPTIONAL) Configure and view a Power BI report in Power BI Desktop ##
-
-All the hard work is done, and although there are a number of pieces to the puzzle, it's easy to see how all efforts have really paid off. You now have a cross-platform app using Xamarin Forms to view Twitter activity using Power BI Embedded. One of the benefits of Power BI Embedded, especially when using the Power BI Embedded SDK to import report definitions (*.pbix) files, is the ability to view and manipulate these reports in Power BI Desktop.
-
-In this exercise you will be accessing the report definition file imported in Exercise 4 to view and make slight adjustments to the report using Microsoft Power BI Desktop.
-
-If you have not installed Microsoft Power BI Desktop, **stop now and install it** from [https://powerbi.microsoft.com/en-us/desktop/](https://powerbi.microsoft.com/en-us/desktop/ "https://powerbi.microsoft.com/en-us/desktop/").
-
-1. Copy and paste the following URL in your browser to access the report definition used in this lab:
-
-	```https://traininglabservices.azurewebsites.net/PowerBIImports/TwitterActivity.zip```
-
-1. Save the ZIP file to a location on your computer where you can easily access it, such as your **Desktop** or **Documents** folder.
-1. Change the file extension of this file from .zip to **.pbix**.
-1. Open **TwitterActivity.pbix** in Microsoft Power BI Desktop by **double-clicking the file** in the saved location from the previous step.
-
-	![The renamed TwitterActivity.pbix file](Images/fe-pbix.png)
-	
-	_The renamed TwitterActivity.pbix file_
-
-1. When Power BI Desktop loads you will be prompted for credentials. Power BI reports are disconnected from credentials by design, for security purposes. In the "SQL Server database" dialog, select the **Database** tab.
-1. Enter "powerbiuser" as the **Username**, and "PowerBIRocks!" as the **Password** (both without quotation marks) and click **Connect**. 
-
-	![Updating credentials for the TwitterActivity.pbix report defintion](Images/pbid-creds.png)
-	
-	_Updating credentials for the TwitterActivity.pbix report defintion_
-
-1. After the report refreshes the dataset, select the **Statistics** tab at the bottom of the report designer.
-
-	![Selecting the report Statistics page](Images/pbid-click-stats.png)
-	
-	_Selecting the report Statistics page_
-
-1. Select the **Activity by Time Average** visual on the report palette by clicking it with your mouse cursor.
-
-	![Selecting the Activity by Time Average visual](Images/pbid-select-by-time.png)
-	
-	_Selecting the Activity by Time Average visual_
-
-1. Change report visual by selecting the **Stacked bar chart** visual from the **Visualizations** panel. Notice the immediate update to the report visual.
-
-	![Selecting the Stacked bar chart visual](Images/pbid-select-stacked.png)
-	
-	_Selecting the Stacked bar chart visual_
-
-1. Experiment with other Visualizations for other elements, such as the "Time average" **Slicer** and **Pie chart**, or if you're a data scientist check out the powerful **R script** visual, or just navigate back to the **Activity Map** tab and experiment with changing Visualizations and other properties for data that contains location data.
-
-	![Selecting the Slicer visual](Images/pbid-slicer.png)
-	
-	_Selecting the Slicer visual_
-
-Using Microsoft Power BI Desktop is one of the most powerful ways to create custom reports for Microsoft Power BI, especially when you're using Power BI Embedded to serve up reports to users who may not have direct access to Power BI services. 
+Play with the app and notice that you can even filter results based on latitude and longitude. Voila! A Power BI report hosted in a Web page using Power BI Embedded, and surfaced in a ```WebView``` control in a page in a Xamarin Forms app.
 
 <a name="Summary"></a>
 ## Summary ##
 
-In this hands-on lab you learned how to:
-
-- Provision a Power BI Embedded Workspace Collection
-- Create a Xamarin Forms app in Visual Studio 2017 
-- Add assets, common logic, and models to Xamarin Forms projects
-- Write code to create Power BI Embedded reports
-- Write code to track Twitter activity
-- Create an Azure Mobile App as a back-end service
-- Create a Power BI report viewer in an Azure Mobile App
-- View a Power BI report in an app targeting Android, iOS, and Windows
-
-You've worked through a lot of great scenarios in this lab, however this is really just the "tip of the iceberg" as it were. The power and ability of Power BI Embedded to transform your business intelligence and data visualization strategy, especially when combined with great cross-platform user experiences, is really just a few lines of code away.
+It required no small amount of work to host a Power BI Embedded report in a Xamarin Forms app, but hopefully you will judge that the results are worth it. Note that *any* Power BI report can be hosted this way, and that Power BI provides a tremendous amount of power and flexibility when it comes to generating reports. If you're new to Power BI and want to learn more about creating reports and the various visualizations Power BI supports, see https://powerbi.microsoft.com/en-us/documentation/powerbi-service-create-a-new-report/. And for a hands-on tutorial demonstrating the basics of Power BI, see [Using Microsoft Power BI to Explore and Visualize Data](https://github.com/Microsoft/TechnicalCommunityContent/tree/master/Advanced%20Analytics/Power%20BI/Session%202%20-%20Hands%20On).
 
 ---
 
