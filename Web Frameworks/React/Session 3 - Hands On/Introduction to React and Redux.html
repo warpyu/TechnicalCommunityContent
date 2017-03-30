@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Introduction to React and Redux</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+</head>
+<body>
+<p><a name="HOLTitle"></a></p>
+<h1>Building Web Applications with React and Redux</h1>
+<hr>
+<p><a name="Overview"></a></p>
+<h2>Overview</h2>
+<p>An important aspect of modern user interface (UI) development is change detection ― specifically, how to know when the underlying data has changed so the UI can be updated accordingly. Change detection is not an easy problem to solve. With the exception of apps that use <a href="https://www.html5rocks.com/en/tutorials/workers/basics/">HTML5 Web Workers</a>, JavaScript is inherently single-threaded and executes on the same thread that renders the UI. Consequently, JavaScript tasks that take too long to execute ― such as code that scans every element in the DOM to identify changes ― make the UI sluggish and unresponsive. Change detection must also take into account the fact that model data needs to be available to <em>all</em> parts of the application, regardless of how or where the data is stored.</p>
+<p>One solution to the problem of detecting changes without sacrificing performance is <a href="http://redux.js.org/">Redux</a>, a popular JavaScript library that works well with React. Redux manages all of the state for an application using a single store. <em>State</em> includes all of the model data, as well as data regarding the current state of the UI such as the active sort column in a table. Allowing Redux to take responsibility for managing state has several advantages. First, it centralizes the location of the data and makes it available to all parts of the application. Second, it eliminates the hard coupling between between the UI and the state that drives it and simplifies workflow within the application. Redux serves as the "single source of truth" for data. This is the first principle of Redux.</p>
+<p>To implement change detection in a performant way, Redux treats application state as read-only and relies on immutable programming techniques to produce new state each time a change occurs. Immutability eliminates the need to traverse object trees and element arrays to determine what changed. The creation of a new object or array reference allows Redux to detect <em>exactly</em> what changed so it can communicate that change to the UI. Treating state as read-only is the second principle of Redux.</p>
+<p>To process state changes, a Redux store handles <em>actions</em> generated by the application. An action is any kind of asynchronous event triggered in the browser. Examples include button clicks, the receipt of data from a web socket, and the completion of an asynchronous AJAX call. Actions are handled by <em>reducers</em>, which are so-called because their behavior is analogous to the <code>reduce</code> function on array objects. A reducer takes an array of input values and returns a single value such as the sum of an array of numbers. Conceptually, you can think of user interactions as an array of actions such as login, display table, sort data, and so on. Envision a state object that is "reduced" by each action to produce a new state object. This is the essence of reduction and is an important concept in Redux programming.</p>
+<p>A store can have many reducers, but each reducer must be a pure function. A pure function has four qualities:</p>
+<ul>
+<li>Its only input data is passed via parameters; no external references may be used</li>
+<li>Input parameters are read-only</li>
+<li>The function must not produce side-effects; it must not write to a database, for example</li>
+<li>The only data returned from a reducer is the value returned via the <code>return</code> statement</li>
+</ul>
+<p>Reducer functions have many advantages. They are easy to unit test. Their behavior is predictable and easily understood. They are reusable across applications without concern for dependencies. They allow state to be read-only because input parameters are read-only. The use of reducer functions to produce new state is the third principle of Redux.</p>
+<p>In this lab, you will use <a href="https://facebook.github.io/react/">React</a>, <a href="http://redux.js.org/">Redux</a>, and <a href="https://code.visualstudio.com/">Visual Studio Code</a> to create an application that manages a collection of widgets. Widget data will be loaded from a REST service, displayed in an HTML table by a React component, and managed by Redux. You will use a library named <a href="https://github.com/reactjs/react-redux">React-Redux</a> to bind React and Redux, and a library named <a href="https://github.com/gaearon/redux-thunk">Redux-Thunk</a> to manage interactions with the REST service. And along the way, you will get a first-hand look at the face of modern web development.</p>
+<p><a name="Objectives"></a></p>
+<h3>Objectives</h3>
+<p>In this hands-on lab, you will learn how to:</p>
+<ul>
+<li>Convert an existing React application to use Redux</li>
+<li>Create a Redux store, complete with reducer functions</li>
+<li>Connect Redux stores to React components with React-Redux</li>
+<li>Manage asychronous REST calls with Redux-Thunk</li>
+</ul>
+<p><a name="Prerequisites"></a></p>
+<h3>Prerequisites</h3>
+<p>The following are required to complete this hands-on lab:</p>
+<ul>
+<li><a href="http://code.visualstudio.com/">Visual Studio Code</a></li>
+<li><a href="https://nodejs.org/en/">Node.js</a> version 7.0 or higher</li>
+</ul>
+<hr>
+<p><a name="Exercises"></a></p>
+<h2>Exercises</h2>
+<p>This hands-on lab includes the following exercises. All exercises must be completed to create a working application. Because Redux requires actions, reducers, middleware and component registration there are a number of steps required to convert an existing application to simply load up.</p>
+<ul>
+<li><a href="#Exercise1">Exercise 1: Create and configure the starter application</a></li>
+<li><a href="#Exercise2">Exercise 2: Modify the code to use Redux for state management</a></li>
+<li><a href="#Exercise3">Exercise 3: Connect React and Redux with React-Redux</a></li>
+<li><a href="#Exercise4">Exercise 4: Connect to the REST service with Redux-Thunk</a></li>
+<li><a href="#Exercise5">Exercise 5: Add support for editing widgets</a></li>
+<li><a href="#Exercise6">Exercise 6: Add support for adding and deleting widgets</a></li>
+</ul>
+<p>Estimated time to complete this lab: <strong>45</strong> minutes.</p>
+<p><a name="Exercise1"></a></p>
+<h2>Exercise 1: Create and configure the starter application</h2>
+<p>In this exercise, you will copy a starter project that uses React to a local folder on your hard disk and use the Node Package Manager (NPM) to install Redux, Redux-Thunk, and other packages required by the application.</p>
+<ol>
+<li>
+<p>Find the "resources" folder that accompanies this lab, and then open the "react-redux-vscode-starter" folder inside the "resources" folder. Copy the contents of the "react-redux-vscode-starter" folder to a local folder on your hard disk (the "project folder").</p>
+</li>
+<li>
+<p>Open a terminal or Command Prompt window and use a <strong>cd</strong> command to change to the project folder that you copied the starter project into.</p>
+</li>
+<li>
+<p>If you are running Windows, execute the following command in the Command Prompt window to open Visual Studio Code in the project folder:</p>
+<pre><code>code .
+</code></pre>
+<p>If you are running Linux or macOS instead, use this command instead:</p>
+<pre><code>open -a "Visual Studio Code" .
+</code></pre>
+</li>
+<li>
+<p>Confirm that Visual Studio Code starts and shows the project files in the Explorer pane on the left.</p>
+<p><a href="Images/vscode.png" target="_blank"><img src="Images/vscode.png" alt="Visual Studio Code showing the starter project" style="max-width:100%;"></a></p>
+<p><em>Visual Studio Code showing the starter project</em></p>
+</li>
+<li>
+<p>Select <strong>Integrated Terminal</strong> from Visual Studio Code's <strong>View</strong> menu to open the integrated terminal. In the integrated terminal, run the following command to install the packages that the app will use:</p>
+<pre><code>npm install
+</code></pre>
+<p><a href="Images/npm-install.png" target="_blank"><img src="Images/npm-install.png" alt="Installing packages" style="max-width:100%;"></a></p>
+<p><em>Installing packages</em></p>
+<blockquote>
+<p>During the install, you may receive warning messages regrading deprecations. These warnings can be ignored. If you receive an actual error message (usually displayed in red and labeled "ERR"), delete the "node_modules" folder in the project folder and try again.</p>
+</blockquote>
+</li>
+<li>
+<p>Once the install has completed, run the following command in the integrated terminal to start the development web server:</p>
+<pre><code>npm start
+</code></pre>
+<blockquote>
+<p>The development web server is powered by the popular module bundler utility <a href="https://webpack.github.io/">Webpack 2</a>. As part of the bundling process, Webpack watches the file system for changes to the source code files, and processes them as changes are made. The processing primarily consists of transpiling code, which is necessary to convert JSX code to JavaScript.</p>
+</blockquote>
+</li>
+<li>
+<p>To verify that the development environment and the application are working correctly, open a web browser and navigate to <a href="http://localhost:3000">http://localhost:3000</a>. Confirm that a "Widget Tool" page appears.</p>
+<p><a href="Images/widget-table-page.png" target="_blank"><img src="Images/widget-table-page.png" alt="The starter app running in a browser" style="max-width:100%;"></a></p>
+<p><em>The starter app running in a browser</em></p>
+</li>
+<li>
+<p>Return to the integrated terminal and press <strong>Ctrl+C</strong> to stop the web server. Then execute the following command to install additional packages:</p>
+<pre><code>npm install -S redux react-redux redux-thunk key-mirror
+</code></pre>
+<blockquote>
+<p>The <code>-S</code> switch is shorthand for <code>--save</code>. The save option adds the packages to the project's <strong>package.json</strong> file. If you move the project to another directory minus the "node_modules" folder, <code>npm-install</code> will now install these packages for you.</p>
+</blockquote>
+</li>
+<li>
+<p>Use the following command to restart the web server:</p>
+<pre><code>npm start
+</code></pre>
+</li>
+</ol>
+<p>With the project set up and the required libraries installed, it is time to begin modifying the application to use Redux.</p>
+<p><a name="Exercise2"></a></p>
+<h2>Exercise 2: Modify the code to use Redux for state management</h2>
+<p>The application that you built and ran in the previous exercise manages state itself. In this exercise, you will modify the application to use Redux to manage its state.</p>
+<ol>
+<li>
+<p>Select the "js" folder in the project's "src" folder. Then click the <strong>New File</strong> button and create a file named <strong>action-types.js</strong> in that folder.</p>
+<blockquote>
+<p>Another way to add this file is to right-click (on a Mac, Control-click) the "js" folder and select <strong>New File</strong> from the menu.</p>
+</blockquote>
+<p><a href="Images/add-file.png" target="_blank"><img src="Images/add-file.png" alt="Adding a file" style="max-width:100%;"></a></p>
+<p><em>Adding a file</em></p>
+</li>
+<li>
+<p>Add the following code to <strong>action-types.js</strong>:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> <span class="pl-smi">keyMirror</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>key-mirror<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">actionTypes</span> <span class="pl-k">=</span> <span class="pl-en">keyMirror</span>({
+    <span class="pl-c1">REFRESH_WIDGETS</span><span class="pl-k">:</span> <span class="pl-c1">null</span>,
+});</pre></div>
+<p>For each action that the application supports, an action name needs to be registered with <code>actionTypes</code>. Key Mirror is a helpful utility for declaring properties whose values are the property names themselves. The <code>actionTypes</code> object will be imported in relevant parts of the application to ensure that consistent action-type names are used.</p>
+</li>
+<li>
+<p>Select the "js" folder in the project's "src" folder again. Then click the <strong>New Folder</strong> button and create a folder named "actions."</p>
+<p><a href="Images/add-folder.png" target="_blank"><img src="Images/add-folder.png" alt="Adding a folder" style="max-width:100%;"></a></p>
+<p><em>Adding a folder</em></p>
+</li>
+<li>
+<p>Create a new file named <strong>refresh-widgets.js</strong> in the "actions" folder and add the following code to the file:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">actionTypes</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>../action-types<span class="pl-pds">'</span></span>;
+
+<span class="pl-c"><span class="pl-c">//</span> mock data until the asynchronous code is wired up</span>
+<span class="pl-k">const</span> <span class="pl-c1">widgets</span> <span class="pl-k">=</span> [{
+    id<span class="pl-k">:</span> <span class="pl-c1">1</span>, name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Small Red Widget<span class="pl-pds">'</span></span>, description<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>A small, red widget.<span class="pl-pds">'</span></span>,
+    color<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span>, size<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>small<span class="pl-pds">'</span></span>, quantity<span class="pl-k">:</span> <span class="pl-c1">2</span>
+},{
+    id<span class="pl-k">:</span> <span class="pl-c1">2</span>, name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Medium Blue Widget<span class="pl-pds">'</span></span>, description<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>A medium, blue widget.<span class="pl-pds">'</span></span>,
+    color<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>blue<span class="pl-pds">'</span></span>, size<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>, quantity<span class="pl-k">:</span> <span class="pl-c1">15</span>
+}];
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">refreshWidgets</span> <span class="pl-k">=</span> () <span class="pl-k">=&gt;</span> ({
+    type<span class="pl-k">:</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">REFRESH_WIDGETS</span>,
+    widgets
+});</pre></div>
+<p>Until the app is wired up to a REST service with Redux-Thunk, the widget table is populated with mock data. The exported function generates an <code>action</code> object. Each <code>action</code> object requires a <code>type</code> property. Additionally, data may be added to the <code>action</code> object. The action's type and data are used to produce a new application state. The exported function is known as an <em>action creator function</em>.</p>
+<p>Examine the <code>widgets</code> property on the <code>action</code> object produced by the <code>refreshWidgets</code> function. Only the word "widgets" with no colon and no value is specified. This is known as a <em>shorthand property</em>. If a property and the variable that stores its value have the same name, this shorthand syntax simplifies the code.</p>
+</li>
+<li>
+<p>With the first action type and an action creator defined, the next step is to add a reducer function to process the action. Add a file named <strong>reducer.js</strong> to the "js" folder and add the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">actionTypes</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./action-types<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">reducer</span> <span class="pl-k">=</span> (<span class="pl-smi">state</span> <span class="pl-k">=</span> { widgets<span class="pl-k">:</span> [] }, <span class="pl-smi">action</span>) <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-k">switch</span> (<span class="pl-smi">action</span>.<span class="pl-c1">type</span>) {
+        <span class="pl-k">case</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">REFRESH_WIDGETS</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, state, { widgets<span class="pl-k">:</span> <span class="pl-smi">action</span>.<span class="pl-smi">widgets</span> });
+        <span class="pl-k">default</span>:
+            <span class="pl-k">return</span> state;
+    }
+
+};</pre></div>
+<p>Action types are imported into the reducer so it is aware of the actions that are defined. Every reducer accepts two parameters: the state and the action. The state is the current application state, including model data and UI data. The action is the operation triggered by the application to update the state. In this case, the operation that updates the state assigns to it a new array of widgets.</p>
+<p>While this application has just one reducer, most real-world Redux applications have many reducers. Each action dispatched into the store is processed by every reducer. There is no logic within the store to pick and choose which reducers to run. This is by design. Each reducer is given the opportunity to update the state tree or part of the state tree when an action is dispatched. Because of this, the reducer must return the original state if it does not care about the action being dispatched. Additionally, the reducer must maintain the state it doesn't care about while it updates the parts that it <em>does</em> care about. This reducer calls <code>Object.assign</code> to copy the original state (regardless of what's in it), and then replaces one property.</p>
+<p>Note that the reducer does not mutate the state. Instead, it creates a new state object containing a <code>widgets</code> property initialized to an empty array.</p>
+</li>
+<li>
+<p>Now it is time to create the Redux store. Once created, the store can be used by the React application to dispatch actions and receive the application state for updating the UI. Create a new file named <strong>app-store.js</strong> in the "js" folder and add the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">createStore</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>redux<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">reducer</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./reducer<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">appStore</span> <span class="pl-k">=</span> <span class="pl-en">createStore</span>(reducer);</pre></div>
+<p>Redux uses named exports, and one of the exports is the <code>createStore</code> function. That function accepts a reducer function and produces a store for the application. Within a Redux application, there is just one store. This differs from the traditional Flux pattern that includes many stores and one dispatch.</p>
+</li>
+<li>
+<p>To complete the exercise, the <code>WidgetTable</code> component must be modified to connect it to the Redux store. Open <strong>app.js</strong> in the project's "js" folder and add the following <code>import</code> statements at the top of the file after the existing <code>import</code> statements:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">refreshWidgets</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./actions/refresh-widgets<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">appStore</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./app-store<span class="pl-pds">'</span></span>;</pre></div>
+</li>
+<li>
+<p>Replace the <code>componentDidMount</code> function in the same file with the following functions:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">componentDidMount</span>() {
+
+    <span class="pl-c1">this</span>.<span class="pl-smi">appStoreUnsubscribe</span> <span class="pl-k">=</span> <span class="pl-smi">appStore</span>.<span class="pl-en">subscribe</span>(() <span class="pl-k">=&gt;</span> {
+        <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({
+            widgets<span class="pl-k">:</span> <span class="pl-smi">appStore</span>.<span class="pl-en">getState</span>().<span class="pl-smi">widgets</span>,
+        });
+    });
+
+    <span class="pl-smi">appStore</span>.<span class="pl-en">dispatch</span>(<span class="pl-en">refreshWidgets</span>());
+}
+
+<span class="pl-en">componentWillUnmount</span>() {
+    <span class="pl-c1">this</span>.<span class="pl-en">appStoreUnsubscribe</span>();
+}</pre></div>
+<p>When the component mounts (loads), it subscribes to notifications fired by the store indicating that state has been updated. The registered callback function is invoked when an action is dispatched after the new state is produced by the reducer function. The store object's <code>getState</code> function returns a reference to the entire state tree. The return value from the <code>subscribe</code> function is an <code>unsubscribe</code> function which is invoked with the component is unmounted to prevent memory leaks. Finally, the <em>REFRESH_WIDGETS</em> action is dispatched to populate the table of widgets.</p>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save all your changes. Then switch back to the web browser and confirm that the widget table resembles the one below.</p>
+<p><a href="Images/widget-table-redux-mock-data.png" target="_blank"><img src="Images/widget-table-redux-mock-data.png" alt="Widget table using Redux and mock data" style="max-width:100%;"></a></p>
+<p><em>Widget table using Redux and mock data</em></p>
+</li>
+</ol>
+<p>Now that you are familiar with actions, action creators, reducers, and stores, you will build on this foundation to enhance the application further.</p>
+<p><a name="Exercise3"></a></p>
+<h2>Exercise 3: Connect React and Redux with React-Redux</h2>
+<p>At this point, React is managing the application's user interface, and Redux is managing the application's state. The React <code>WidgetTool</code> component uses the Redux store, but the connection can be improved. In this exercise, you will use a library named React-Redux to simplify the code that connects the two together.</p>
+<ol>
+<li>
+<p>Open <strong>app.js</strong> in the project's "js" folder. Add the following <code>import</code> statements after the <code>import</code> statement that loads <code>ReactDOM</code>:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">bindActionCreators</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>redux<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">connect</span>, <span class="pl-smi">Provider</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-redux<span class="pl-pds">'</span></span>;</pre></div>
+</li>
+<li>
+<p>Now add the following statement before the <code>WidgetTool</code> class declaration:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">mapStateToProps</span> <span class="pl-k">=</span> ({ widgets }) <span class="pl-k">=&gt;</span> ({ widgets });</pre></div>
+</li>
+<li>
+<p>To use React-Redux, two mapping functions need to be added. The first maps the application state object to the component's props. Add the following statement after the <code>mapStateToProps</code> function declaration:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">mapDispatchToProps</span> <span class="pl-k">=</span> <span class="pl-smi">dispatch</span> <span class="pl-k">=&gt;</span> <span class="pl-en">bindActionCreators</span>({ refreshWidgets }, dispatch);</pre></div>
+<p>The use of the curly braces and property name in the parameters passed to the arrow function is known as <em>destructuring</em>. Destructuring allows specific properties of an input object to plucked off as variables. This approach facilitates the use of a shorthand property to do the mapping.</p>
+</li>
+<li>
+<p>After the <code>WidgetTool</code> class declaration, replace the call to <code>ReactDOM.render</code> with the following code:</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">const</span> <span class="pl-smi">WidgetToolContainer</span><span class="pl-k"> =</span> <span class="pl-en">connect</span>(<span class="pl-smi">mapStateToProps</span>,<span class="pl-smi"> mapDispatchToProps</span>)(<span class="pl-smi">WidgetTool</span>);
+
+<span class="pl-smi">ReactDOM</span><span class="pl-k">.</span><span class="pl-en">render</span>(
+    &lt;<span class="pl-ent"><span class="pl-c1">Provider</span></span> <span class="pl-e">store</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">appStore</span></span><span class="pl-pse">}</span>&gt;
+        &lt;<span class="pl-ent"><span class="pl-c1">WidgetToolContainer</span></span> /&gt;
+    &lt;/<span class="pl-ent"><span class="pl-c1">Provider</span></span>&gt;,
+<span class="pl-c1">    document</span><span class="pl-k">.</span><span class="pl-en">querySelector</span>(<span class="pl-s"><span class="pl-pds">'</span>main<span class="pl-pds">'</span></span>)
+);</pre></div>
+<p>This second mapping function binds the action creators to the store's dispatch function and produces an object containing action creator/dispatch functions which are passed as props to the component. This allows the component to dispatch actions in response to user interactions</p>
+<p>React-Redux provides the <code>connect</code> function, which produces a <em>container</em> component that connects the application state to the action dispatch functions. While the store could be passed directly to the <code>WidgetToolContainer</code>, a more common approach is to use the React-Redux <code>Provider</code> component to pass in the store and make it available to all container components in the tree via React's context feature.</p>
+</li>
+<li>
+<p>The final step is to update the <code>WidgetTool</code> component to receive the array of widgets via props. Replace the <code>WidgetTool</code> class with the following code:</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">class</span> <span class="pl-en">WidgetTool</span> <span class="pl-k">extends</span> <span class="pl-en">React</span><span class="pl-k">.</span><span class="pl-smi">Component</span> {
+
+<span class="pl-k">    static</span> <span class="pl-smi">propTypes</span> <span class="pl-k">=</span> {
+<span class="pl-c1">        <span class="pl-s">refreshWidgets</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">func</span>,
+    };
+
+    <span class="pl-en">componentDidMount</span>() {
+<span class="pl-c1">        this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-en">refreshWidgets</span>();
+    }
+
+    <span class="pl-en">render</span>() {
+<span class="pl-k">        return</span> &lt;<span class="pl-ent">div</span>&gt;
+            &lt;<span class="pl-ent">h1</span>&gt;Widget Tool&lt;/<span class="pl-ent">h1</span>&gt;
+            &lt;<span class="pl-ent"><span class="pl-c1">WidgetTable</span></span> <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-k">...</span><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span></span><span class="pl-pse">}</span> /&gt;
+        &lt;/<span class="pl-ent">div</span>&gt;;
+    }
+}</pre></div>
+<p>The <code>{...this.props}</code> syntax is known as a <em>JSX spread</em>. The name comes from the <code>spread</code> operator in ES2015. Essentially, it takes the properties of the <code>this.props</code> object and passes them as individual props to the <code>WidgetTable</code> component.</p>
+</li>
+<li>
+<p>The <code>WidgetTool</code> component is <em>much</em> simpler now. Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Return to your browser and confirm that the page resembles the one below. Ignore any error messages displayed in the console if you have the developer console open; you will fix those in a bit.</p>
+<p><a href="Images/widget-tool-react-redux.png" target="_blank"><img src="Images/widget-tool-react-redux.png" alt="Widget tool using React-Redux" style="max-width:100%;"></a></p>
+<p><em>Widget tool using React-Redux</em></p>
+</li>
+</ol>
+<p>The <code>WidgetTool</code> component is now connected to the Redux store using the React-Redux library. But the widget data is still being stored locally. Let's fix that by reconnecting the application to the REST service that the starter application was connected to.</p>
+<p><a name="Exercise4"></a></p>
+<h2>Exercise 4: Connect to the REST service with Redux-Thunk</h2>
+<p>In the starter application, widget data was loaded from a REST service. In <a href="#Exercise2">Exercise 2</a>, data coming from the REST service was swapped out with mock data to allow Redux to be added incrementally. In this exercise, the REST service will be connected again, and Redux-Thunk will help Redux manage the asynchronous actions used to load data from the REST service.</p>
+<ol>
+<li>
+<p>The first step in using Redux-Thunk is to register it with the store as middleware. Redux provides an <code>applyMiddleware</code> function for this purpose. Go to <strong>app-store.js</strong> and replace its contents with the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">createStore</span>, <span class="pl-smi">applyMiddleware</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>redux<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">thunk</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>redux-thunk<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">reducer</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./reducer<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">appStore</span> <span class="pl-k">=</span> <span class="pl-en">createStore</span>(reducer, <span class="pl-en">applyMiddleware</span>(thunk));</pre></div>
+</li>
+<li>
+<p>Executing an asynchronous call involves two actions: one to transmit the call, and another to  receive the result when the call completes. The latter is accomplished via callback functions. The first action can be thought of as the <em>REQUEST</em> action, and the second can be thought of as the <em>DONE</em> action. While these actions happen in pairs, the Redux store dispatches them separately.</p>
+<p>Open <strong>action-types.js</strong> and replace its contents with the following code to define a <em>REQUEST</em> action and a <em>DONE</em> action:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> <span class="pl-smi">keyMirror</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>key-mirror<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">actionTypes</span> <span class="pl-k">=</span> <span class="pl-en">keyMirror</span>({
+    <span class="pl-c1">REFRESH_WIDGETS_REQUEST</span><span class="pl-k">:</span> <span class="pl-c1">null</span>,
+    <span class="pl-c1">REFRESH_WIDGETS_DONE</span><span class="pl-k">:</span> <span class="pl-c1">null</span>,
+});</pre></div>
+</li>
+<li>
+<p>Now replace the contents of <strong>refresh-widgets.js</strong> with the following code to dispatch these actions and trigger REST calls:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">actionTypes</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>../action-types<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">refreshWidgetsRequest</span> <span class="pl-k">=</span> () <span class="pl-k">=&gt;</span> ({
+    type<span class="pl-k">:</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">REFRESH_WIDGETS_REQUEST</span>
+});
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">refreshWidgetsDone</span> <span class="pl-k">=</span> <span class="pl-smi">widgets</span> <span class="pl-k">=&gt;</span> ({
+    type<span class="pl-k">:</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">REFRESH_WIDGETS_DONE</span>,
+    widgets
+});
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">refreshWidgets</span> <span class="pl-k">=</span> () <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-k">return</span> <span class="pl-smi">dispatch</span> <span class="pl-k">=&gt;</span> {
+
+        <span class="pl-en">dispatch</span>(<span class="pl-en">refreshWidgetsRequest</span>());
+
+        <span class="pl-k">return</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets<span class="pl-pds">'</span></span>)
+            .<span class="pl-en">then</span>(<span class="pl-smi">res</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>())
+            .<span class="pl-en">then</span>(<span class="pl-smi">widgets</span> <span class="pl-k">=&gt;</span> <span class="pl-en">dispatch</span>(<span class="pl-en">refreshWidgetsDone</span>(widgets)));
+    };
+};</pre></div>
+<p>The <code>refreshWidgets</code> action creator is now divided into a "Request" half and a "Done" half. The new <code>refreshWidgets</code> function dispatches the <em>REQUEST</em> action, and then uses <code>fetch</code> to request widgets from the REST service. When the call completes, the callback function is invoked and the <em>DONE</em> action is dispatched and passed the downloaded widget data.</p>
+</li>
+<li>
+<p>Replace the <code>reducer</code> function in <strong>reducer.js</strong> with the following code to update the reducer to handle the new actions:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">reducer</span> <span class="pl-k">=</span> (<span class="pl-smi">state</span> <span class="pl-k">=</span> { widgets<span class="pl-k">:</span> [] }, <span class="pl-smi">action</span>) <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-k">switch</span> (<span class="pl-smi">action</span>.<span class="pl-c1">type</span>) {
+        <span class="pl-k">case</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">REFRESH_WIDGETS_REQUEST</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, state, { widgets<span class="pl-k">:</span> [] });
+        <span class="pl-k">case</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">REFRESH_WIDGETS_DONE</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, state, { widgets<span class="pl-k">:</span> <span class="pl-smi">action</span>.<span class="pl-smi">widgets</span> });
+        <span class="pl-k">default</span>:
+            <span class="pl-k">return</span> state;
+    }
+
+};</pre></div>
+<p>The reducer handles each action independently. If desired, the <em>REQUEST</em> action could be used to display a "loading" spinner or some other UI element indicating that a request has been made and completion is pending. Once the call completes, the second action updates the state with the widget data.</p>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Then switch back to the browser and examine the widget table.</p>
+<p><a href="Images/widget-table-redux-thunk.png" target="_blank"><img src="Images/widget-table-redux-thunk.png" alt="Widget table using Redux-Thunk" style="max-width:100%;"></a></p>
+<p><em>Widget table using Redux-Thunk</em></p>
+</li>
+</ol>
+<p>The list of widgets displayed in the page has changed because the data now comes from REST service. But even though the UI contains <strong>Edit</strong> and <strong>Delete</strong> buttons, clicking the buttons does nothing. There is no way to edit and delete widgets. The REST service supports editing and deleting, but the buttons need to be bound to the service.</p>
+<p><a name="Exercise5"></a></p>
+<h2>Exercise 5: Add support for editing widgets</h2>
+<p>In this exercise, you will restore the application's ability to edit widgets. You will do so by implementing new actions.</p>
+<ol>
+<li>
+<p>Open <strong>action-types.js</strong> and add the following properties to the <code>actionTypes</code> object:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">EDIT_WIDGET</span><span class="pl-k">:</span> <span class="pl-c1">null</span>,
+<span class="pl-c1">CANCEL_WIDGET</span><span class="pl-k">:</span> <span class="pl-c1">null</span>,
+<span class="pl-c1">SAVE_WIDGET_REQUEST</span><span class="pl-k">:</span> <span class="pl-c1">null</span>,</pre></div>
+<p>The <em>EDIT_WIDGET</em> action will replace a view row with an edit row, while <em>CANCEL_WIDGET</em> will replace an edit row with a view row. The <em>SAVE_WIDGET_REQUEST</em> action will save the edited widget and change the edit row to a view row. Note that there is no <em>DONE</em> action. That's because saving a widget refreshes the widget array and executes a <em>REFRESH_WIDGETS_DONE</em> action.</p>
+</li>
+<li>
+<p>Create a new file named <strong>edit-widget.js</strong> in the "actions" folder and add the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">actionTypes</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>../action-types<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">editWidget</span> <span class="pl-k">=</span> <span class="pl-smi">widgetId</span> <span class="pl-k">=&gt;</span> ({
+    type<span class="pl-k">:</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">EDIT_WIDGET</span>,
+    widgetId
+});
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">cancelWidget</span> <span class="pl-k">=</span> () <span class="pl-k">=&gt;</span> ({
+    type<span class="pl-k">:</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">EDIT_WIDGET</span>,
+    widgetId<span class="pl-k">:</span> <span class="pl-k">-</span><span class="pl-c1">0</span>
+});</pre></div>
+</li>
+<li>
+<p>Create a new file named <strong>save-widget.js</strong> in the "actions" folder and add the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">actionTypes</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>../action-types<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">refreshWidgetsDone</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./refresh-widgets<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">saveWidgetsRequest</span> <span class="pl-k">=</span> <span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span> ({
+    type<span class="pl-k">:</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">SAVE_WIDGET_REQUEST</span>,
+    widget,
+});
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">saveWidget</span> <span class="pl-k">=</span> (<span class="pl-smi">widget</span>) <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-k">return</span> <span class="pl-smi">dispatch</span> <span class="pl-k">=&gt;</span> {
+
+        <span class="pl-en">dispatch</span>(<span class="pl-en">saveWidgetsRequest</span>(widget));
+
+        <span class="pl-k">let</span> widgetSavePromise <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+
+        <span class="pl-k">if</span> (<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>) {
+            widgetSavePromise <span class="pl-k">=</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets/<span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-c1">encodeURIComponent</span>(<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>), {
+                method<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>PUT<span class="pl-pds">'</span></span>,
+                headers<span class="pl-k">:</span> { <span class="pl-s"><span class="pl-pds">'</span>Content-Type<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>application/json<span class="pl-pds">'</span></span> },
+                body<span class="pl-k">:</span> <span class="pl-c1">JSON</span>.<span class="pl-en">stringify</span>(widget),
+            });
+        } <span class="pl-k">else</span> {
+            widgetSavePromise <span class="pl-k">=</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets<span class="pl-pds">'</span></span>, {
+                method<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>POST<span class="pl-pds">'</span></span>,
+                headers<span class="pl-k">:</span> { <span class="pl-s"><span class="pl-pds">'</span>Content-Type<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>application/json<span class="pl-pds">'</span></span> },
+                body<span class="pl-k">:</span> <span class="pl-c1">JSON</span>.<span class="pl-en">stringify</span>(widget),
+            });
+        }
+
+        widgetSavePromise
+            .<span class="pl-en">then</span>(() <span class="pl-k">=&gt;</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets<span class="pl-pds">'</span></span>))
+            .<span class="pl-en">then</span>(<span class="pl-smi">res</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>())
+            .<span class="pl-en">then</span>(<span class="pl-smi">widgets</span> <span class="pl-k">=&gt;</span> <span class="pl-en">dispatch</span>(<span class="pl-en">refreshWidgetsDone</span>(widgets)));
+    };
+};</pre></div>
+<p>The <code>saveWidget</code> function dispatches a <em>REQUEST</em> action, and then in the callback dispatches a <em>DONE</em> action. For the <em>REQUEST</em> action, the widget to be saved is passed along in case the reducer needs it. The save operation handles both inserts and edits, and decides which to do based on whether the widget input to it contains an id value.</p>
+</li>
+<li>
+<p>Open <strong>reducer.js</strong> and replace its contents with the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">actionTypes</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./action-types<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">reducer</span> <span class="pl-k">=</span> (<span class="pl-smi">state</span> <span class="pl-k">=</span> { widgets<span class="pl-k">:</span> [], editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span> }, <span class="pl-smi">action</span>) <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-k">switch</span> (<span class="pl-smi">action</span>.<span class="pl-c1">type</span>) {
+        <span class="pl-k">case</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">REFRESH_WIDGETS_REQUEST</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, state, { widgets<span class="pl-k">:</span> [] });
+        <span class="pl-k">case</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">REFRESH_WIDGETS_DONE</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, state, { widgets<span class="pl-k">:</span> <span class="pl-smi">action</span>.<span class="pl-smi">widgets</span>, editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span> });
+        <span class="pl-k">case</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">EDIT_WIDGET</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, state, { editRowId<span class="pl-k">:</span> <span class="pl-smi">action</span>.<span class="pl-smi">widgetId</span> });
+        <span class="pl-k">case</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">CANCEL_WIDGET</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, state, { editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span> });
+        <span class="pl-k">case</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">SAVE_WIDGET_REQUEST</span>:
+            <span class="pl-k">return</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, state, { widget<span class="pl-k">:</span> <span class="pl-smi">action</span>.<span class="pl-smi">widget</span> });
+        <span class="pl-k">default</span>:
+            <span class="pl-k">return</span> state;
+    }
+
+};</pre></div>
+<p>The state object is now initialized with an <code>editRowId</code> value of 0 to make sure that all rows are reset to read-only after a refresh occurs.</p>
+</li>
+<li>
+<p>Open <strong>app.js</strong> and add the following <code>import</code> statements after the statement that imports <code>refreshWidgets</code>:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">editWidget</span>, <span class="pl-smi">cancelWidget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./actions/edit-widget<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">saveWidget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./actions/save-widget<span class="pl-pds">'</span></span>;</pre></div>
+</li>
+<li>
+<p>Now replace the mapping functions with the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">mapStateToProps</span> <span class="pl-k">=</span> ({ widgets, editRowId }) <span class="pl-k">=&gt;</span> ({ widgets, editRowId });
+
+<span class="pl-k">const</span> <span class="pl-c1">mapDispatchToProps</span> <span class="pl-k">=</span> <span class="pl-smi">dispatch</span> <span class="pl-k">=&gt;</span> <span class="pl-en">bindActionCreators</span>({
+    refreshWidgets,
+    onEdit<span class="pl-k">:</span> editWidget,
+    onCancel<span class="pl-k">:</span> cancelWidget,
+    onSave<span class="pl-k">:</span> saveWidget,
+}, dispatch);</pre></div>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Switch back to the browser and confirm that you can edit widgets and save the changes.</p>
+<p><a href="Images/widget-table-edit.png" target="_blank"><img src="Images/widget-table-edit.png" alt="Editing a widget" style="max-width:100%;"></a></p>
+<p><em>Editing a widget</em></p>
+</li>
+</ol>
+<p>Almost there, but you still can't add and delete widgets. That needs to be fixed so the application can be considered finished.</p>
+<p><a name="Exercise6"></a></p>
+<h2>Exercise 6: Add support for adding and deleting widgets</h2>
+<p>In this exercise, you will modify the application to support for adding and deleting widgets.</p>
+<ol>
+<li>
+<p>Add the following property to the <code>actionTypes</code> object in <strong>action-types.js</strong>:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">DELETE_WIDGET_REQUEST</span><span class="pl-k">:</span> <span class="pl-c1">null</span>,</pre></div>
+<p>The <em>DELETE_WIDGET</em> action will trigger the widget to be deleted. The next step is to implement the action.</p>
+</li>
+<li>
+<p>Create a file named <strong>delete-widget.js</strong> in the "actions" folder and add the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">actionTypes</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>../action-types<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">refreshWidgetsDone</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./refresh-widgets<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">deleteWidgetRequest</span> <span class="pl-k">=</span> <span class="pl-smi">widgetId</span> <span class="pl-k">=&gt;</span> ({
+    type<span class="pl-k">:</span> <span class="pl-smi">actionTypes</span>.<span class="pl-c1">DELETE_WIDGET_REQUEST</span>,
+    widgetId,
+});
+
+<span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-c1">deleteWidget</span> <span class="pl-k">=</span> (<span class="pl-smi">widgetId</span>) <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-k">return</span> <span class="pl-smi">dispatch</span> <span class="pl-k">=&gt;</span> {
+
+        <span class="pl-en">dispatch</span>(<span class="pl-en">deleteWidgetRequest</span>(widgetId));
+
+        <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets/<span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-c1">encodeURIComponent</span>(widgetId), {
+            method<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>DELETE<span class="pl-pds">'</span></span>,
+        })
+            .<span class="pl-en">then</span>(() <span class="pl-k">=&gt;</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets<span class="pl-pds">'</span></span>))
+            .<span class="pl-en">then</span>(<span class="pl-smi">res</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>())
+            .<span class="pl-en">then</span>(<span class="pl-smi">widgets</span> <span class="pl-k">=&gt;</span> <span class="pl-en">dispatch</span>(<span class="pl-en">refreshWidgetsDone</span>(widgets)));
+    };
+};</pre></div>
+</li>
+<li>
+<p>Open <strong>reducer.js</strong> and add the following action type:</p>
+<div class="highlight highlight-source-js"><pre>case <span class="pl-smi">actionTypes</span>.<span class="pl-c1">DELETE_WIDGET_REQUEST</span><span class="pl-k">:</span>
+    <span class="pl-k">return</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, state, { widgetId<span class="pl-k">:</span> <span class="pl-smi">action</span>.<span class="pl-smi">widgetId</span> });</pre></div>
+</li>
+<li>
+<p>Add the following <code>import</code> statement to <strong>app.js</strong> after the statement that imports <code>saveWidget</code>:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">deleteWidget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./actions/delete-widget<span class="pl-pds">'</span></span>;</pre></div>
+</li>
+<li>
+<p>Update the dispatch mapping function to include <code>deleteWidget</code>:</p>
+<div class="highlight highlight-source-js"><pre>onDelete<span class="pl-k">:</span> deleteWidget,</pre></div>
+</li>
+<li>
+<p>Update the <code>propTypes</code> in the <code>WidgetTool</code> class to include <code>onSave</code>:</p>
+<div class="highlight highlight-source-js"><pre>onSave<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">func</span>,</pre></div>
+</li>
+<li>
+<p>Add the <code>WidgetForm</code> component to the <code>render</code> function, just before the closing <code>&lt;/div&gt;</code> tag:</p>
+<div class="highlight highlight-source-js-jsx"><pre>&lt;<span class="pl-ent"><span class="pl-c1">WidgetForm</span></span> <span class="pl-e">onSubmit</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">onSave</span></span><span class="pl-pse">}</span> /&gt;</pre></div>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Then switch back to the browser, reload the application, and confirm that you can add and delete widgets.</p>
+<p><a href="Images/widget-tool-complete.png" target="_blank"><img src="Images/widget-tool-complete.png" alt="Widget UI with support for adding and deleting widgets" style="max-width:100%;"></a></p>
+<p><em>Widget UI with support for adding and deleting widgets</em></p>
+</li>
+</ol>
+<p>The application now contains all the functionality of the starter application, but implemented in an entirely different way: the React-Redux way.</p>
+<p><a name="Summary"></a></p>
+<h2>Summary</h2>
+<p>React and Redux together represent the frontier of modern web development. If you would like to learn more about these libraries and how they work together, see <a href="https://onsen.io/blog/react-state-management-redux-store/">https://onsen.io/blog/react-state-management-redux-store/</a>, or watch the video entitled <a href="https://wintellectnow.com/Videos/Watch?videoId=using-react-with-redux">Using React with Redux</a> by React guru Eric Greene. For a great step-by-step tutorial on React itself, see <a href="https://github.com/Microsoft/TechnicalCommunityContent/tree/master/Web%20Frameworks/React/Session%202%20-%20Hands%20On">Building Web Apps with React</a>.</p>
+<hr>
+<p>Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
