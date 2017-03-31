@@ -1,8 +1,9 @@
-# Community Content - Introduction to React
+# Community Content - React
 
-This folder contains content introducing React and demonstrating how to use it to build web applications. The content is divided into two sessions:
+This folder contains content introducing React and demonstrating how to use it to build Web applications. The content is divided into three sessions:
 
 - Session 1 - Slides
 - Session 2 - Building Web Applications with React (HOL)
+- Session 3 - Building Web Applications with React and Redux (HOL)
 
-The HOL works on any operating system (Windows, MacOS, Linux) — and may be presented as a hands-on lab or as a demo accompanying the slide deck.
+The HOLs may be presented as hands-on labs or as demos accompanying the slide deck.

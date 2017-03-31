@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Quantity</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-template ngFor let-widget [ngForOf]="widgets">
+            <tr widget-view-row *ngIf="widget.id !== editRowId" [widget]="widget"
+                (onEditWidget)="editWidget($event)" (onDeleteWidget)="onDeleteWidget.emit($event); editRowId = 0">
+            </tr>
+            <tr widget-edit-row *ngIf="widget.id === editRowId" [widget]="widget"
+                (onSaveWidget)="onSaveWidget.emit($event); editRowId = 0" (onCancelWidget)="editRowId = 0">
+            </tr>
+        </ng-template>
+    </tbody>
+</table>

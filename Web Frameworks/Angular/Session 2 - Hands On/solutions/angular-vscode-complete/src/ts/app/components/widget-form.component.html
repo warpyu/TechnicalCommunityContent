@@ -1,0 +1,24 @@
+<h2>Widget Form</h2>
+<form>
+    <div>
+        <label for="widget-name-input">Widget Name:</label>
+        <input type="text" name="widgetNameInput" id="widget-name-input" [(ngModel)]="newWidget.name" />
+    </div>
+    <div>
+        <label for="widget-description-input">Widget Description:</label>
+        <input type="text" name="widgetDescriptionInput" id="widget-description-input" [(ngModel)]="newWidget.description" />
+    </div>
+    <div>
+        <label for="widget-color-input">Widget Color:</label>
+        <input type="text" name="widgetColorInput" id="widget-color-input" [(ngModel)]="newWidget.color" />
+    </div>
+    <div>
+        <label for="widget-size-input">Widget Size:</label>
+        <input type="text" name="widgetSizeInput" id="widget-size-input" [(ngModel)]="newWidget.size" />
+    </div>
+    <div>
+        <label for="widget-quantity-input">Widget Quantity:</label>
+        <input type="text" name="widgetQuantityInput" id="widget-quantity-input" [(ngModel)]="newWidget.quantity" />
+    </div>
+    <button type="button" (click)="addWidget()">Add Widget</button>
+</form>
