@@ -10,21 +10,22 @@
 
 Angular takes a template-driven approach to building UIs. An HTML template is decorated with component elements, directives, and other expressions to bind data models and other entities. The fundamental building block of Angluar apps is the *component*. Components are template-bound to a data model. The template is part of the component's metadata, and the data model is the component instance itself.
 
-Composing rich UIs from components is major aspect of Angular programming. Angular partially implements the W3C recommendations for [Web Components](https://www.w3.org/standards/techs/components#w3c_all). As Web Components grow in popularity and browser support increases, Angular will be well positioned to fully support them. In addition to component-driven development, Angular is well known for its rich services architecture, which even includes hierarchical dependency injection. While two-way data binding between the UI and data models is supported in Angular, developers who do not like the two-way pattern can easily avoid it. This lab makes use of ```ngModel``` to perform two-way binding for collecting form data, but does use two-way binding otherwise.
+Composing rich UIs from components is major aspect of Angular programming. Angular partially implements the W3C recommendations for [Web Components](https://www.w3.org/standards/techs/components#w3c_all). As Web Components grow in popularity and browser support increases, Angular will be well positioned to fully support them. In addition to component-driven development, Angular is well known for its rich services architecture, which even includes hierarchical dependency injection. While two-way data binding between the UI and data models is supported in Angular, developers who do not like the two-way pattern can easily avoid it. This lab makes use of ```ngModel``` to perform two-way binding for collecting form data, but does not use two-way binding otherwise.
 
-Angular is a complete framework for building UIs. Angular apps can be written in JavaScript, but [TypeScript](https://www.typescriptlang.org/) is more commonly used to due to its support for advanced features such as decorators (which are used to configure metadata for components), directives, modules, and services. TypeScript is especially helpful when building enterprise applications because of the strong typing that it offers.
+Angular is a complete framework for building UIs. Angular apps can be written in JavaScript, but [TypeScript](https://www.typescriptlang.org/) is more commonly used to due to its support for advanced features such as decorators (which are used to configure metadata for components), directives, modules, and services. TypeScript is especially helpful when building enterprise applications because of the strong typing that it enforces.
 
-In this lab, you will use Angular, TypeScript, and [Visual Studio Code](https://code.visualstudio.com/) to build a simple application for managing a table of widgets. Data will be loaded from a REST service and displayed in an HTML table by an Angular component. In addition, the application will fully support CRUD (Create, Read, Update and Delete), allowing widgets to be added and edited as well as viewed and deleted. As you build out the app, you will learn the basics of Angular and get a feel for what Angular programming is all about. 
+In this lab, you will use Angular, TypeScript, and [Visual Studio Code](https://code.visualstudio.com/) to build a simple application for managing a table of widgets. Data will be loaded from a REST service and displayed in an HTML table by Angular components. In addition, the application will fully support CRUD (Create, Read, Update and Delete), allowing widgets to be added and edited as well as viewed and deleted. As you build out the app, you will learn the basics of Angular and get a feel for what Angular programming is all about. 
 
 <a name="Objectives"></a>
 ### Objectives ###
 
 In this hands-on lab, you will learn how to:
 
-- Create an app module and an app component
-- Build a UI For displaying, collecting, and editing data
-- Decompose a UI into smaller components
-- Integrate REST services into an Angular app
+- Create Angular components and services
+- Combine Angular with HTML forms for collecting and editing data
+- Decompose a single UI component into several smaller components
+- Compose rich UIs from Angular components
+- Integrate REST services into Angular apps
 
 <a name="Prerequisites"></a>
 ### Prerequisites ###
@@ -76,7 +77,7 @@ Rather than start from scratch, you will begin with a "hello world" project that
 
     _Visual Studio Code showing the starter project_
 
-1. Select **Integrated Terminal** from Visual Studio Code's **View** menu to open the integrated terminal. In the integrated terminal, run the following command to install the packages that the app will use:
+1. Select **Integrated Terminal** from Visual Studio Code's **View** menu to open the integrated terminal. In the integrated terminal, run the following command to install the packages that the app requires:
 
     ```
     npm install
@@ -104,9 +105,9 @@ Rather than start from scratch, you will begin with a "hello world" project that
 
 1. The "Hello World" that you see is HTML content produced by a simple Angular component named ```AppComponent```. The component is defined in **app.component.ts**, which is located in the project's "src\ts\app" folder. Open **app.component.ts** and inspect its contents:
 
-    ![The Angular component](Images/app-component.png)
+    ![Defining an Angular component](Images/app-component.png)
 
-    _The Angular component_
+    _Defining an Angular component_
 
 	The component replaces the page's ```hello-world``` element with the HTML in **app.component.html** (the component template), and styles the output with the styles in **app.component.scss**.
 
@@ -178,7 +179,7 @@ Rather than start from scratch, you will begin with a "hello world" project that
 	}
 	```
 
-	This markup is not conventional CSS; it is [SCSS](http://sass-lang.com/), which is an extension to [SASS](http://sass-lang.com/). SASS is a preprocessor for CSS that includes a number of syntax efficiencies not available in CSS. Angular provides no direct support for SASS, but a well configured development environment enables developers to leverage such technologies in Angular applications.
+	This markup is not conventional CSS; it is [SCSS](http://sass-lang.com/), which is an extension to [SASS](http://sass-lang.com/). SASS is a preprocessor for CSS that includes a number of syntax efficiencies not available in CSS. Angular provides no direct support for SASS, but a properly configured development environment enables developers to leverage such technologies in Angular applications.
 
 1. Use the **File** -> **Save All** command to save all of your changes. Then switch back to the browser and confirm that a table of widgets appears, as shown below.
 
@@ -267,7 +268,7 @@ In this exercise, you will add an HTML form to the app so users can add widgets 
 	import { FormsModule } from "@angular/forms";
 	```
 
-1. Once imported, the ```FormsModule``` must be registered with the ```AppModule```. In the ```NgModule``` decorator, update the ```imports``` property to include ```FormsModule```:
+1. Once imported, ```FormsModule``` must be registered with the ```AppModule```. In the ```@NgModule``` decorator, update the ```imports``` property to include ```FormsModule```:
 
 	```typescript
 	imports: [ BrowserModule, FormsModule ],
@@ -302,7 +303,7 @@ In this exercise, you will add an HTML form to the app so users can add widgets 
 	</form>
 	```
 
-	The ```ngModel``` directives establish two-way data binding between the UI and the model on the component instance. Each directive is surrounded by square brackets and parentheses. Square brackets indicates an input binding, which passes data from the model to the directive or component. Parentheses indicate an output binding, which passes data back to the model. The use of both indicates that this is two-way data binding. For the button's click event, parentheses are used without square brackets since there is no input, just output when the button is clicked.
+	The ```ngModel``` directives establish two-way data binding between the UI and the model on the component instance. Each directive is surrounded by square brackets and parentheses. Square brackets denote an input binding, which passes data from the model to the directive or component. Parentheses indicate an output binding, which passes data back to the model. The use of both declares a two-way data binding. For the button's click event, parentheses are used without square brackets since there is no input, just output, when the button is clicked.
 
 1. Now update the component class to make information about new widgets available. To do the update, add the following property to the ```AppComponent``` class in **app.component.ts**:
 
@@ -345,14 +346,14 @@ In this exercise, you will add an HTML form to the app so users can add widgets 
 
     _UI for adding widgets_
 
-Now you know how to implement forms in Angular components and use ```ngModel``` to bind form elements to model properties.
+Now you know how to implement forms in Angular components and use ```ngModel``` to bind form elements to model properties. The next step is to modularize the app a bit more.
 
 <a name="Exercise4"></a>
 ## Exercise 4: Decompose the component into two components ##
 
-The application component has grown and is now responsible for displaying the widget table AND handling form input for new widgets. This works, but it's not ideal. In this exercise, you will decompose the application component into two smaller components: one to display widgets, and another to add widgets. 
+The application component has grown and is now responsible for displaying the widget table AND handling form input for new widgets. This works, but it's not ideal. In this exercise, you will decompose the application component into two smaller components: one for displaying widgets, and another for adding widgets. 
 
-1. Create a new folder named "components" in the project's "src\ts\app" folder. Add a new file to the folder named **widget-table.component.ts**, and add the following code to the file to define a new component named ```WidgetTable```:
+1. Create a new folder named "components" in the project's "src\ts\app" folder. Add a new file named **widget-table.component.ts** to the "components" folder, and add the following code to the file to define a new component named ```WidgetTable```:
 
 	```typescript
 	import { Component, Input } from "@angular/core";
@@ -372,7 +373,7 @@ The application component has grown and is now responsible for displaying the wi
 	}
 	```
 
-	The ```@Input``` decorator indicates which property (or properties) on the component class can be used for input bindings. The property type can be any valid type.
+	The ```@Input``` decorator indicates which property (or properties) of the component class can be used for input bindings. The property type can be any valid type.
 
 1. Add a file named **widget-table.component.html** to the "components" folder to hold the component template. Then add the following markup to the file:
 
@@ -500,7 +501,7 @@ The application component has grown and is now responsible for displaying the wi
 	}
 	```
 
-	The ```@Output``` decorator indicates which properties on the component are available for output bindings. Typically, the ```EventEmitter``` class is used to wire up the output mechanism.
+	The ```@Output``` decorator indicates which properties on the component are available for output bindings. Typically, the ```EventEmitter``` class is used to wire up the outputs.
 
 1. Add a file named **widget-form.component.html** to the "components" folder. Then add the following markup to the file:
 
@@ -586,7 +587,7 @@ The application component has grown and is now responsible for displaying the wi
 	}
 	```
 
-1. Use the **File** -> **Save All** command to save your changes. Then switch back to the browser and confirm that the widget table and widget form are both displayed on the web page. Try adding a new widget and verify that it works.
+1. Use the **File** -> **Save All** command to save your changes. Then switch back to the browser and confirm that the widget table and widget form are both displayed on the web page. Add a new widget and verify that it works.
 
     ![Adding a yellow widget](Images/add-widget.png)
 
@@ -683,7 +684,7 @@ Currently, the app allows new widgets to be added, but lacks a UI for editing an
 1. Create a file named **widget-edit-row.component.ts** in the "components" folder and add the following code:
 
 	```typescript
-	import { Component, Input, Output, EventEmitter } from "@angular/core";
+	import { Component, Input, Output, EventEmitter, OnChanges } from "@angular/core";
 	
 	import { Widget } from "../models/widget";
 	
@@ -692,7 +693,7 @@ Currently, the app allows new widgets to be added, but lacks a UI for editing an
 	    templateUrl: "./widget-edit-row.component.html",
 	    styleUrls: [ "./widget-row.component.scss" ],
 	})
-	export class WidgetEditRow {
+	export class WidgetEditRow implements OnChanges {
 	
 	    @Input()
 	    public widget: Widget = {} as Widget;
@@ -702,8 +703,16 @@ Currently, the app allows new widgets to be added, but lacks a UI for editing an
 	
 	    @Output()
 	    public onCancelWidget: EventEmitter<void> = new EventEmitter<void>();
+	
+	    public ngOnChanges(changes: any) {
+	        if (changes.widget) {
+	            this.widget = Object.assign({}, changes.widget.currentValue);
+	        }
+	    }
 	}
 	```
+
+	The ```OnChanges``` interface is imported and applied to the ```WidgetEditRow``` class to declare that the component implements the ```ngOnChanges``` lifecycle method. This method executes whenever the input properties to the component change. In particular, changes to the ```widgets``` property must be properly handled to ensure that edits to the widget do not overwrite the existing widget object in memory. For this reason, a new object is created, and the properties of the original widget are copied to the new widget using ```Object.assign``` in the ```ngOnChanges``` method. As a result, the original object is not modified if the user clicks the **Cancel** button.
 
 1. Create a file named **widget-edit-row.component.html** in the "components" folder and add the following markup:
 
@@ -732,7 +741,7 @@ Currently, the app allows new widgets to be added, but lacks a UI for editing an
 	declarations: [ AppComponent, WidgetTable, WidgetForm, WidgetViewRow, WidgetEditRow ],
 	```
 
-1. The ```WidgetTable``` template needs to be updated to use the new row components. A new "Action" column needs to be added to the table header row, and some logic needs to be added to the table to switch between the view row and edit row. Replace the template for the widget table component in **widget-table.component.html** with the following markup.
+1. The ```WidgetTable``` template needs to be updated to use the new row components. A new "Action" column needs to be added to the table header row, and some logic needs to be added to the table to switch between the view row and edit row. Replace the template for the widget table component in **widget-table.component.html** with the following markup:
 
 	```html
 	<table>
@@ -761,7 +770,7 @@ Currently, the app allows new widgets to be added, but lacks a UI for editing an
 
 	It isn't possible to use ```ngFor``` to apply two different components to the same element. Therefore, an ```ng-template``` element is used instead to iterate over the model data, and the appropriate component is emitted using ```ngIf```. The asterisk is shorthand, and must be used when a structural directive is applied to multiple sibling directives.
 
-	Also, observe how multiple expressions can be combined together in the template. For ```onDeleteWidget```, one expression emits a delete-widget event, and the second sets ```editRowId``` to zero.
+	Also, observe how multiple expressions can be included in a single template. For ```onDeleteWidget```, one expression emits a delete-widget event, and the second sets ```editRowId``` to zero.
 
 1. The ```WidgetTable``` component needs to be updated to handle edit rows and the events associated with saving and deleting widgets. Open **widget-table.component.ts** and replace the contents of the file with the following code:
 
@@ -865,153 +874,147 @@ Users can now edit and delete widgets as well as view and add them. The final st
 <a name="Exercise6"></a>
 ## Exercise 6: Connect to a REST service ##
 
-The Widget Tool is almost complete. This last exercise will connect the Widget Tool to a REST service to retrieve and save its widget data. To connect to a REST service will require the HTTP service and the creation of Widgets service to provide the data to the components.
+The app is almost complete. In the final exercise, you will modify it to use a REST service to store widget data. To communicate with the REST service, you will use Angular's ```HttpModule```, which provides HTTP services to applications that require them. And you will implement a service of your own named ```Widgets``` to use Angular's HTTP services.
 
-1. First, the HTTP Module needs to imported into the application. Open the file named "app.module.ts" in the "src/ts/app" folder. After the Forms Module import statement, import the HTTP Module.
+1. Open **app.module.ts** in the project's "app" folder and add the following statement after the statement that imports ```FormsModule```:
 
-```typescript
-import { HttpModule } from "@angular/http";
-```
+	```typescript
+	import { HttpModule } from "@angular/http";
+	```
+1. Add ```HttpModule``` to the list of modules imported into the application module:
 
-Register the Http Module with the application's module, using the imports option.
+	```typescript
+	imports: [ BrowserModule, FormsModule, HttpModule ],
+	```
 
-```typescript
-imports: [ BrowserModule, FormsModule, HttpModule ],
-```
+1. Create a new folder in the "app" folder named "services." Then add a file named **widgets.service.ts** to the "services" folder and add the following code:
 
-1. Create a new folder in the "src/ts/app" folder named "services".
+	```typescript
+	import { Injectable } from "@angular/core";
+	import { Http, Headers, RequestOptions } from "@angular/http";
+	import { Observable } from "rxjs/Rx";
+	
+	import { Widget } from "../models/widget";
+	
+	@Injectable()
+	export class Widgets {
+	
+	    private baseUrl: string = "http://localhost:3010/widgets";
+	
+	    private requestOptions: RequestOptions = new RequestOptions({
+	        headers: new Headers({ "Content-Type": "application/json" })
+	    });
+	
+	    constructor(private http: Http) { }
+	
+	    public getAll(): Observable<Widget[]> {
+	        return this.http.get(this.baseUrl).map(res => res.json());
+	    }
+	
+	    public get(widgetId: number): Observable<Widget> {
+	        return this.http.get(this.baseUrl + "/" + encodeURIComponent(widgetId.toString())).map((res) => res.json());
+	    }
+	
+	    public insert(widget: Widget): Observable<Widget> {
+	        return this.http.post(this.baseUrl + "/", JSON.stringify(widget), this.requestOptions).map((res) => res.json());
+	    }
+	
+	    public update(widget: Widget): Observable<Widget> {
+	        return this.http.put(this.baseUrl + "/" + encodeURIComponent(widget.id.toString()),
+	            JSON.stringify(widget), this.requestOptions).map((res) => res.json());
+	    }
+	
+	    public delete(widgetId: number): Observable<Widget> {
+	        return this.http.delete(this.baseUrl + "/" + encodeURIComponent(widgetId.toString())).map((res) => res.json());
+	    }
+	
+	}
+	```
 
-1. In the new "services" folder, create a new file named "widgets.service.ts". Add the following code to the file, and save.
+	Angular's HTTP service provides helper methods for making REST service requests. You simply call these methods with a URL, data, and request options, and an HTTP request is transmitted. To manage the asynchronous nature of such requests, Angular uses *observables* provided by another framework named RxJS (Reactive Extensions for JavaScript). Parties that subscribe to an observable returned by the HTTP service are notified when an asynchronous call completes.
 
-```typescript
-import { Injectable } from "@angular/core";
-import { Http, Headers, RequestOptions } from "@angular/http";
-import { Observable } from "rxjs/Rx";
+1. The ```Widgets``` service needs to be registered with the application module so it can be injected into the application component. Open **app.module.ts** and import the service just before the statement that imports ```AppComponent```.
 
-import { Widget } from "../models/widget";
+	```typescript
+	import { Widgets } from "./services/widgets.service";
+	```
 
-@Injectable()
-export class Widgets {
+1. Now modify the ```@NgModule``` decorator on the ```AppModule``` class to include a ```providers``` option that registers the ```Widgets``` class as a provider:
 
-    private baseUrl: string = "http://localhost:3010/widgets";
+	```typescript
+	@NgModule({
+	  imports: [ BrowserModule, FormsModule, HttpModule ],
+	  declarations: [ AppComponent, WidgetTable, WidgetForm, WidgetViewRow, WidgetEditRow ],
+	  bootstrap: [ AppComponent ],
+	  providers: [ Widgets ],
+	})
+	```
 
-    private requestOptions: RequestOptions = new RequestOptions({
-        headers: new Headers({ "Content-Type": "application/json" })
-    });
+	The ```providers``` option specifies how the ```Widgets``` service will be injected. In this example, ```Widgets``` doubles as an injection token and as the concrete implementation to be injected.
 
-    constructor(private http: Http) { }
+1. Next, the application component needs to be updated to use the ```Widgets``` service. Replace the contents of **app.component.ts** with the following code:
 
-    public getAll(): Observable<Widget[]> {
-        return this.http.get(this.baseUrl).map(res => res.json());
-    }
+	```typescript
+	import { Component, OnInit } from "@angular/core";
+	
+	import { Widget } from "./models/widget";
+	import { Widgets } from "./services/widgets.service";
+	
+	@Component({
+	    selector: "widget-tool",
+	    templateUrl: "./app.component.html",
+	    styleUrls: [ "./app.component.scss" ],
+	})
+	export class AppComponent implements OnInit {
+	
+	    public widgets: Widget[] = [];
+	
+	    constructor(private widgetsSvc: Widgets) { }
+	
+	    public refreshWidgets() {
+	        this.widgetsSvc.getAll().subscribe((widgets) => {
+	            this.widgets = widgets;
+	        });
+	    }
+	
+	    public ngOnInit() {
+	        this.refreshWidgets();
+	    }
+	
+	    public deleteWidget(widgetId: number) {
+	
+	        this.widgetsSvc.delete(widgetId).subscribe((widgets) => {
+	            this.refreshWidgets();
+	        });
+	    }
+	
+	    public saveWidget(widget: Widget) {
+	
+	        if (widget.id) {
+	            this.widgetsSvc.update(widget).subscribe(() => this.refreshWidgets());
+	        } else {
+	            this.widgetsSvc.insert(widget).subscribe(() => this.refreshWidgets());
+	        }
+	
+	    }
+	
+	}
+	```
 
-    public get(widgetId: number): Observable<Widget> {
-        return this.http.get(this.baseUrl + "/" + encodeURIComponent(widgetId.toString())).map((res) => res.json());
-    }
+	```ngOnInit``` is a lifecycle function that's called when a component is loaded and ready. In this case, it loads widgets from the REST service. Oserve how callback functions are used to perform widget operations. Because REST service calls are asynchronous in nature, a callback is registered with ```subscribe```, and the callback is invoked when a call completes.
 
-    public insert(widget: Widget): Observable<Widget> {
-        return this.http.post(this.baseUrl + "/", JSON.stringify(widget), this.requestOptions).map((res) => res.json());
-    }
+1. Use the **File** -> **Save All** command to save your changes. Then switch back to the browser one last time and observe that the widget tool is now populated with data from the REST service. Try adding, editing, and deleting widgets to confirm that the app behaves as expected.
 
-    public update(widget: Widget): Observable<Widget> {
-        return this.http.put(this.baseUrl + "/" + encodeURIComponent(widget.id.toString()),
-            JSON.stringify(widget), this.requestOptions).map((res) => res.json());
-    }
+    ![The final application](Images/widget-rest-service.png)
 
-    public delete(widgetId: number): Observable<Widget> {
-        return this.http.delete(this.baseUrl + "/" + encodeURIComponent(widgetId.toString())).map((res) => res.json());
-    }
+    _The final application_
 
-}
-```
-
-The ```Http``` service provides helper methods for making common REST service requests. Simply call the method with a url, data and some request options, and request to the REST services will be made. To manage the asynchronous nature of such requests, Angular uses obserables provided by RxJS (Reactive Extensions for JavaScript). These methods return observables which can be subscribed to, and when the response data arrives, subscribers will be notified.
-
-1. The service needs to be registered with the application module so it can be injected into the application component. Open the "app.module.ts" file, and add the providers option to the application module metadata.
-
-First, import the service class just before import statement for ```AppComponent```.
-
-```typescript
-import { Widgets } from "./services/widgets.service";
-```
-
-Then register the class with the ```providers``` option.
-
-```typescript
-providers: [ Widgets ],
-```
-
-The ```providers``` option configures how the ```Widgets``` service will be injected. For this simple configuration, the Widgets class will serve a both the injection token and the concrete implementation to be injected.
-
-1. The application component needs to be updated to use the new widgets service. Open the file named "app.component.ts" in the "src/ts/app" folder. Replace the contents of the file with the following code.
-
-```typescript
-import { Component, OnInit } from "@angular/core";
-
-import { Widget } from "./models/widget";
-import { Widgets } from "./services/widgets.service";
-
-@Component({
-    selector: "widget-tool",
-    templateUrl: "./app.component.html",
-    styleUrls: [ "./app.component.scss" ],
-})
-export class AppComponent implements OnInit {
-
-    public widgets: Widget[] = [];
-
-    constructor(private widgetsSvc: Widgets) { }
-
-    public refreshWidgets() {
-        this.widgetsSvc.getAll().subscribe((widgets) => {
-            this.widgets = widgets;
-        });
-    }
-
-    public ngOnInit() {
-        this.refreshWidgets();
-    }
-
-    public deleteWidget(widgetId: number) {
-
-        this.widgetsSvc.delete(widgetId).subscribe((widgets) => {
-            this.refreshWidgets();
-        });
-    }
-
-    public saveWidget(widget: Widget) {
-
-        if (widget.id) {
-            this.widgetsSvc.update(widget).subscribe(() => this.refreshWidgets());
-        } else {
-            this.widgetsSvc.insert(widget).subscribe(() => this.refreshWidgets());
-        }
-
-    }
-
-}
-```
-
-To load the widgets from the REST service when the application component is ready, the ```ngOnInit``` lifecycle function is implemented. Angular provides a TypeScript interface for the ```ngOnInit``` function named ```OnInit``` and it can be added to the class declaration. Also, you will observe how call back functions are use to perform the widget operations. Because REST service calls are asynchronous in nature, a callback must be registered with subscribe, and will be invoked with the response data once the REST service sends a response to the request.
-
-1. Switch to the web browser and observe that the widget tool is now populated with data from the REST service. Try the various functions of the widget tool to verify all is working correctly.
-
-    ![Widget Tool with REST Service data](Images/widget-rest-service.png)
-
-    _Widget Tool with REST Service data_
-
-Great job! You have been completed CRUD application with Angular. There are many ways to extend the application including routing, better styling, unit tests, etc...
+Great job! You have built a CRUD application with Angular and learned a lot about Angular along the way.
 
 ## Summary ##
 
-In this hands-on lab, you learned how to:
+For more information on Angular, check out [this summary of Angular basics](https://angular.io/docs/ts/latest/quickstart.html) on the Angular Web site, as well as [these Angular tutorials](https://angular.io/docs/ts/latest/tutorial/). Note that Angular is great for building mobile apps, too. The [Angular Mobile Toolkit](https://mobile.angular.io/) makes it easy to build responsive Web apps that work on any device, even when you lack an Internet connection.
 
-- Create and Display an Angular Component
-- Configure Data Bindings for a Component
-- Compose components into Higher Order Components
-- Integrate REST services into the Angular Application
-
-There's much more than you can do with Angular and Visual Studio Code, but this is a start. Feel free to experiment with it on your own and explore the exciting world of component-driven development with a library that is not only productive, but fun!
 
 ----
 

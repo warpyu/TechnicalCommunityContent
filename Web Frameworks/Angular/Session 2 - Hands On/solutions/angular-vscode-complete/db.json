@@ -1,24 +1,6 @@
 {
   "widgets": [
     {
-      "id": 1,
-      "name": "Small Red Widget",
-      "description": "A small, red widget.",
-      "color": "red",
-      "size": "medium",
-      "quantity": 2,
-      "ownerId": 1
-    },
-    {
-      "id": 2,
-      "name": "Medium Blue Widget",
-      "description": "A medium, blue widget.",
-      "color": "blue",
-      "size": "medium",
-      "quantity": 15,
-      "ownerId": 2
-    },
-    {
       "id": 3,
       "name": "Large Green Widget",
       "description": "A large, green widget.",
@@ -35,6 +17,14 @@
       "size": "tiny",
       "quantity": 10,
       "ownerId": 3
+    },
+    {
+      "id": 5,
+      "name": "foo",
+      "description": "bar",
+      "color": "red",
+      "size": "large",
+      "quantity": "1"
     }
   ],
   "people": [

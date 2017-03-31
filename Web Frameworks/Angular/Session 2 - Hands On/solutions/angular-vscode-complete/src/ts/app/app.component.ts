@@ -9,7 +9,7 @@ import { Widgets } from "./services/widgets.service";
     styleUrls: [ "./app.component.scss" ],
 })
 export class AppComponent implements OnInit {
-    
+
     public widgets: Widget[] = [];
 
     constructor(private widgetsSvc: Widgets) { }

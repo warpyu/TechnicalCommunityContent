@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Building Web Apps with Angular</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+</head>
+<body>
+<p><a name="HOLTitle"></a></p>
+<h1>Building Web Applications with Angular</h1>
+<hr>
+<p><a name="Overview"></a></p>
+<h2>Overview</h2>
+<p><a href="https://angular.io/">Angular</a> is a popular framework for building UI applications. The newest version, which is not backward-compatible with the original version, is referred to as Angular, while the original version is referred to as <a href="https://angularjs.org/">AngularJS</a>. The Angular team recently released version 4 of the framework. This lab is based on that version.</p>
+<p>Angular takes a template-driven approach to building UIs. An HTML template is decorated with component elements, directives, and other expressions to bind data models and other entities. The fundamental building block of Angluar apps is the <em>component</em>. Components are template-bound to a data model. The template is part of the component's metadata, and the data model is the component instance itself.</p>
+<p>Composing rich UIs from components is major aspect of Angular programming. Angular partially implements the W3C recommendations for <a href="https://www.w3.org/standards/techs/components#w3c_all">Web Components</a>. As Web Components grow in popularity and browser support increases, Angular will be well positioned to fully support them. In addition to component-driven development, Angular is well known for its rich services architecture, which even includes hierarchical dependency injection. While two-way data binding between the UI and data models is supported in Angular, developers who do not like the two-way pattern can easily avoid it. This lab makes use of <code>ngModel</code> to perform two-way binding for collecting form data, but does not use two-way binding otherwise.</p>
+<p>Angular is a complete framework for building UIs. Angular apps can be written in JavaScript, but <a href="https://www.typescriptlang.org/">TypeScript</a> is more commonly used to due to its support for advanced features such as decorators (which are used to configure metadata for components), directives, modules, and services. TypeScript is especially helpful when building enterprise applications because of the strong typing that it enforces.</p>
+<p>In this lab, you will use Angular, TypeScript, and <a href="https://code.visualstudio.com/">Visual Studio Code</a> to build a simple application for managing a table of widgets. Data will be loaded from a REST service and displayed in an HTML table by Angular components. In addition, the application will fully support CRUD (Create, Read, Update and Delete), allowing widgets to be added and edited as well as viewed and deleted. As you build out the app, you will learn the basics of Angular and get a feel for what Angular programming is all about.</p>
+<p><a name="Objectives"></a></p>
+<h3>Objectives</h3>
+<p>In this hands-on lab, you will learn how to:</p>
+<ul>
+<li>Create Angular components and services</li>
+<li>Combine Angular with HTML forms for collecting and editing data</li>
+<li>Decompose a single UI component into several smaller components</li>
+<li>Compose rich UIs from Angular components</li>
+<li>Integrate REST services into Angular apps</li>
+</ul>
+<p><a name="Prerequisites"></a></p>
+<h3>Prerequisites</h3>
+<p>The following are required to complete this hands-on lab:</p>
+<ul>
+<li><a href="http://code.visualstudio.com/">Visual Studio Code</a></li>
+<li><a href="https://nodejs.org/en/">Node.js</a> version 7.0 or higher</li>
+</ul>
+<hr>
+<p><a name="Exercises"></a></p>
+<h2>Exercises</h2>
+<p>This hands-on lab includes the following exercises:</p>
+<ul>
+<li><a href="#Exercise1">Exercise 1: Use Angular to display a static widget table</a></li>
+<li><a href="#Exercise2">Exercise 2: Add a data model to the component</a></li>
+<li><a href="#Exercise3">Exercise 3: Add a form for adding widgets</a></li>
+<li><a href="#Exercise4">Exercise 4: Decompose the component into two components</a></li>
+<li><a href="#Exercise5">Exercise 5: Add support for editing and deleting widgets</a></li>
+<li><a href="#Exercise6">Exercise 6: Connect the app to a REST service</a></li>
+</ul>
+<p>Estimated time to complete this lab: <strong>45</strong> minutes.</p>
+<p><a name="Exercise1"></a></p>
+<h2>Exercise 1: Use Angular to display a static widget table</h2>
+<p>Rather than start from scratch, you will begin with a "hello world" project that has been created for you. This will enable you to start learning quickly without spending time creating boilerplate infrastructure. In this exercise, you will copy the starter project to a local folder and use Visual Studio Code to modify a simple Angular component included in the starter project to display a table of widgets. As you do, you will get a first look at the Angular component model.</p>
+<ol>
+<li>
+<p>Find the "resources" folder that accompanies this lab, and then open the "angular-vscode-starter" folder inside the "resources" folder. Copy the contents of the "angular-vscode-starter" folder to a local folder on your hard disk (the "project folder").</p>
+</li>
+<li>
+<p>Open a terminal or Command Prompt window and use a <strong>cd</strong> command to change to the project folder that you copied the starter project into.</p>
+</li>
+<li>
+<p>If you are running Windows, execute the following command in the Command Prompt window to open Visual Studio Code in the project folder:</p>
+<pre><code>code .
+</code></pre>
+<p>If you are running Linux or macOS instead, use this command instead:</p>
+<pre><code>open -a "Visual Studio Code" .
+</code></pre>
+</li>
+<li>
+<p>Confirm that Visual Studio Code starts and shows the project files in the Explorer pane on the left.</p>
+<p><a href="Images/vscode.png" target="_blank"><img src="Images/vscode.png" alt="Visual Studio Code showing the starter project" style="max-width:100%;"></a></p>
+<p><em>Visual Studio Code showing the starter project</em></p>
+</li>
+<li>
+<p>Select <strong>Integrated Terminal</strong> from Visual Studio Code's <strong>View</strong> menu to open the integrated terminal. In the integrated terminal, run the following command to install the packages that the app requires:</p>
+<pre><code>npm install
+</code></pre>
+<p><a href="Images/npm-install.png" target="_blank"><img src="Images/npm-install.png" alt="Installing packages" style="max-width:100%;"></a></p>
+<p><em>Installing packages</em></p>
+<blockquote>
+<p>During the install, you may receive warning messages regrading deprecations. These warnings can be ignored. If you receive an actual error message (usually displayed in red and labeled "ERR"), delete the "node_modules" folder in the project folder and try again.</p>
+</blockquote>
+</li>
+<li>
+<p>Once the install has completed, run the following command in the integrated terminal to start the development web server:</p>
+<pre><code>npm start
+</code></pre>
+<blockquote>
+<p>The development web server is powered by the popular module bundler utility <a href="https://webpack.github.io/">Webpack 2</a>. As part of the bundling process, Webpack watches the file system for changes to the source code files, and processes them as changes are made. The processing primarily consists of transpiling code, which is necessary to convert TypeScript code to JavaScript.</p>
+</blockquote>
+</li>
+<li>
+<p>To verify that the development environment and the application are working correctly, open a web browser and navigate to <a href="http://localhost:3000">http://localhost:3000</a>. Confirm that a "Hello World" page appears.</p>
+<p><a href="Images/hello-world-browser.png" target="_blank"><img src="Images/hello-world-browser.png" alt="The starter app running in a browser" style="max-width:100%;"></a></p>
+<p><em>The starter app running in a browser</em></p>
+</li>
+<li>
+<p>The "Hello World" that you see is HTML content produced by a simple Angular component named <code>AppComponent</code>. The component is defined in <strong>app.component.ts</strong>, which is located in the project's "src\ts\app" folder. Open <strong>app.component.ts</strong> and inspect its contents:</p>
+<p><a href="Images/app-component.png" target="_blank"><img src="Images/app-component.png" alt="Defining an Angular component" style="max-width:100%;"></a></p>
+<p><em>Defining an Angular component</em></p>
+<p>The component replaces the page's <code>hello-world</code> element with the HTML in <strong>app.component.html</strong> (the component template), and styles the output with the styles in <strong>app.component.scss</strong>.</p>
+</li>
+<li>
+<p>The next step is to modify the component to display a table of widgets instead of "Hello World." Open <strong>index.html</strong> in the project's "src" folder and replace the  <code>hello-world</code> element  with the following element:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">widget</span><span class="pl-e">-tool</span>&gt;Loading...&lt;/<span class="pl-ent">widget</span><span class="pl-e">-tool</span>&gt;</pre></div>
+</li>
+<li>
+<p>Now change the <code>selector</code> property in <strong>app.component.ts</strong> to target the <code>widget-tool</code> element:</p>
+<div class="highlight highlight-source-js"><pre>selector<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>widget-tool<span class="pl-pds">"</span></span>,</pre></div>
+</li>
+<li>
+<p>Next, the component template needs to be updated to display a static table of widgets. Open <strong>app.component.html</strong> in the "src\ts\app" folder and replace its contents with the following markup:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">h1</span>&gt;Widget Tool&lt;/<span class="pl-ent">h1</span>&gt;
+&lt;<span class="pl-ent">table</span>&gt;
+    &lt;<span class="pl-ent">thead</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Name&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Description&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Color&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Size&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Quantity&lt;/<span class="pl-ent">th</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">thead</span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;Sample Widget&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;A sample widget&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;blue&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;large&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;10&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</li>
+<li>
+<p>Historically, stylesheets were applied to entire web pages. With components, styles can applied at the component level. Open <strong>app.component.scss</strong> in the "src\ts\app" folder and add the following statements:</p>
+<div class="highlight highlight-source-css"><pre><span class="pl-ent">table</span> {
+
+    <span class="pl-c1"><span class="pl-c1">font-family</span></span>: <span class="pl-s"><span class="pl-pds">'</span>arial<span class="pl-pds">'</span></span>;
+    <span class="pl-c1"><span class="pl-c1">border-collapse</span></span>: <span class="pl-c1">collapse</span>;
+    <span class="pl-c1"><span class="pl-c1">border</span></span>:<span class="pl-c1">1<span class="pl-k">px</span></span> <span class="pl-c1">solid</span> <span class="pl-c1">#000</span>;
+
+    <span class="pl-c1">tr</span> {
+
+        <span class="pl-c1">td</span>, <span class="pl-c1">th</span> {
+            <span class="pl-c1"><span class="pl-c1">border-bottom</span></span>:<span class="pl-c1">1<span class="pl-k">px</span></span> <span class="pl-c1">solid</span> <span class="pl-c1">black</span>;
+            <span class="pl-c1"><span class="pl-c1">padding</span></span>: <span class="pl-c1">5<span class="pl-k">px</span></span>;
+        }
+
+        <span class="pl-ent">th</span> {
+            <span class="pl-c1"><span class="pl-c1">font-weight</span></span>: <span class="pl-c1">bold</span>;
+            <span class="pl-c1"><span class="pl-c1">text-align</span></span>:<span class="pl-c1">center</span>;
+        }
+
+        <span class="pl-ent">th</span><span class="pl-e">:nth-child</span>(<span class="pl-c1">n + 1</span>), <span class="pl-ent">td</span><span class="pl-e">:nth-child</span>(<span class="pl-c1">n + 1</span>) {
+            <span class="pl-c1"><span class="pl-c1">border-left</span></span>:<span class="pl-c1">1<span class="pl-k">px</span></span> <span class="pl-c1">solid</span> <span class="pl-c1">black</span>;
+        }
+
+    }
+
+}</pre></div>
+<p>This markup is not conventional CSS; it is <a href="http://sass-lang.com/">SCSS</a>, which is an extension to <a href="http://sass-lang.com/">SASS</a>. SASS is a preprocessor for CSS that includes a number of syntax efficiencies not available in CSS. Angular provides no direct support for SASS, but a properly configured development environment enables developers to leverage such technologies in Angular applications.</p>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save all of your changes. Then switch back to the browser and confirm that a table of widgets appears, as shown below.</p>
+<p><a href="Images/widget-tool-static-data.png" target="_blank"><img src="Images/widget-tool-static-data.png" alt="Widgets dsiplayed by the modified Angular component" style="max-width:100%;"></a></p>
+<p><em>Widgets dsiplayed by the modified Angular component</em></p>
+</li>
+</ol>
+<p>You have now seen how Angular components are defined, how they are declared in a page using custom HTML elements, how HTML templates are attached to them, and how they are styled. Now let's build on that by adding a data model to the Angular component.</p>
+<p><a name="Exercise2"></a></p>
+<h2>Exercise 2: Add a data model to the component</h2>
+<p>In this exercise, you will add a model to the project and modify <code>AppComponent</code> to use the model. You will also see Angular's <code>ngFor</code> directive for the first time.</p>
+<ol>
+<li>
+<p>Create a "models" folder in the project's "src\ts\app" folder. Then add a file named <strong>widget.ts</strong> to the "models" folder and add the following code to the file:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">export</span> <span class="pl-k">interface</span> <span class="pl-en">Widget</span> {
+    id<span class="pl-k">:</span> <span class="pl-c1">number</span>;
+    name<span class="pl-k">:</span> <span class="pl-c1">string</span>;
+    description<span class="pl-k">:</span> <span class="pl-c1">string</span>;
+    color<span class="pl-k">:</span> <span class="pl-c1">string</span>;
+    size<span class="pl-k">:</span> <span class="pl-c1">string</span>;
+    quantity<span class="pl-k">:</span> <span class="pl-c1">number</span>;
+}</pre></div>
+<blockquote>
+<p>An easy way to add a file or folder to a project in Visual Studio Code is to right-click (on a Mac, Control-click) the folder you want to add it to and select <strong>New File</strong> or <strong>New Folder</strong> from the context menu.</p>
+</blockquote>
+</li>
+<li>
+<p>Add the following statement to the top of <strong>app.component.ts</strong> (after the existing <code>import</code> statement) to import the <code>Widget</code> interface defined in the previous step:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./models/widget<span class="pl-pds">"</span></span>;</pre></div>
+</li>
+<li>
+<p>Replace the empty <code>AppComponent</code> class in the same file with one that declares a property named <code>widgets</code> initialized with an array of Widgets:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">AppComponent</span> {
+
+    <span class="pl-k">public</span> widgets<span class="pl-k">:</span> <span class="pl-en">Widget</span>[] <span class="pl-k">=</span> [{
+        id: <span class="pl-c1">1</span>, name: <span class="pl-s"><span class="pl-pds">'</span>Small Red Widget<span class="pl-pds">'</span></span>, description: <span class="pl-s"><span class="pl-pds">'</span>A small, red widget.<span class="pl-pds">'</span></span>,
+        color: <span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span>, size: <span class="pl-s"><span class="pl-pds">'</span>small<span class="pl-pds">'</span></span>, quantity: <span class="pl-c1">2</span>
+    },{
+        id: <span class="pl-c1">2</span>, name: <span class="pl-s"><span class="pl-pds">'</span>Medium Blue Widget<span class="pl-pds">'</span></span>, description: <span class="pl-s"><span class="pl-pds">'</span>A medium, blue widget.<span class="pl-pds">'</span></span>,
+        color: <span class="pl-s"><span class="pl-pds">'</span>blue<span class="pl-pds">'</span></span>, size: <span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>, quantity: <span class="pl-c1">15</span>
+    }];
+
+}</pre></div>
+</li>
+<li>
+<p>Now return to <strong>app.component.html</strong> and update the component template by replacing the template's <code>tbody</code> element with the following element:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">tbody</span>&gt;
+    &lt;<span class="pl-ent">tr</span> *<span class="pl-e">ngFor</span>=<span class="pl-s"><span class="pl-pds">"</span>let widget of widgets<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">td</span>&gt;{{widget.name}}&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;<span class="pl-ent">td</span>&gt;{{widget.description}}&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;<span class="pl-ent">td</span>&gt;{{widget.color}}&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;<span class="pl-ent">td</span>&gt;{{widget.size}}&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;<span class="pl-ent">td</span>&gt;{{widget.quantity}}&lt;/<span class="pl-ent">td</span>&gt;
+    &lt;/<span class="pl-ent">tr</span>&gt;
+&lt;/<span class="pl-ent">tbody</span>&gt;</pre></div>
+<p>The <code>ngFor</code> directive duplicates an element and its children from model data. In this case, a <code>tr</code> element is produced for each widget, and each widget populates the columns of its table row. The asterisk before <code>ngFor</code> indicates that this is a structural directive. Directives come in two forms: structural and attribute. Structural directives add and remove DOM elements. Attribute directives manipulate the elements they are applied to.</p>
+<p>The double curly braces denote Angular <em>expressions</em>. Expressions are evaluated at run-time. In this example, the first table cell in each row will be filled with the widget's <code>name</code> property, the second will be filled with the widget's <code>description</code> property, and so on.</p>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Then switch back to the browser and confirm that the widget table is populated with the model data you added in Step 3.</p>
+<p><a href="Images/widget-tool-model-data.png" target="_blank"><img src="Images/widget-tool-model-data.png" alt="Widget table populated with model data" style="max-width:100%;"></a></p>
+<p><em>Widget table populated with model data</em></p>
+</li>
+</ol>
+<p>Now that a model is in place, the next step is to provide an interface for creating new widgets.</p>
+<p><a name="Exercise3"></a></p>
+<h2>Exercise 3: Add a form for adding widgets</h2>
+<p>In this exercise, you will add an HTML form to the app so users can add widgets to the collection. This will involve importing an Angular module named <code>FormsModule</code> and modifying <code>AppComponent</code> to use the module.</p>
+<ol>
+<li>
+<p>Open <strong>app.module.ts</strong> in the project's "src\ts\app" folder and add the following <code>import</code> statement after the statement that imports <code>BrowserModule</code>:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">FormsModule</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/forms<span class="pl-pds">"</span></span>;</pre></div>
+</li>
+<li>
+<p>Once imported, <code>FormsModule</code> must be registered with the <code>AppModule</code>. In the <code>@NgModule</code> decorator, update the <code>imports</code> property to include <code>FormsModule</code>:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-smi">imports</span>: [ <span class="pl-smi">BrowserModule</span>, <span class="pl-smi">FormsModule</span> ],</pre></div>
+</li>
+<li>
+<p>The next step is to add a form to the component template. In <strong>app.component.ts</strong>, add the following statements after the <code>table</code> element:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">h2</span>&gt;Widget Form&lt;/<span class="pl-ent">h2</span>&gt;
+&lt;<span class="pl-ent">form</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-name-input<span class="pl-pds">"</span></span>&gt;Widget Name:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetNameInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-name-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.name<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-description-input<span class="pl-pds">"</span></span>&gt;Widget Description:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetDescriptionInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-description-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.description<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-color-input<span class="pl-pds">"</span></span>&gt;Widget Color:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetColorInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-color-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.color<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-size-input<span class="pl-pds">"</span></span>&gt;Widget Size:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetSizeInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-size-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.size<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-quantity-input<span class="pl-pds">"</span></span>&gt;Widget Quantity:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetQuantityInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-quantity-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.quantity<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> (<span class="pl-e">click</span>)=<span class="pl-s"><span class="pl-pds">"</span>addWidget()<span class="pl-pds">"</span></span>&gt;Add Widget&lt;/<span class="pl-ent">button</span>&gt;
+&lt;/<span class="pl-ent">form</span>&gt;</pre></div>
+<p>The <code>ngModel</code> directives establish two-way data binding between the UI and the model on the component instance. Each directive is surrounded by square brackets and parentheses. Square brackets denote an input binding, which passes data from the model to the directive or component. Parentheses indicate an output binding, which passes data back to the model. The use of both declares a two-way data binding. For the button's click event, parentheses are used without square brackets since there is no input, just output, when the button is clicked.</p>
+</li>
+<li>
+<p>Now update the component class to make information about new widgets available. To do the update, add the following property to the <code>AppComponent</code> class in <strong>app.component.ts</strong>:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-smi">public</span> <span class="pl-smi">newWidget</span>: <span class="pl-smi">Widget</span> <span class="pl-k">=</span> {
+    id: <span class="pl-c1">0</span>,
+    name: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    description: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    color: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    size: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    quantity: <span class="pl-c1">0</span>,
+}</pre></div>
+</li>
+<li>
+<p>Next, add the following function to the <code>AppComponent</code> class to handle clicks of the <strong>Add Widget</strong> button:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-smi">public</span> <span class="pl-en">addWidget</span>() {
+
+    <span class="pl-c1">this</span>.<span class="pl-smi">newWidget</span>.<span class="pl-c1">id</span> <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-en">reduce</span>((<span class="pl-v">maxWidgetId</span>, <span class="pl-v">nextWidget</span>) <span class="pl-k">=&gt;</span>
+        <span class="pl-c1">Math</span>.<span class="pl-c1">max</span>(<span class="pl-smi">maxWidgetId</span>, <span class="pl-smi">nextWidget</span>.<span class="pl-c1">id</span>), <span class="pl-c1">0</span>) <span class="pl-k">+</span> <span class="pl-c1">1</span>;
+    <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span> <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">concat</span>(<span class="pl-c1">this</span>.<span class="pl-smi">newWidget</span>);
+
+    <span class="pl-c1">this</span>.<span class="pl-smi">newWidget</span> <span class="pl-k">=</span> {
+        id: <span class="pl-c1">0</span>,
+        name: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+        description: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+        color: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+        size: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+        quantity: <span class="pl-c1">0</span>,
+    };
+
+}</pre></div>
+<p>The array <code>reduce</code> function is used to generate an id for the new widget based on the last id present in the array.</p>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Then switch back to the browser and confirm that you can add a widget to the collection by filling in the form and clicking <strong>Add Widget</strong>.</p>
+<p><a href="Images/widget-tool-add-widget-form.png" target="_blank"><img src="Images/widget-tool-add-widget-form.png" alt="UI for adding widgets" style="max-width:100%;"></a></p>
+<p><em>UI for adding widgets</em></p>
+</li>
+</ol>
+<p>Now you know how to implement forms in Angular components and use <code>ngModel</code> to bind form elements to model properties. The next step is to modularize the app a bit more.</p>
+<p><a name="Exercise4"></a></p>
+<h2>Exercise 4: Decompose the component into two components</h2>
+<p>The application component has grown and is now responsible for displaying the widget table AND handling form input for new widgets. This works, but it's not ideal. In this exercise, you will decompose the application component into two smaller components: one for displaying widgets, and another for adding widgets.</p>
+<ol>
+<li>
+<p>Create a new folder named "components" in the project's "src\ts\app" folder. Add a new file named <strong>widget-table.component.ts</strong> to the "components" folder, and add the following code to the file to define a new component named <code>WidgetTable</code>:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Component</span>, <span class="pl-smi">Input</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/core<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>../models/widget<span class="pl-pds">"</span></span>;
+
+@<span class="pl-en">Component</span>({
+    selector: <span class="pl-s"><span class="pl-pds">"</span>widget-table<span class="pl-pds">"</span></span>,
+    templateUrl: <span class="pl-s"><span class="pl-pds">"</span>./widget-table.component.html<span class="pl-pds">"</span></span>,
+    styleUrls: [ <span class="pl-s"><span class="pl-pds">"</span>./widget-table.component.scss<span class="pl-pds">"</span></span> ],
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">WidgetTable</span> {
+
+    @<span class="pl-en">Input</span>()
+    widgets<span class="pl-k">:</span> <span class="pl-en">Widget</span>[] <span class="pl-k">=</span> [];
+
+}</pre></div>
+<p>The <code>@Input</code> decorator indicates which property (or properties) of the component class can be used for input bindings. The property type can be any valid type.</p>
+</li>
+<li>
+<p>Add a file named <strong>widget-table.component.html</strong> to the "components" folder to hold the component template. Then add the following markup to the file:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">table</span>&gt;
+    &lt;<span class="pl-ent">thead</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Name&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Description&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Color&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Size&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Quantity&lt;/<span class="pl-ent">th</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">thead</span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">tr</span> *<span class="pl-e">ngFor</span>=<span class="pl-s"><span class="pl-pds">"</span>let widget of widgets<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;{{widget.name}}&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;{{widget.description}}&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;{{widget.color}}&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;{{widget.size}}&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;{{widget.quantity}}&lt;/<span class="pl-ent">td</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+</li>
+<li>
+<p>Add a file named <strong>widget-table.component.scss</strong> to the "components" folder. Then add the following statements to the file:</p>
+<div class="highlight highlight-source-scss"><pre><span class="pl-ent">table</span> {
+
+    <span class="pl-c1"><span class="pl-c1">font-family</span></span>: <span class="pl-s"><span class="pl-pds">'</span>arial<span class="pl-pds">'</span></span>;
+    <span class="pl-c1"><span class="pl-c1">border-collapse</span></span>: <span class="pl-c1">collapse</span>;
+    <span class="pl-c1"><span class="pl-c1">border</span></span>:<span class="pl-c1">1</span><span class="pl-k">px</span> <span class="pl-c1">solid</span> <span class="pl-c1">#000</span>;
+
+    <span class="pl-ent">tr</span> {
+
+        <span class="pl-ent">td</span>, <span class="pl-ent">th</span> {
+            <span class="pl-c1"><span class="pl-c1">border-bottom</span></span>:<span class="pl-c1">1</span><span class="pl-k">px</span> <span class="pl-c1">solid</span> <span class="pl-c1">black</span>;
+            <span class="pl-c1"><span class="pl-c1">padding</span></span>: <span class="pl-c1">5</span><span class="pl-k">px</span>;
+        }
+
+        <span class="pl-ent">th</span> {
+            <span class="pl-c1"><span class="pl-c1">font-weight</span></span>: <span class="pl-c1">bold</span>;
+            <span class="pl-c1"><span class="pl-c1">text-align</span></span>:<span class="pl-c1">center</span>;
+        }
+
+        <span class="pl-ent">th</span><span class="pl-e">:nth-child(n</span> + 1), <span class="pl-ent">td</span><span class="pl-e">:nth-child(n</span> + 1) {
+            <span class="pl-c1"><span class="pl-c1">border-left</span></span>:<span class="pl-c1">1</span><span class="pl-k">px</span> <span class="pl-c1">solid</span> <span class="pl-c1">black</span>;
+        }
+
+    }
+
+}</pre></div>
+</li>
+<li>
+<p>Now that the <code>WidgetTable</code> component has been defined, the application component needs to be updated to use it. In <strong>app.module.ts</strong>, add the following <code>import</code> statement right after the statement that imports <code>AppComponent</code>.</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">WidgetTable</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./components/widget-table.component<span class="pl-pds">"</span></span>;</pre></div>
+</li>
+<li>
+<p>Next, add <code>WidgetTable</code> to the component declarations in the <code>@NgModule</code> decorator attached to <code>AppComponent</code>:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-smi">declarations</span>: [ <span class="pl-smi">AppComponent</span>, <span class="pl-smi">WidgetTable</span> ],</pre></div>
+<p>Remembering to update the <code>declarations</code> array is key to decomposition. Many an Angular developer has lost precious time by failing to remember to register new components, directives, and pipes with the appropriate module.</p>
+</li>
+<li>
+<p>Replace the <code>table</code> element in <strong>app.component.html</strong> with the following markup:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">widget</span><span class="pl-e">-table</span> [<span class="pl-e">widgets</span>]=<span class="pl-s"><span class="pl-pds">"</span>widgets<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">widget</span><span class="pl-e">-table</span>&gt;</pre></div>
+</li>
+<li>
+<p><code>WidgetTable</code> manages its own CSS, so delete the contents of <strong>app.component.scss</strong>. <strong>Do not delete the file; just delete the contents</strong>.</p>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Then switch back to the browser and view the page source. Confirm that you see the new <code>widget-table</code> element created from the template.</p>
+<p><a href="Images/widget-table-element-dom.png" target="_blank"><img src="Images/widget-table-element-dom.png" alt="Output from the WidgetTable component" style="max-width:100%;"></a></p>
+<p><em>Output from the WidgetTable component</em></p>
+</li>
+<li>
+<p>Now let's separate the form into its own component. Whereas the widget table received widgets as inputs, the widget form will output widgets. Add a file named <strong>widget-form.component.ts</strong> to the "components" folder. Then add the following code to the file:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Component</span>, <span class="pl-smi">Output</span>, <span class="pl-smi">EventEmitter</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/core<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>../models/widget<span class="pl-pds">"</span></span>;
+
+@<span class="pl-en">Component</span>({
+    selector: <span class="pl-s"><span class="pl-pds">"</span>widget-form<span class="pl-pds">"</span></span>,
+    templateUrl: <span class="pl-s"><span class="pl-pds">"</span>./widget-form.component.html<span class="pl-pds">"</span></span>,
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">WidgetForm</span> {
+
+    newWidget<span class="pl-k">:</span> <span class="pl-en">Widget</span> <span class="pl-k">=</span> {
+        id: <span class="pl-c1">0</span>,
+        name: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+        description: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+        color: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+        size: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+        quantity: <span class="pl-c1">0</span>,
+    }
+
+    @<span class="pl-en">Output</span>()
+    onSubmit<span class="pl-k">:</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-en">Widget</span>&gt; <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-en">Widget</span>&gt;();
+
+    addWidget() {
+
+        <span class="pl-c1">this</span>.<span class="pl-smi">onSubmit</span>.<span class="pl-en">emit</span>(<span class="pl-c1">this</span>.<span class="pl-smi">newWidget</span>);
+
+        <span class="pl-c1">this</span>.<span class="pl-smi">newWidget</span> <span class="pl-k">=</span> {
+            id: <span class="pl-c1">0</span>,
+            name: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+            description: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+            color: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+            size: <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+            quantity: <span class="pl-c1">0</span>,
+        };
+
+    }
+
+}</pre></div>
+<p>The <code>@Output</code> decorator indicates which properties on the component are available for output bindings. Typically, the <code>EventEmitter</code> class is used to wire up the outputs.</p>
+</li>
+<li>
+<p>Add a file named <strong>widget-form.component.html</strong> to the "components" folder. Then add the following markup to the file:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">h2</span>&gt;Widget Form&lt;/<span class="pl-ent">h2</span>&gt;
+&lt;<span class="pl-ent">form</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-name-input<span class="pl-pds">"</span></span>&gt;Widget Name:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetNameInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-name-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.name<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-description-input<span class="pl-pds">"</span></span>&gt;Widget Description:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetDescriptionInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-description-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.description<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-color-input<span class="pl-pds">"</span></span>&gt;Widget Color:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetColorInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-color-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.color<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-size-input<span class="pl-pds">"</span></span>&gt;Widget Size:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetSizeInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-size-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.size<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">for</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-quantity-input<span class="pl-pds">"</span></span>&gt;Widget Quantity:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>widgetQuantityInput<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>widget-quantity-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>newWidget.quantity<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> (<span class="pl-e">click</span>)=<span class="pl-s"><span class="pl-pds">"</span>addWidget()<span class="pl-pds">"</span></span>&gt;Add Widget&lt;/<span class="pl-ent">button</span>&gt;
+&lt;/<span class="pl-ent">form</span>&gt;</pre></div>
+</li>
+<li>
+<p>Return to <strong>app.module.ts</strong> and add the following <code>import</code> statement after the statement that imports <code>WidgetTable</code>:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">WidgetForm</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./components/widget-form.component<span class="pl-pds">"</span></span>;</pre></div>
+</li>
+<li>
+<p>Next, add <code>WidgetForm</code> to the component declarations in the <code>@NgModule</code> decorator attached to <code>AppComponent</code>:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-smi">declarations</span>: [ <span class="pl-smi">AppComponent</span>, <span class="pl-smi">WidgetTable</span>, <span class="pl-smi">WidgetForm</span> ],</pre></div>
+</li>
+<li>
+<p>Replace the contents of <strong>app.component.html</strong> with the following markup:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">h1</span>&gt;Widget Tool&lt;/<span class="pl-ent">h1</span>&gt;
+&lt;<span class="pl-ent">widget</span><span class="pl-e">-table</span> [<span class="pl-e">widgets</span>]=<span class="pl-s"><span class="pl-pds">"</span>widgets<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">widget</span><span class="pl-e">-table</span>&gt;
+&lt;<span class="pl-ent">widget</span><span class="pl-e">-form</span> (<span class="pl-e">onSubmit</span>)=<span class="pl-s"><span class="pl-pds">"</span>saveWidget($event)<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">widget</span><span class="pl-e">-form</span>&gt;</pre></div>
+<p>Notice how much simpler and cleaner the <code>AppComponent</code> template is now. Angular uses depedency injection to pass arguments to event handlers in component templates. <code>$event</code> is a special variable name that allows event data to be passed as function arguments.</p>
+</li>
+<li>
+<p>The <code>AppComponent</code> class needs to be updated to use the <code>WidgetForm</code> component. Replace the contents of <strong>app.component.ts</strong> with the following code:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Component</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/core<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./models/widget<span class="pl-pds">"</span></span>;
+
+@<span class="pl-en">Component</span>({
+    selector: <span class="pl-s"><span class="pl-pds">"</span>widget-tool<span class="pl-pds">"</span></span>,
+    templateUrl: <span class="pl-s"><span class="pl-pds">"</span>./app.component.html<span class="pl-pds">"</span></span>,
+    styleUrls: [ <span class="pl-s"><span class="pl-pds">"</span>./app.component.scss<span class="pl-pds">"</span></span> ],
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">AppComponent</span> {
+
+    widgets<span class="pl-k">:</span> <span class="pl-en">Widget</span>[] <span class="pl-k">=</span> [{
+        id: <span class="pl-c1">1</span>, name: <span class="pl-s"><span class="pl-pds">'</span>Small Red Widget<span class="pl-pds">'</span></span>, description: <span class="pl-s"><span class="pl-pds">'</span>A small, red widget.<span class="pl-pds">'</span></span>,
+        color: <span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span>, size: <span class="pl-s"><span class="pl-pds">'</span>small<span class="pl-pds">'</span></span>, quantity: <span class="pl-c1">2</span>
+    },{
+        id: <span class="pl-c1">2</span>, name: <span class="pl-s"><span class="pl-pds">'</span>Medium Blue Widget<span class="pl-pds">'</span></span>, description: <span class="pl-s"><span class="pl-pds">'</span>A medium, blue widget.<span class="pl-pds">'</span></span>,
+        color: <span class="pl-s"><span class="pl-pds">'</span>blue<span class="pl-pds">'</span></span>, size: <span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>, quantity: <span class="pl-c1">15</span>
+    }];
+
+    saveWidget(<span class="pl-v">newWidget</span><span class="pl-k">:</span> <span class="pl-en">Widget</span>) {
+
+        <span class="pl-smi">newWidget</span>.<span class="pl-c1">id</span> <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-en">reduce</span>((<span class="pl-v">maxWidgetId</span>, <span class="pl-v">nextWidget</span>) <span class="pl-k">=&gt;</span>
+            <span class="pl-c1">Math</span>.<span class="pl-c1">max</span>(<span class="pl-smi">maxWidgetId</span>, <span class="pl-smi">nextWidget</span>.<span class="pl-c1">id</span>), <span class="pl-c1">0</span>) <span class="pl-k">+</span> <span class="pl-c1">1</span>;
+        <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span> <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">concat</span>(<span class="pl-smi">newWidget</span>);
+
+    }
+
+}</pre></div>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Then switch back to the browser and confirm that the widget table and widget form are both displayed on the web page. Add a new widget and verify that it works.</p>
+<p><a href="Images/add-widget.png" target="_blank"><img src="Images/add-widget.png" alt="Adding a yellow widget" style="max-width:100%;"></a></p>
+<p><em>Adding a yellow widget</em></p>
+</li>
+</ol>
+<p>The application component has now been decomposed into two smaller components, and you can add widgets and view widgets. The next task is to permit widgets to be edited and deleted as well.</p>
+<p><a name="Exercise5"></a></p>
+<h2>Exercise 5: Add support for editing and deleting widgets</h2>
+<p>Currently, the app allows new widgets to be added, but lacks a UI for editing and deleting widgets. In this exercise, you will add support for editing widgets using inline table editing, and support for deleting widgets as well. This will involve adding two new components — one to represent edit rows and one to represent "view" rows (rows that are not currently being edited) — and modifying existing code to use them.</p>
+<ol>
+<li>
+<p>Create a new file named <strong>widget-row.component.scss</strong> in the "components" folder to provide CSS styling for the view-row and edit-row components. Then add the following markup to the file:</p>
+<div class="highlight highlight-source-scss"><pre><span class="pl-ent">td</span> {
+    <span class="pl-c1"><span class="pl-c1">border-bottom</span></span>:<span class="pl-c1">1</span><span class="pl-k">px</span> <span class="pl-c1">solid</span> <span class="pl-c1">black</span>;
+    <span class="pl-c1"><span class="pl-c1">padding</span></span>: <span class="pl-c1">5</span><span class="pl-k">px</span>;
+}
+
+<span class="pl-ent">td</span><span class="pl-e">:nth-child(n</span> + 1) {
+    <span class="pl-c1"><span class="pl-c1">border-left</span></span>:<span class="pl-c1">1</span><span class="pl-k">px</span> <span class="pl-c1">solid</span> <span class="pl-c1">black</span>;
+}</pre></div>
+</li>
+<li>
+<p>The <code>WidgetTable</code> component's styling needs to be updated as well. Open <strong>widget-table.component.scss</strong> and replace the contents of that file with the following markup:</p>
+<div class="highlight highlight-source-scss"><pre><span class="pl-ent">table</span> {
+
+    <span class="pl-c1"><span class="pl-c1">font-family</span></span>: <span class="pl-s"><span class="pl-pds">'</span>arial<span class="pl-pds">'</span></span>;
+    <span class="pl-c1"><span class="pl-c1">border-collapse</span></span>: <span class="pl-c1">collapse</span>;
+    <span class="pl-c1"><span class="pl-c1">border</span></span>:<span class="pl-c1">1</span><span class="pl-k">px</span> <span class="pl-c1">solid</span> <span class="pl-c1">#000</span>;
+
+    <span class="pl-ent">tr</span> {
+
+        <span class="pl-ent">th</span> {
+            <span class="pl-c1"><span class="pl-c1">border-bottom</span></span>:<span class="pl-c1">1</span><span class="pl-k">px</span> <span class="pl-c1">solid</span> <span class="pl-c1">black</span>;
+            <span class="pl-c1"><span class="pl-c1">padding</span></span>: <span class="pl-c1">5</span><span class="pl-k">px</span>;
+            <span class="pl-c1"><span class="pl-c1">font-weight</span></span>: <span class="pl-c1">bold</span>;
+            <span class="pl-c1"><span class="pl-c1">text-align</span></span>:<span class="pl-c1">center</span>;
+        }
+
+        <span class="pl-ent">th</span><span class="pl-e">:nth-child(n</span> + 1) {
+            <span class="pl-c1"><span class="pl-c1">border-left</span></span>:<span class="pl-c1">1</span><span class="pl-k">px</span> <span class="pl-c1">solid</span> <span class="pl-c1">black</span>;
+        }
+
+    }
+
+}</pre></div>
+</li>
+<li>
+<p>Create a file named <strong>widget-view-row.component.ts</strong> in the "components" folder and add the following code:.</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Component</span>, <span class="pl-smi">Input</span>, <span class="pl-smi">Output</span>, <span class="pl-smi">EventEmitter</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/core<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>../models/widget<span class="pl-pds">"</span></span>;
+
+@<span class="pl-en">Component</span>({
+    selector: <span class="pl-s"><span class="pl-pds">"</span>tr[widget-view-row]<span class="pl-pds">"</span></span>,
+    templateUrl: <span class="pl-s"><span class="pl-pds">"</span>./widget-view-row.component.html<span class="pl-pds">"</span></span>,
+    styleUrls: [ <span class="pl-s"><span class="pl-pds">"</span>./widget-row.component.scss<span class="pl-pds">"</span></span> ],
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">WidgetViewRow</span> {
+
+    @<span class="pl-en">Input</span>()
+    <span class="pl-k">public</span> widget<span class="pl-k">:</span> <span class="pl-en">Widget</span> <span class="pl-k">=</span> {} <span class="pl-k">as</span> <span class="pl-en">Widget</span>;
+
+    @<span class="pl-en">Output</span>()
+    <span class="pl-k">public</span> onEditWidget<span class="pl-k">:</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-c1">number</span>&gt; <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-c1">number</span>&gt;();
+
+    @<span class="pl-en">Output</span>()
+    <span class="pl-k">public</span> onDeleteWidget<span class="pl-k">:</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-c1">number</span>&gt; <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-c1">number</span>&gt;();
+}</pre></div>
+<p>Observe that the selector for this component targets <code>tr</code> elements. The purpose of the <code>widget-view-row</code> attribute in the selector is to differentiate between view rows and edit rows.</p>
+</li>
+<li>
+<p>Create a file named <strong>widget-view-row.component.html</strong> in the "components" folder and add the following code:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">td</span>&gt;{{widget.name}}&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;{{widget.description}}&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;{{widget.color}}&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;{{widget.size}}&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;{{widget.quantity}}&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;
+    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> (<span class="pl-e">click</span>)=<span class="pl-s"><span class="pl-pds">"</span>onEditWidget.emit(widget.id)<span class="pl-pds">"</span></span>&gt;Edit&lt;/<span class="pl-ent">button</span>&gt;
+    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> (<span class="pl-e">click</span>)=<span class="pl-s"><span class="pl-pds">"</span>onDeleteWidget.emit(widget.id)<span class="pl-pds">"</span></span>&gt;Delete&lt;/<span class="pl-ent">button</span>&gt;
+&lt;/<span class="pl-ent">td</span>&gt;</pre></div>
+</li>
+<li>
+<p>Create a file named <strong>widget-edit-row.component.ts</strong> in the "components" folder and add the following code:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Component</span>, <span class="pl-smi">Input</span>, <span class="pl-smi">Output</span>, <span class="pl-smi">EventEmitter</span>, <span class="pl-smi">OnChanges</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/core<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>../models/widget<span class="pl-pds">"</span></span>;
+
+@<span class="pl-en">Component</span>({
+    selector: <span class="pl-s"><span class="pl-pds">"</span>tr[widget-edit-row]<span class="pl-pds">"</span></span>,
+    templateUrl: <span class="pl-s"><span class="pl-pds">"</span>./widget-edit-row.component.html<span class="pl-pds">"</span></span>,
+    styleUrls: [ <span class="pl-s"><span class="pl-pds">"</span>./widget-row.component.scss<span class="pl-pds">"</span></span> ],
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">WidgetEditRow</span> <span class="pl-k">implements</span> <span class="pl-e">OnChanges</span> {
+
+    @<span class="pl-en">Input</span>()
+    <span class="pl-k">public</span> widget<span class="pl-k">:</span> <span class="pl-en">Widget</span> <span class="pl-k">=</span> {} <span class="pl-k">as</span> <span class="pl-en">Widget</span>;
+
+    @<span class="pl-en">Output</span>()
+    <span class="pl-k">public</span> onSaveWidget<span class="pl-k">:</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-en">Widget</span>&gt; <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-en">Widget</span>&gt;();
+
+    @<span class="pl-en">Output</span>()
+    <span class="pl-k">public</span> onCancelWidget<span class="pl-k">:</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-c1">void</span>&gt; <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-c1">void</span>&gt;();
+
+    <span class="pl-k">public</span> ngOnChanges(<span class="pl-v">changes</span><span class="pl-k">:</span> <span class="pl-c1">any</span>) {
+        <span class="pl-k">if</span> (<span class="pl-smi">changes</span>.<span class="pl-smi">widget</span>) {
+            <span class="pl-c1">this</span>.<span class="pl-smi">widget</span> <span class="pl-k">=</span> <span class="pl-c1">Object</span>.<span class="pl-en">assign</span>({}, <span class="pl-smi">changes</span>.<span class="pl-smi">widget</span>.<span class="pl-smi">currentValue</span>);
+        }
+    }
+}</pre></div>
+<p>The <code>OnChanges</code> interface is imported and applied to the <code>WidgetEditRow</code> class to declare that the component implements the <code>ngOnChanges</code> lifecycle method. This method executes whenever the input properties to the component change. In particular, changes to the <code>widgets</code> property must be properly handled to ensure that edits to the widget do not overwrite the existing widget object in memory. For this reason, a new object is created, and the properties of the original widget are copied to the new widget using <code>Object.assign</code> in the <code>ngOnChanges</code> method. As a result, the original object is not modified if the user clicks the <strong>Cancel</strong> button.</p>
+</li>
+<li>
+<p>Create a file named <strong>widget-edit-row.component.html</strong> in the "components" folder and add the following markup:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>editWidgetName<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>edit-widget-name-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>widget.name<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>editWidgetDescription<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>edit-widget-description-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>widget.description<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>editWidgetColor<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>edit-widget-color-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>widget.color<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>editWidgetSize<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>edit-widget-size-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>widget.size<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>editWidgetQuantity<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>edit-widget-quantity-input<span class="pl-pds">"</span></span> [(<span class="pl-e">ngModel</span>)]=<span class="pl-s"><span class="pl-pds">"</span>widget.quantity<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">td</span>&gt;
+&lt;<span class="pl-ent">td</span>&gt;
+    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> (<span class="pl-e">click</span>)=<span class="pl-s"><span class="pl-pds">"</span>onSaveWidget.emit(widget)<span class="pl-pds">"</span></span>&gt;Save&lt;/<span class="pl-ent">button</span>&gt;
+    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> (<span class="pl-e">click</span>)=<span class="pl-s"><span class="pl-pds">"</span>onCancelWidget.emit()<span class="pl-pds">"</span></span>&gt;Cancel&lt;/<span class="pl-ent">button</span>&gt;
+&lt;/<span class="pl-ent">td</span>&gt;</pre></div>
+</li>
+<li>
+<p>The two new row components need to be registered with the application module. Add the following <code>import</code> statements after the statement that imports <code>WidgetForm</code> in <strong>app.module.ts</strong>:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">WidgetViewRow</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./components/widget-view-row.component<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">WidgetEditRow</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./components/widget-edit-row.component<span class="pl-pds">"</span></span>;</pre></div>
+</li>
+<li>
+<p>Now add the new components to the <code>declarations</code> in the application module:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-smi">declarations</span>: [ <span class="pl-smi">AppComponent</span>, <span class="pl-smi">WidgetTable</span>, <span class="pl-smi">WidgetForm</span>, <span class="pl-smi">WidgetViewRow</span>, <span class="pl-smi">WidgetEditRow</span> ],</pre></div>
+</li>
+<li>
+<p>The <code>WidgetTable</code> template needs to be updated to use the new row components. A new "Action" column needs to be added to the table header row, and some logic needs to be added to the table to switch between the view row and edit row. Replace the template for the widget table component in <strong>widget-table.component.html</strong> with the following markup:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">table</span>&gt;
+    &lt;<span class="pl-ent">thead</span>&gt;
+        &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Name&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Description&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Color&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Size&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Quantity&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;<span class="pl-ent">th</span>&gt;Action&lt;/<span class="pl-ent">th</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;
+    &lt;/<span class="pl-ent">thead</span>&gt;
+    &lt;<span class="pl-ent">tbody</span>&gt;
+        &lt;<span class="pl-ent">ng</span><span class="pl-e">-template</span> <span class="pl-e">ngFor</span> <span class="pl-e">let-widget</span> [<span class="pl-e">ngForOf</span>]=<span class="pl-s"><span class="pl-pds">"</span>widgets<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">tr</span> <span class="pl-e">widget-view-row</span> *<span class="pl-e">ngIf</span>=<span class="pl-s"><span class="pl-pds">"</span>widget.id !== editRowId<span class="pl-pds">"</span></span> [<span class="pl-e">widget</span>]=<span class="pl-s"><span class="pl-pds">"</span>widget<span class="pl-pds">"</span></span>
+                (<span class="pl-e">onEditWidget</span>)=<span class="pl-s"><span class="pl-pds">"</span>editWidget($event)<span class="pl-pds">"</span></span> (<span class="pl-e">onDeleteWidget</span>)=<span class="pl-s"><span class="pl-pds">"</span>onDeleteWidget.emit($event); editRowId = 0<span class="pl-pds">"</span></span>&gt;
+            &lt;/<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">tr</span> <span class="pl-e">widget-edit-row</span> *<span class="pl-e">ngIf</span>=<span class="pl-s"><span class="pl-pds">"</span>widget.id === editRowId<span class="pl-pds">"</span></span> [<span class="pl-e">widget</span>]=<span class="pl-s"><span class="pl-pds">"</span>widget<span class="pl-pds">"</span></span>
+                (<span class="pl-e">onSaveWidget</span>)=<span class="pl-s"><span class="pl-pds">"</span>onSaveWidget.emit($event); editRowId = 0<span class="pl-pds">"</span></span> (<span class="pl-e">onCancelWidget</span>)=<span class="pl-s"><span class="pl-pds">"</span>editRowId = 0<span class="pl-pds">"</span></span>&gt;
+            &lt;/<span class="pl-ent">tr</span>&gt;
+        &lt;/<span class="pl-ent">ng</span><span class="pl-e">-template</span>&gt;
+    &lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;</pre></div>
+<p>It isn't possible to use <code>ngFor</code> to apply two different components to the same element. Therefore, an <code>ng-template</code> element is used instead to iterate over the model data, and the appropriate component is emitted using <code>ngIf</code>. The asterisk is shorthand, and must be used when a structural directive is applied to multiple sibling directives.</p>
+<p>Also, observe how multiple expressions can be included in a single template. For <code>onDeleteWidget</code>, one expression emits a delete-widget event, and the second sets <code>editRowId</code> to zero.</p>
+</li>
+<li>
+<p>The <code>WidgetTable</code> component needs to be updated to handle edit rows and the events associated with saving and deleting widgets. Open <strong>widget-table.component.ts</strong> and replace the contents of the file with the following code:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Component</span>, <span class="pl-smi">Input</span>, <span class="pl-smi">Output</span>, <span class="pl-smi">EventEmitter</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/core<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>../models/widget<span class="pl-pds">"</span></span>;
+
+@<span class="pl-en">Component</span>({
+    selector: <span class="pl-s"><span class="pl-pds">"</span>widget-table<span class="pl-pds">"</span></span>,
+    templateUrl: <span class="pl-s"><span class="pl-pds">"</span>./widget-table.component.html<span class="pl-pds">"</span></span>,
+    styleUrls: [ <span class="pl-s"><span class="pl-pds">"</span>./widget-table.component.scss<span class="pl-pds">"</span></span> ],
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">WidgetTable</span> {
+
+    <span class="pl-k">public</span> editRowId <span class="pl-k">=</span> <span class="pl-c1">0</span>;
+
+    @<span class="pl-en">Input</span>()
+    <span class="pl-k">public</span> widgets<span class="pl-k">:</span> <span class="pl-en">Widget</span>[] <span class="pl-k">=</span> [];
+
+    @<span class="pl-en">Output</span>()
+    <span class="pl-k">public</span> onSaveWidget<span class="pl-k">:</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-en">Widget</span>&gt; <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-en">Widget</span>&gt;();
+
+    @<span class="pl-en">Output</span>()
+    <span class="pl-k">public</span> onDeleteWidget<span class="pl-k">:</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-c1">number</span>&gt; <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">EventEmitter</span>&lt;<span class="pl-c1">number</span>&gt;();
+
+    <span class="pl-k">public</span> editWidget(<span class="pl-v">widgetId</span><span class="pl-k">:</span> <span class="pl-c1">number</span>) {
+        <span class="pl-c1">this</span>.<span class="pl-smi">editRowId</span> <span class="pl-k">=</span> <span class="pl-smi">widgetId</span>;
+    }
+}</pre></div>
+</li>
+<li>
+<p>Open <strong>app.component.ts</strong> in the "app" folder and replace its contents with the following code to add functions for saving and deleting widgets to the application component:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Component</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/core<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./models/widget<span class="pl-pds">"</span></span>;
+
+@<span class="pl-en">Component</span>({
+    selector: <span class="pl-s"><span class="pl-pds">"</span>widget-tool<span class="pl-pds">"</span></span>,
+    templateUrl: <span class="pl-s"><span class="pl-pds">"</span>./app.component.html<span class="pl-pds">"</span></span>,
+    styleUrls: [ <span class="pl-s"><span class="pl-pds">"</span>./app.component.scss<span class="pl-pds">"</span></span> ],
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">AppComponent</span> {
+
+    <span class="pl-k">public</span> widgets<span class="pl-k">:</span> <span class="pl-en">Widget</span>[] <span class="pl-k">=</span> [{
+        id: <span class="pl-c1">1</span>, name: <span class="pl-s"><span class="pl-pds">'</span>Small Red Widget<span class="pl-pds">'</span></span>, description: <span class="pl-s"><span class="pl-pds">'</span>A small, red widget.<span class="pl-pds">'</span></span>,
+        color: <span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span>, size: <span class="pl-s"><span class="pl-pds">'</span>small<span class="pl-pds">'</span></span>, quantity: <span class="pl-c1">2</span>
+    },{
+        id: <span class="pl-c1">2</span>, name: <span class="pl-s"><span class="pl-pds">'</span>Medium Blue Widget<span class="pl-pds">'</span></span>, description: <span class="pl-s"><span class="pl-pds">'</span>A medium, blue widget.<span class="pl-pds">'</span></span>,
+        color: <span class="pl-s"><span class="pl-pds">'</span>blue<span class="pl-pds">'</span></span>, size: <span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>, quantity: <span class="pl-c1">15</span>
+    }];
+
+    <span class="pl-k">public</span> deleteWidget(<span class="pl-v">widgetId</span><span class="pl-k">:</span> <span class="pl-c1">number</span>) {
+        <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span> <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-en">filter</span>(<span class="pl-v">w</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">w</span>.<span class="pl-c1">id</span> <span class="pl-k">!==</span> <span class="pl-smi">widgetId</span>);
+    }
+
+    <span class="pl-k">public</span> saveWidget(<span class="pl-v">widget</span><span class="pl-k">:</span> <span class="pl-en">Widget</span>) {
+
+        <span class="pl-k">if</span> (<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>) {
+
+            <span class="pl-k">const</span> widgetIndex <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-en">findIndex</span>(<span class="pl-v">w</span> <span class="pl-k">=&gt;</span>
+                <span class="pl-smi">w</span>.<span class="pl-c1">id</span> <span class="pl-k">===</span> <span class="pl-smi">widget</span>.<span class="pl-c1">id</span>);
+
+            <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span> <span class="pl-k">=</span> [
+                <span class="pl-k">...</span><span class="pl-smi">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">slice</span>(<span class="pl-c1">0</span>, <span class="pl-smi">widgetIndex</span>),
+                <span class="pl-smi">widget</span>,
+                <span class="pl-k">...</span><span class="pl-smi">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">slice</span>(<span class="pl-smi">widgetIndex</span> <span class="pl-k">+</span> <span class="pl-c1">1</span>) ];
+
+        } <span class="pl-k">else</span> {
+
+            <span class="pl-smi">widget</span>.<span class="pl-c1">id</span> <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-en">reduce</span>((<span class="pl-v">maxWidgetId</span>, <span class="pl-v">nextWidget</span>) <span class="pl-k">=&gt;</span>
+                <span class="pl-c1">Math</span>.<span class="pl-c1">max</span>(<span class="pl-smi">maxWidgetId</span>, <span class="pl-smi">nextWidget</span>.<span class="pl-c1">id</span>), <span class="pl-c1">0</span>) <span class="pl-k">+</span> <span class="pl-c1">1</span>;
+
+            <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span> <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">concat</span>(<span class="pl-smi">widget</span>);
+
+        }
+
+    }
+
+}</pre></div>
+</li>
+<li>
+<p>Now update the application component's template in <strong>app.component.html</strong> to reference the functions added in the previous step:</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">h1</span>&gt;Widget Tool&lt;/<span class="pl-ent">h1</span>&gt;
+&lt;<span class="pl-ent">widget</span><span class="pl-e">-table</span> [<span class="pl-e">widgets</span>]=<span class="pl-s"><span class="pl-pds">"</span>widgets<span class="pl-pds">"</span></span> (<span class="pl-e">onSaveWidget</span>)=<span class="pl-s"><span class="pl-pds">"</span>saveWidget($event)<span class="pl-pds">"</span></span> (<span class="pl-e">onDeleteWidget</span>)=<span class="pl-s"><span class="pl-pds">"</span>deleteWidget($event)<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">widget</span><span class="pl-e">-table</span>&gt;
+&lt;<span class="pl-ent">widget</span><span class="pl-e">-form</span> (<span class="pl-e">onSubmit</span>)=<span class="pl-s"><span class="pl-pds">"</span>saveWidget($event)<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">widget</span><span class="pl-e">-form</span>&gt;</pre></div>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Then switch back to the browser and confirm that you can add new widgets as well as edit and delete existing ones.</p>
+<p><a href="Images/widget-tool-edit-delete.png" target="_blank"><img src="Images/widget-tool-edit-delete.png" alt="The modified UI with tools for editing and deleting widgets" style="max-width:100%;"></a></p>
+<p><em>The modified UI with tools for editing and deleting widgets</em></p>
+</li>
+</ol>
+<p>Users can now edit and delete widgets as well as view and add them. The final step is to connect the app to a REST service and move widget data to the cloud rather than store it locally.</p>
+<p><a name="Exercise6"></a></p>
+<h2>Exercise 6: Connect to a REST service</h2>
+<p>The app is almost complete. In the final exercise, you will modify it to use a REST service to store widget data. To communicate with the REST service, you will use Angular's <code>HttpModule</code>, which provides HTTP services to applications that require them. And you will implement a service of your own named <code>Widgets</code> to use Angular's HTTP services.</p>
+<ol>
+<li>
+<p>Open <strong>app.module.ts</strong> in the project's "app" folder and add the following statement after the statement that imports <code>FormsModule</code>:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">HttpModule</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/http<span class="pl-pds">"</span></span>;</pre></div>
+</li>
+<li>
+<p>Add <code>HttpModule</code> to the list of modules imported into the application module:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-smi">imports</span>: [ <span class="pl-smi">BrowserModule</span>, <span class="pl-smi">FormsModule</span>, <span class="pl-smi">HttpModule</span> ],</pre></div>
+</li>
+<li>
+<p>Create a new folder in the "app" folder named "services." Then add a file named <strong>widgets.service.ts</strong> to the "services" folder and add the following code:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Injectable</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/core<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">Http</span>, <span class="pl-smi">Headers</span>, <span class="pl-smi">RequestOptions</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/http<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">Observable</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>rxjs/Rx<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>../models/widget<span class="pl-pds">"</span></span>;
+
+@<span class="pl-en">Injectable</span>()
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">Widgets</span> {
+
+    <span class="pl-k">private</span> baseUrl<span class="pl-k">:</span> <span class="pl-c1">string</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>http://localhost:3010/widgets<span class="pl-pds">"</span></span>;
+
+    <span class="pl-k">private</span> requestOptions<span class="pl-k">:</span> <span class="pl-en">RequestOptions</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">RequestOptions</span>({
+        headers: <span class="pl-k">new</span> <span class="pl-en">Headers</span>({ <span class="pl-s"><span class="pl-pds">"</span>Content-Type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>application/json<span class="pl-pds">"</span></span> })
+    });
+
+    <span class="pl-k">constructor</span>(<span class="pl-k">private</span> <span class="pl-v">http</span><span class="pl-k">:</span> <span class="pl-en">Http</span>) { }
+
+    <span class="pl-k">public</span> getAll()<span class="pl-k">:</span> <span class="pl-en">Observable</span>&lt;<span class="pl-en">Widget</span>[]&gt; {
+        <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-smi">http</span>.<span class="pl-c1">get</span>(<span class="pl-c1">this</span>.<span class="pl-smi">baseUrl</span>).<span class="pl-en">map</span>(<span class="pl-v">res</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>());
+    }
+
+    <span class="pl-k">public</span> get(<span class="pl-v">widgetId</span><span class="pl-k">:</span> <span class="pl-c1">number</span>)<span class="pl-k">:</span> <span class="pl-en">Observable</span>&lt;<span class="pl-en">Widget</span>&gt; {
+        <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-smi">http</span>.<span class="pl-c1">get</span>(<span class="pl-c1">this</span>.<span class="pl-smi">baseUrl</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-c1">encodeURIComponent</span>(<span class="pl-smi">widgetId</span>.<span class="pl-c1">toString</span>())).<span class="pl-en">map</span>((<span class="pl-v">res</span>) <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>());
+    }
+
+    <span class="pl-k">public</span> insert(<span class="pl-v">widget</span><span class="pl-k">:</span> <span class="pl-en">Widget</span>)<span class="pl-k">:</span> <span class="pl-en">Observable</span>&lt;<span class="pl-en">Widget</span>&gt; {
+        <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-smi">http</span>.<span class="pl-en">post</span>(<span class="pl-c1">this</span>.<span class="pl-smi">baseUrl</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>, <span class="pl-c1">JSON</span>.<span class="pl-c1">stringify</span>(<span class="pl-smi">widget</span>), <span class="pl-c1">this</span>.<span class="pl-smi">requestOptions</span>).<span class="pl-en">map</span>((<span class="pl-v">res</span>) <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>());
+    }
+
+    <span class="pl-k">public</span> update(<span class="pl-v">widget</span><span class="pl-k">:</span> <span class="pl-en">Widget</span>)<span class="pl-k">:</span> <span class="pl-en">Observable</span>&lt;<span class="pl-en">Widget</span>&gt; {
+        <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-smi">http</span>.<span class="pl-en">put</span>(<span class="pl-c1">this</span>.<span class="pl-smi">baseUrl</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-c1">encodeURIComponent</span>(<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>.<span class="pl-c1">toString</span>()),
+            <span class="pl-c1">JSON</span>.<span class="pl-c1">stringify</span>(<span class="pl-smi">widget</span>), <span class="pl-c1">this</span>.<span class="pl-smi">requestOptions</span>).<span class="pl-en">map</span>((<span class="pl-v">res</span>) <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>());
+    }
+
+    <span class="pl-k">public</span> delete(<span class="pl-v">widgetId</span><span class="pl-k">:</span> <span class="pl-c1">number</span>)<span class="pl-k">:</span> <span class="pl-en">Observable</span>&lt;<span class="pl-en">Widget</span>&gt; {
+        <span class="pl-k">return</span> <span class="pl-c1">this</span>.<span class="pl-smi">http</span>.<span class="pl-c1">delete</span>(<span class="pl-c1">this</span>.<span class="pl-smi">baseUrl</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-c1">encodeURIComponent</span>(<span class="pl-smi">widgetId</span>.<span class="pl-c1">toString</span>())).<span class="pl-en">map</span>((<span class="pl-v">res</span>) <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>());
+    }
+
+}</pre></div>
+<p>Angular's HTTP service provides helper methods for making REST service requests. You simply call these methods with a URL, data, and request options, and an HTTP request is transmitted. To manage the asynchronous nature of such requests, Angular uses <em>observables</em> provided by another framework named RxJS (Reactive Extensions for JavaScript). Parties that subscribe to an observable returned by the HTTP service are notified when an asynchronous call completes.</p>
+</li>
+<li>
+<p>The <code>Widgets</code> service needs to be registered with the application module so it can be injected into the application component. Open <strong>app.module.ts</strong> and import the service just before the statement that imports <code>AppComponent</code>.</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Widgets</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./services/widgets.service<span class="pl-pds">"</span></span>;</pre></div>
+</li>
+<li>
+<p>Now modify the <code>@NgModule</code> decorator on the <code>AppModule</code> class to include a <code>providers</code> option that registers the <code>Widgets</code> class as a provider:</p>
+<div class="highlight highlight-source-ts"><pre>@<span class="pl-en">NgModule</span>({
+  imports: [ <span class="pl-smi">BrowserModule</span>, <span class="pl-smi">FormsModule</span>, <span class="pl-smi">HttpModule</span> ],
+  declarations: [ <span class="pl-smi">AppComponent</span>, <span class="pl-smi">WidgetTable</span>, <span class="pl-smi">WidgetForm</span>, <span class="pl-smi">WidgetViewRow</span>, <span class="pl-smi">WidgetEditRow</span> ],
+  bootstrap: [ <span class="pl-smi">AppComponent</span> ],
+  providers: [ <span class="pl-smi">Widgets</span> ],
+})</pre></div>
+<p>The <code>providers</code> option specifies how the <code>Widgets</code> service will be injected. In this example, <code>Widgets</code> doubles as an injection token and as the concrete implementation to be injected.</p>
+</li>
+<li>
+<p>Next, the application component needs to be updated to use the <code>Widgets</code> service. Replace the contents of <strong>app.component.ts</strong> with the following code:</p>
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">import</span> { <span class="pl-smi">Component</span>, <span class="pl-smi">OnInit</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@angular/core<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span> { <span class="pl-smi">Widget</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./models/widget<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">Widgets</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./services/widgets.service<span class="pl-pds">"</span></span>;
+
+@<span class="pl-en">Component</span>({
+    selector: <span class="pl-s"><span class="pl-pds">"</span>widget-tool<span class="pl-pds">"</span></span>,
+    templateUrl: <span class="pl-s"><span class="pl-pds">"</span>./app.component.html<span class="pl-pds">"</span></span>,
+    styleUrls: [ <span class="pl-s"><span class="pl-pds">"</span>./app.component.scss<span class="pl-pds">"</span></span> ],
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">AppComponent</span> <span class="pl-k">implements</span> <span class="pl-e">OnInit</span> {
+
+    <span class="pl-k">public</span> widgets<span class="pl-k">:</span> <span class="pl-en">Widget</span>[] <span class="pl-k">=</span> [];
+
+    <span class="pl-k">constructor</span>(<span class="pl-k">private</span> <span class="pl-v">widgetsSvc</span><span class="pl-k">:</span> <span class="pl-en">Widgets</span>) { }
+
+    <span class="pl-k">public</span> refreshWidgets() {
+        <span class="pl-c1">this</span>.<span class="pl-smi">widgetsSvc</span>.<span class="pl-c1">getAll</span>().<span class="pl-en">subscribe</span>((<span class="pl-v">widgets</span>) <span class="pl-k">=&gt;</span> {
+            <span class="pl-c1">this</span>.<span class="pl-smi">widgets</span> <span class="pl-k">=</span> <span class="pl-smi">widgets</span>;
+        });
+    }
+
+    <span class="pl-k">public</span> ngOnInit() {
+        <span class="pl-c1">this</span>.<span class="pl-en">refreshWidgets</span>();
+    }
+
+    <span class="pl-k">public</span> deleteWidget(<span class="pl-v">widgetId</span><span class="pl-k">:</span> <span class="pl-c1">number</span>) {
+
+        <span class="pl-c1">this</span>.<span class="pl-smi">widgetsSvc</span>.<span class="pl-c1">delete</span>(<span class="pl-smi">widgetId</span>).<span class="pl-en">subscribe</span>((<span class="pl-v">widgets</span>) <span class="pl-k">=&gt;</span> {
+            <span class="pl-c1">this</span>.<span class="pl-en">refreshWidgets</span>();
+        });
+    }
+
+    <span class="pl-k">public</span> saveWidget(<span class="pl-v">widget</span><span class="pl-k">:</span> <span class="pl-en">Widget</span>) {
+
+        <span class="pl-k">if</span> (<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>) {
+            <span class="pl-c1">this</span>.<span class="pl-smi">widgetsSvc</span>.<span class="pl-en">update</span>(<span class="pl-smi">widget</span>).<span class="pl-en">subscribe</span>(() <span class="pl-k">=&gt;</span> <span class="pl-c1">this</span>.<span class="pl-en">refreshWidgets</span>());
+        } <span class="pl-k">else</span> {
+            <span class="pl-c1">this</span>.<span class="pl-smi">widgetsSvc</span>.<span class="pl-en">insert</span>(<span class="pl-smi">widget</span>).<span class="pl-en">subscribe</span>(() <span class="pl-k">=&gt;</span> <span class="pl-c1">this</span>.<span class="pl-en">refreshWidgets</span>());
+        }
+
+    }
+
+}</pre></div>
+<p><code>ngOnInit</code> is a lifecycle function that's called when a component is loaded and ready. In this case, it loads widgets from the REST service. Oserve how callback functions are used to perform widget operations. Because REST service calls are asynchronous in nature, a callback is registered with <code>subscribe</code>, and the callback is invoked when a call completes.</p>
+</li>
+<li>
+<p>Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save your changes. Then switch back to the browser one last time and observe that the widget tool is now populated with data from the REST service. Try adding, editing, and deleting widgets to confirm that the app behaves as expected.</p>
+<p><a href="Images/widget-rest-service.png" target="_blank"><img src="Images/widget-rest-service.png" alt="The final application" style="max-width:100%;"></a></p>
+<p><em>The final application</em></p>
+</li>
+</ol>
+<p>Great job! You have built a CRUD application with Angular and learned a lot about Angular along the way.</p>
+<h2>Summary</h2>
+<p>For more information on Angular, check out <a href="https://angular.io/docs/ts/latest/quickstart.html">this summary of Angular basics</a> on the Angular Web site, as well as <a href="https://angular.io/docs/ts/latest/tutorial/">these Angular tutorials</a>. Note that Angular is great for building mobile apps, too. The <a href="https://mobile.angular.io/">Angular Mobile Toolkit</a> makes it easy to build responsive Web apps that work on any device, even when you lack an Internet connection.</p>
+<hr>
+<p>Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnChanges } from "@angular/core";
 
 import { Widget } from "../models/widget";
 
@@ -7,7 +7,7 @@ import { Widget } from "../models/widget";
     templateUrl: "./widget-edit-row.component.html",
     styleUrls: [ "./widget-row.component.scss" ],
 })
-export class WidgetEditRow {
+export class WidgetEditRow implements OnChanges {
 
     @Input()
     public widget: Widget = {} as Widget;
@@ -17,4 +17,10 @@ export class WidgetEditRow {
 
     @Output()
     public onCancelWidget: EventEmitter<void> = new EventEmitter<void>();
+
+    public ngOnChanges(changes: any) {
+        if (changes.widget) {
+            this.widget = Object.assign({}, changes.widget.currentValue);
+        }
+    }
 }
