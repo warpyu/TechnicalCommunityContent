@@ -1,4 +1,4 @@
-# Community Content - Aazure Service Fabric
+# Community Content - Azure Service Fabric
 
 This folder contains content introducing Azure Service Fabric. The content is divided into two sessions:
 
