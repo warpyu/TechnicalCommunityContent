@@ -509,7 +509,7 @@ vertical-align:1px;
 <h2>Exercises</h2>
 <p>This hands-on lab includes the following exercises:</p>
 <ul>
-<li><a href="#Exercise1">Exercise 1: Create a Service Fabric project</a></li>
+<li><a href="#Exercise1">Exercise 1: Create a Service Fabric solution</a></li>
 <li><a href="#Exercise2">Exercise 2: Run the Service Fabric app in the Service Fabric Local Cluster Manager</a></li>
 <li><a href="#Exercise3">Exercise 3: Add another service in the Service Fabric cluster</a></li>
 <li><a href="#Exercise4">Exercise 4: Connect the services in a Service Fabric cluster</a></li>
@@ -517,70 +517,50 @@ vertical-align:1px;
 </ul>
 <p>Estimated time to complete this lab: <strong>60</strong> minutes.</p>
 <p><a name="Exercise1"></a></p>
-<h2>Exercise 1: Create a Service Fabric project</h2>
+<h2>Exercise 1: Create a Service Fabric solution</h2>
 <p>In this exercise, you will create an Azure Service Fabric application using Visual Studio 2017. Before you begin, make sure your development environment is configured with the tools and options specified in the <a href="#Prerequisites">Prerequisites</a>.</p>
 <ol>
 <li>
-<p>Run Visual Studio 2017 as an administrator. This elevation of privileges for Visual Studio is required in order for it to work with the <em>Service Fabric Local Cluster Manager</em>, which allows you to deploy, run, and debug Service Fabric applications within your development machine.</p>
+<p>Start Visual Studio 2017 as an administrator. This elevation of privilege is required in order for Visual Studio to work with the <em>Service Fabric Local Cluster Manager</em>, which allows you to deploy, run, and debug Service Fabric applications on your development machine.</p>
 <blockquote>
-<p>In Windows 10, to run Visual Studio as an Administrator, you can first type <strong>Visual Studio 2017</strong> into the Windows search bar. In the <strong>Best Match</strong> section of the search results, right-click on the <strong>Visual Studio 2017</strong> entry, and select <strong>Run as administrator</strong> from the dropdown. When the <em>User Account Control (UAC)</em> dialog is displayed to confirm that you want to run Visual Studio this way, select <strong>Yes</strong>.</p>
-</blockquote>
-<p><a href="Images/start-run_vs_as_admin.png" target="_blank"><img src="Images/start-run_vs_as_admin.png" alt="Running Visual Studio as an Administrator" style="max-width:100%;"></a></p>
-<p><em>Running Visual Studio as an Administrator</em></p>
-<blockquote>
-<p>Note - When Visual Studio 2017 is running with administrator privileges, the application title will be displayed in the title bar with the word <em>(Administrator)</em> in parentheses at the end.</p>
+<p>To start Visual Studio as an administrator in Windows 10, type "Visual Studio 2017" into the Windows search bar. Then right-click <strong>Visual Studio 2017</strong> and select <strong>Run as administrator</strong>. When prompted to confirm that you want to run Visual Studio as administrator, answer <strong>Yes</strong>.</p>
 </blockquote>
 </li>
 <li>
-<p>In Visual Studio, select <strong>New</strong> from the <strong>File</strong> menu, and then click on <strong>Project</strong>.</p>
+<p>In Visual Studio, select <strong>New</strong> from the <strong>File</strong> menu, and then click <strong>Project</strong>.</p>
 <p><a href="Images/start-file_newproject.png" target="_blank"><img src="Images/start-file_newproject.png" alt="Creating a new project" style="max-width:100%;"></a></p>
 <p><em>Creating a new project</em></p>
 </li>
 <li>
-<p>In the <strong>New Project</strong> dialog, select the <strong>Cloud</strong> node and then <strong>Service Fabric Application</strong> from within the <strong>Cloud</strong> node.</p>
-<ul>
-<li>Enter <em>ServiceFabricLab</em> for the project <strong>Name</strong>.</li>
-<li>Leave the <strong>Location</strong> set to the default value.</li>
-<li>Leave the <strong>Solution</strong> name set to the default value.</li>
-<li>Click the <strong>OK</strong> button to create the project.</li>
-</ul>
-<p><a href="Images/start-newproject_settings.png" target="_blank"><img src="Images/start-newproject_settings.png" alt="New project settings" style="max-width:100%;"></a><br>
-<em>New project settings</em></p>
+<p>Select <strong>Service Fabric Application</strong> as the project type and enter "ServiceFabricLab" as the project name. Then click <strong>OK</strong>.</p>
+<p><a href="Images/start-newproject_settings.png" target="_blank"><img src="Images/start-newproject_settings.png" alt="Specifying the project type" style="max-width:100%;"></a></p>
+<p><em>Specifying the project type</em></p>
 </li>
 <li>
-<p>The <strong>New Service Fabric Service</strong> dialog will be displayed. This dialog shows the different types of services that can be included in a Service Fabric application.  Select <strong>ASP.NET Core</strong> and set the name to <strong>InventoryService</strong>. Click <strong>OK</strong> to dismiss the dialog.</p>
-<p><a href="Images/start-newservicefabricservice_settings.png" target="_blank"><img src="Images/start-newservicefabricservice_settings.png" alt="New Service Fabric service" style="max-width:100%;"></a></p>
-<p><em>New Service Fabric Service</em></p>
+<p>Select <strong>ASP.NET Core</strong> and set the name to "InventoryService." Then click <strong>OK</strong>.</p>
+<p><a href="Images/start-newservicefabricservice_settings.png" target="_blank"><img src="Images/start-newservicefabricservice_settings.png" alt="Selecting a service template" style="max-width:100%;"></a></p>
+<p><em>Selecting a service template</em></p>
 </li>
 <li>
-<p>In the dialog titled <strong>New ASP.NET Core Web Application (.NET Framework) - Inventory Service</strong>, make sure <strong>ASP.NET Core 1.1</strong> is selected in the framework dropdown. Select the <strong>Web Application</strong> template, and then click on the <strong>OK</strong> button.</p>
-<p><a href="Images/start-newaspnetcoreapp_template.png" target="_blank"><img src="Images/start-newaspnetcoreapp_template.png" alt="Web Application Template" style="max-width:100%;"></a></p>
-<p><em>Web Application Template</em></p>
+<p>Make sure <strong>ASP.NET Core 1.1</strong> is selected as the framework version. Then select <strong>Web Application</strong> and click <strong>OK</strong>.</p>
+<p><a href="Images/start-newaspnetcoreapp_template.png" target="_blank"><img src="Images/start-newaspnetcoreapp_template.png" alt="Creating an ASP.NET Core Web app" style="max-width:100%;"></a></p>
+<p><em>Creating an ASP.NET Core Web app</em></p>
 </li>
 <li>
-<p>Take a minute to look over the contents of the <em>Solution Explorer</em> in Visual Studio 2017.</p>
-<p>The solution contains two projects - <strong>InventoryService</strong> and <strong>ServiceFabricLab</strong>. Service Fabric solutions consist of one or more Service Fabric Service projects, as well as a Service Fabric Application project.</p>
-<p><a href="Images/start-solutionexplorer.png" target="_blank"><img src="Images/start-solutionexplorer.png" alt="The Service Fabric Application Solution" style="max-width:100%;"></a></p>
-<p><em>The Service Fabric Application Solution</em></p>
+<p>Go to Solution Explorer and confirm that the solution is structured like the one below. The solution should contain two projects named <strong>InventoryService</strong> and <strong>ServiceFabricLab</strong>. Service Fabric solutions consist of one or more Service Fabric Service projects, as well as a Service Fabric Application project.</p>
+<p><a href="Images/start-solutionexplorer.png" target="_blank"><img src="Images/start-solutionexplorer.png" alt="Viewing the solution in Solution Explorer" style="max-width:100%;"></a></p>
+<p><em>Viewing the solution in Solution Explorer</em></p>
+<p><strong>ServiceFabricLab</strong> is the Service Fabric Application project. This project does not contain any code, but instead contains links to the services that are included in your Service Fabric application and information describing how the application will be packaged and deployed.</p>
+<p>One of the more important elements contained in the Service Fabric Application project is the <em>application manifest</em> file. This file is named <strong>ApplicationManifest.xml</strong> and is located in the "ApplicationPackageRoot" folder. The application manifest is an XML file that describes your configuration to Service Fabric.</p>
+<p><strong>InventoryService</strong> is a Stateless Service Fabric Service project. If you examine the project properties for this project, you will see it is actually a .NET Core Console Application. This is a self-hosted Web application (one that does not rely on IIS as an external HTTP Server), which hosts the <em>WebListener</em> server within the processes managed by the Service Fabric runtime. Additional information about <em>WebListener</em> can be found <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/weblistener">here</a>.</p>
 </li>
 <li>
-<p>Examine the <strong>ServiceFabricLab</strong> project.</p>
-<p>This project is the Service Fabric Application project for this solution. This project does not contain any code, but instead contains links to the services that are included in your Service Fabric application and information describing how your application will be packaged and deployed.</p>
-<p>One of the more important elements contained in the Service Fabric Application project is the <em>application manifest</em> file. This file is named <em>ApplicationManifest.xml</em> and is located in the <em>ApplicationPackageRoot</em> folder. The application manifest is an XML file that describes your configuration to Service Fabric.</p>
-</li>
-<li>
-<p>Now examine the <strong>InventoryService</strong> project.</p>
-<p>This project is a Stateless Service Fabric Service project. If you examine the project properties for this project, you will see it is actually a .NET Core Console Application. This is a self-hosted Web application (one that does not rely on IIS as an external HTTP Server), which hosts the WebListener server within the processes managed by the Service Fabric runtime. Additional information about WebListener can be found <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/weblistener">here</a>.</p>
-</li>
-<li>
-<p>Open the <em>Program.cs</em> file from the <em>InventoryService</em> project. This file contains the following code:</p>
+<p>Open <strong>Program.cs</strong> in the <strong>InventoryService</strong> project. This file contains the following code, which registers the Inventory Service with the Service Fabric runtime. The <code>InventoryService</code> class is an instance of the <code>StatelessService</code> class defined in the Service Fabric SDK:</p>
 <div class="highlight highlight-source-cs"><pre><span class="pl-en">ServiceRuntime.RegisterServiceAsync</span>("InventoryServiceType",
     context =&gt; <span class="pl-k">new</span> <span class="pl-en">InventoryService</span>(<span class="pl-en">context</span>)).GetAwaiter().GetResult(); </pre></div>
-<p>This code registers the Inventory Service with the Service Fabric runtime. The <code>InventoryService</code> class is an instance of the <code>StatelessService</code> class defined in the Service Fabric SDK.</p>
 </li>
 <li>
-<p>Now open the <em>InventoryService.cs</em> file. Locate the <code>CreateServiceInstanceListeners</code> method override. This method is called by the Service Fabric runtime to configure the endpoints on which this service will listen for messages. In this case, it is configuring an instance of the <code>WebListenerCommunicationListener</code> class, which is used to connect Service Fabric to a <em>WebListener</em> HTTP service.</p>
-<p>The following code configures the WebListener:</p>
+<p>Now open <strong>InventoryService.cs</strong> and locate the <code>CreateServiceInstanceListeners</code> method override. This method is called by the Service Fabric runtime to configure the endpoints on which this service will listen for messages. In this case, it configures an instance of the <code>WebListenerCommunicationListener</code> class, which is used to connect Service Fabric to a <em>WebListener</em> HTTP service:</p>
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">WebHostBuilder</span>().<span class="pl-en">UseWebListener</span>()
         .<span class="pl-en">ConfigureServices</span>(
             services =&gt; services
@@ -590,9 +570,9 @@ vertical-align:1px;
         .<span class="pl-en">UseApplicationInsights</span>()
         .<span class="pl-en">UseUrls</span>(url)
         .<span class="pl-en">Build</span>();</pre></div>
-<p>At this point, the application is basically a standard <em>ASP.NET Core 1.1</em> MVC Web application. ASP.NET Core is a rich framework for building Web applications, and a detailed description of programming it is beyond the scope of this lab. Additional information about ASP.NET Core can be found <a href="https://www.asp.net/core">here</a>.</p>
 </li>
 </ol>
+<p>At this point, the application is basically a standard ASP.NET Core 1.1 MVC Web application. ASP.NET Core is a rich framework for building Web applications. Additional information about ASP.NET Core can be found <a href="https://www.asp.net/core">here</a>.</p>
 <p><a name="Exercise2"></a></p>
 <h2>Exercise 2: Run the Service Fabric app in the Service Fabric Local Cluster Manager</h2>
 <p>Now that you have created a basic Service Fabric application project in Visual Studio 2017, it's time to see the application in action. In this exercise, you will deploy your application to the Service Fabric Local Cluster Manager on your development machine and examine the running service using both Visual Studio 2017 and the Service Fabric Cluster manager.</p>
