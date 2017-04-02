@@ -27,7 +27,7 @@ namespace InventoryCommon
     public enum InventoryItemType
     {
         Appliances,
-        Electical,
+        Electrical,
         Flooring,
         HandTools,
         Hardware,

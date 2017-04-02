@@ -53,9 +53,9 @@ Additional information about configuring your development environment can be fou
 This hands-on lab includes the following exercises:
 
 - [Exercise 1: Create a Service Fabric solution](#Exercise1)
-- [Exercise 2: Run the app in the Service Fabric Local Cluster Manager](#Exercise2)
-- [Exercise 3: Add another service in the Service Fabric cluster](#Exercise3)
-- [Exercise 4: Connect the services in a Service Fabric cluster](#Exercise4)
+- [Exercise 2: Run the app in a local cluster](#Exercise2)
+- [Exercise 3: Add another service to the cluster](#Exercise3)
+- [Exercise 4: Connect the services in the cluster](#Exercise4)
 - [Exercise 5: Enable partitioning and show node failover](#Exercise5)
 
 Estimated time to complete this lab: **60** minutes.
@@ -129,9 +129,9 @@ In this exercise, you will create an Azure Service Fabric application using Visu
 At this point, the application is basically a standard ASP.NET Core 1.1 MVC Web application. ASP.NET Core is a rich framework for building Web applications. Additional information about ASP.NET Core can be found [here](https://www.asp.net/core).
 
 <a name="Exercise2"></a>
-## Exercise 2: Run the app in the Service Fabric Local Cluster Manager ##
+## Exercise 2: Run the app in a local cluster ##
 
-Now that you have created a basic Service Fabric project in Visual Studio 2017, it's time to see the application in action. In this exercise, you will deploy the application to the Service Fabric Local Cluster Manager on your development machine and examine the service using both Visual Studio 2017 and the Service Fabric Cluster Manager.
+Now that you have created a basic Service Fabric project in Visual Studio 2017, it's time to see the application in action. In this exercise, you will deploy the application to a local cluster managed by the Service Fabric Local Cluster Manager and examine it in Visual Studio and in the Service Fabric Explorer.
 
 1. Click the **Start** button in Visual Studio 2017. This will deploy the Service Fabric application to a local Service Fabric cluster. This may take a couple of minutes the first time you do it.
 
@@ -199,66 +199,50 @@ Now that you have created a basic Service Fabric project in Visual Studio 2017, 
 
 1. Close your Web browser. Then return to Visual Studio and use the **Debug** -> **Stop Debugging** command to stop debugging.
  
-When you stop debugging, Visual Studio will stop the application and remove it from the Service Fabric Local Cluster Manager. It will be deployed again the next time you launch it from Visual Studio.
+When you stop debugging, Visual Studio will stop the application and remove it from the local cluster. It will be deployed again the next time you launch it from Visual Studio.
 
 <a name="Exercise3"></a>
-## Exercise 3: Add another service in the Service Fabric Cluster ##
+## Exercise 3: Add another service to the cluster ##
 
-In this exercise, you will add a new Stateful Service to the Service Fabric application that you created and worked with in the previous exercises. This service will act as a repository service for a hypothetical Product Inventory system, using the Service Fabric Stateful Service Reliable Collections to hold information and exposing access to this information via RESTful Web API endpoints.
+In this exercise, you will add a new service to the Service Fabric application that you created in [Exercise 1](#Exercise1). This service will act as a repository for a hypothetical Product Inventory system, and it will use Service Fabric [Stateful Service Reliable Collections](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-reliable-collections) to maintain inventory data and make it available through RESTful Web API endpoints.
 
-1. Open the File menu in Visual Studio 2017. In the dropdown menu, click on **Add** and then on **New Project...**   
+1. Right-click the **ServiceFabricLab** solution in Solution Explorer and use the **Add** -> **New Project** command to add a project to the solution. Select **Class Library (.NET Framework)** as the project type and name it "InventoryCommon." Then click **OK**.    
 
-    ![Creating a new project](Images/start-file_newproject.png)
+    ![Adding a project to the solution](Images/addservice-newclasslibrary_settings.png)
 
-     _Creating a new project_
+     _Adding a project to the solution_
 
-1. In the **New Project** dialog, select the Visual C# node and then click on the Class Library (.NET Framework) entry.
-	- Enter *InventoryCommon* for the project **Name**.
-	- Leave the **Location** set to the default value.
-	- Click the **OK** button to create the project.
+1. Delete the file named **Class1.cs** file from the **InventoryCommon** project. Then right-click the project in Solution Explorer and select **Add** -> **Existing Item...**.
 
-    ![New project settings](Images/addservice-newclasslibrary_settings.png)
-     _New project settings_
+	![Adding items to the project](Images/addservice-add_existingitem_common.png)
 
-	Delete the *Class1.cs* file from the new *InventoryCommon* project.
+    _Adding items to the project_
 
-1. Right-click on the InventoryCommon project entry in the Solution Explorer. In the context menu, click on Add and then on Existing Item...
+1. In the "Add Existing Item" dialog, browse to the "Assets" folder included with this lab. Select the file named **InventoryItem.cs** and click **Add**. 
 
-	![Add an Existing Item to the Common Project](Images/addservice-add_existingitem_common.png)
+	![Adding InventoryItem.cs](Images/addservice-add_inventoryitemfile.png)
 
-    _Add an Existing Item to the Common Project_
+    _Adding InventoryItem.cs_
 
-1. In the *Add Existing Item* dialog, browse to the folder where this lab content is located and open the *Assets* folder. Select the **InventoryItem.cs** file and click on the **Add** button. 
+	This file contains an ```InventoryItem``` type that will be used to pass inventory items between services in the application. It also contains an ```enum``` named ```InventoryItemType``` that specifies the item type — Appliances, Flooring, etc. Later, this ```enum``` will be used as a key to divide the deployment into separate service partiions.
 
-	![Add the InventoryItem File](Images/addservice-add_inventoryitemfile.png)
+1. Right-click **Services** in the **ServiceFabricLab** project, and select **Add** -> **New Service Fabric Service...**..
 
-    _Add the InventoryItem File_
+	![Adding a service](Images/addservice-infoke_addnewservice.png)
 
-	> This file contains the definition of an `InventoryItem` type that will be exchanged between services in the application. It also contains the related `InventoryItemType` that will be used to categorize the inventory items. In a later exercise, this value will be used as a key to divide the application deployment into separate service partiions.
+    _Adding a service_
 
-1. In the **ServiceFabricLab** project, right-click on the **Services** node. Click **Add** and then click **New Service Fabric Service...** from the popup menus.
+1. Select **Stateful Service** and enter "InventoryRepository" as the service name. Then click **OK**. This will add a new project named **InventoryRepository** to the solution.
 
-	![Add a New Service](Images/addservice-infoke_addnewservice.png)
+	![Adding a stateful service](Images/addservice-newservicefabricservice_settings.png)
 
-    _Add a New Service_
+    _Adding a stateful service_
 
-1. In the New Service Fabric Service dialog, click on the the **Stateful Service** option and enter the name **InventoryRepository** for the Service Name. Click the **OK** button to close the dialog.
-
-	![New Service Fabric Service](Images/addservice-newservicefabricservice_settings.png)
-
-    _New Service Fabric Service_
-
-	This will add a new *InventoryRepository* project to your Visual Studio 2017 solution.
-
-1. The next step is to configure the new service to respond to HTTP REST requests. In the Solution Explorer in Visual Studio 2017, right-click on the **References** node in the **InventoryRepository** project and click on **Manage NuGet Packages...** in the context menu.
- 
-1. In the NuGet window in Visual Studio, select **Browse**. Type (or paste) ***Microsoft.AspNet.WebApi.OwinSelfHost*** into the Search box. Select the ***Microsoft.AspNet.WebApi.OwinSelfHost*** entry in the search results and click the Install button.
+1. Right-click the **InventoryRepository** project and select **Manage NuGet Packages...** from the context menu. Make sure **Browse** is selected in the Nuget Package Manager, and then type "Microsoft.AspNet.WebApi.OwinSelfHost" into the search box. Select ***Microsoft.AspNet.WebApi.OwinSelfHost*** from the search results and click the Install button. OK any changes shown to you and accept any licenses that are presented.
 
 	![Adding the OWIN Self-Host Nuget Package](Images/addservice-add_ownselfhostnugetpackage.png)
 
     _Adding the OWIN Self-Host Nuget Package_
-
-	In the **Preview** dialog, click the **OK** button to verify the list of packages being installed, and in the **License Acceptance** dialog, click the **I Accept** button to accept the terms associated with these packages. 
 
 1. When the NuGet package installation completes, right-click on the **InventoryRepository** project entry in the Solution Explorer. Click on **Add** and then click on **Existing Item** in the popup menus.
 
@@ -456,7 +440,7 @@ In this exercise, you will add a new Stateful Service to the Service Fabric appl
 	Once you have checked that both services are listed in the *Service Fabric Explorer*, stop debugging.
 
 <a name="Exercise4"></a>
-## Exercise 4: Connect the services in a Service Fabric cluster ##
+## Exercise 4: Connect the services in the cluster ##
 
 In this exercise, you will connect the two services you have created, making requests to the *InventoryRepository* from the *InventoryService*. This will allow you to add inventory items to the catalog, as well as increase and decrease the inventory quantity for a given item.  At the end of this exercise, you will be able to launch your application and interact with it from your Web browser.
 
@@ -1011,12 +995,13 @@ This final exercise will demonstrate some of the scalability and resiliency feat
 ## Summary ##
 
 In this hands-on lab, you learned how to:
+
 - Create a new Service Fabric application using Visual Studio 2017.
 - Use the debugging and diagnostic tools provided by both Visual Studio and Service Fabric itself to run and monitor your Service Fabric application.
 - Configure communication between multiple services in a Service Fabric application. 
 - Leverage partitioning and Reliable Services in order to provide scalability and fault-tolerance in a Service Fabric application.
 
-The application you built was fairly simple - it included a front-end display service and an inventory repository service. A more complete Microservices implementation might consist of several additional services communicating with each other and leveraging the Service Fabric infrastructure to resolve locations and addresses. In some cases, individual services might be assigned to specific subsets of the cluster that Service Fabric is managing, allowing different services to scale independently — a hallmark of a true Microservices implementation.    
+The application you built was fairly simple. It included a front-end display service and an inventory repository service. A more complete Microservices implementation might consist of several additional services communicating with each other and leveraging the Service Fabric infrastructure to resolve locations and addresses. In some cases, individual services might be assigned to specific subsets of the cluster that Service Fabric is managing, allowing different services to scale independently — a hallmark of a true Microservices implementation.    
 
 As you have seen, using Azure Service Fabric it is possible to create applications that consist of several different kinds of services and to deploy them within a framework that supports both scalability and reliability.
 

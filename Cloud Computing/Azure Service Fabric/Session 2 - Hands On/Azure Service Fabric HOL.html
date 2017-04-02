@@ -510,9 +510,9 @@ vertical-align:1px;
 <p>This hands-on lab includes the following exercises:</p>
 <ul>
 <li><a href="#Exercise1">Exercise 1: Create a Service Fabric solution</a></li>
-<li><a href="#Exercise2">Exercise 2: Run the Service Fabric app in the Service Fabric Local Cluster Manager</a></li>
-<li><a href="#Exercise3">Exercise 3: Add another service in the Service Fabric cluster</a></li>
-<li><a href="#Exercise4">Exercise 4: Connect the services in a Service Fabric cluster</a></li>
+<li><a href="#Exercise2">Exercise 2: Run the app in a local cluster</a></li>
+<li><a href="#Exercise3">Exercise 3: Add another service to the cluster</a></li>
+<li><a href="#Exercise4">Exercise 4: Connect the services in the cluster</a></li>
 <li><a href="#Exercise5">Exercise 5: Enable partitioning and show node failover</a></li>
 </ul>
 <p>Estimated time to complete this lab: <strong>60</strong> minutes.</p>
@@ -574,130 +574,104 @@ vertical-align:1px;
 </ol>
 <p>At this point, the application is basically a standard ASP.NET Core 1.1 MVC Web application. ASP.NET Core is a rich framework for building Web applications. Additional information about ASP.NET Core can be found <a href="https://www.asp.net/core">here</a>.</p>
 <p><a name="Exercise2"></a></p>
-<h2>Exercise 2: Run the Service Fabric app in the Service Fabric Local Cluster Manager</h2>
-<p>Now that you have created a basic Service Fabric application project in Visual Studio 2017, it's time to see the application in action. In this exercise, you will deploy your application to the Service Fabric Local Cluster Manager on your development machine and examine the running service using both Visual Studio 2017 and the Service Fabric Cluster manager.</p>
+<h2>Exercise 2: Run the app in a local cluster</h2>
+<p>Now that you have created a basic Service Fabric project in Visual Studio 2017, it's time to see the application in action. In this exercise, you will deploy the application to a local cluster managed by the Service Fabric Local Cluster Manager and examine it in Visual Studio and in the Service Fabric Explorer.</p>
 <ol>
 <li>
-<p>Click on the <strong>Start</strong> button in Visual Studio 2017. This will deploy your Service Fabric application to your local Service Fabric cluster and then open your default Web browser to your service's URL.</p>
-<p><a href="Images/debug-startservice_indebugger.png" target="_blank"><img src="Images/debug-startservice_indebugger.png" alt="Starting the Service Fabric Application from Visual Studio 2017" style="max-width:100%;"></a></p>
-<p><em>Starting the Service Fabric Application from Visual Studio 2017</em></p>
+<p>Click the <strong>Start</strong> button in Visual Studio 2017. This will deploy the Service Fabric application to a local Service Fabric cluster. This may take a couple of minutes the first time you do it.</p>
 <blockquote>
-<p>Note - depending on whether this is the first time you are deploying conten to your Service Fabric Local Cluster Manager, this step may take a couple minutes as the local cluster is prepared for first-time use.</p>
+<p>If the service fails to run with a deployment error, make sure Visual Studio 2017 is running as an administrator.</p>
 </blockquote>
-<p>If the service fails to run with a deployment error,be sure to check that you are running Visual Studio 2017 as an administrator.</p>
-<p><a href="Images/debug-apprunning_inbrowser.png" target="_blank"><img src="Images/debug-apprunning_inbrowser.png" alt="The Service Fabric Application Running in a Web Browser" style="max-width:100%;"></a></p>
-<p><em>The Service Fabric Application Running in a Web Browser</em></p>
+<p><a href="Images/debug-startservice_indebugger.png" target="_blank"><img src="Images/debug-startservice_indebugger.png" alt="Starting the application" style="max-width:100%;"></a></p>
+<p><em>Starting the application</em></p>
 </li>
 <li>
-<p>In addition to the application being launched in your Web browser, running your application for debugging in Visual Studio 2017 will also open a <em>Diagnostic Events</em> window within the IDE.</p>
-<p><a href="Images/debug-diagnosticeventswindow.png" target="_blank"><img src="Images/debug-diagnosticeventswindow.png" alt="The Diagnostic Events view in Visual Studio 2017" style="max-width:100%;"></a></p>
-<p><em>The Diagnostic Events view in Visual Studio 2017</em></p>
-<p>The default templates for Service Fabric Service applications in Visual Studio 2017 include a <code>ServiceEventSource</code> class. This class registers your application and provides helper events for writing trace and diagnostic information to <em>Event Tracing for Windows</em> (ETW).</p>
-<p>ETW is a high-performance tracing technology that is built into Windows. Your applications can leverage the code provided in <em>ServiceEventSource</em> to write application-specific diagnostic information into ETW in order to help you better understand and troubleshoot your service's behavior. More information about ETW can be found <a href="https://msdn.microsoft.com/library/windows/desktop/bb968803.aspx">here</a>.</p>
+<p>Confirm that a browser opens to the service URL.</p>
+<p><a href="Images/debug-apprunning_inbrowser.png" target="_blank"><img src="Images/debug-apprunning_inbrowser.png" alt="Browser showing the service URL" style="max-width:100%;"></a></p>
+<p><em>Browser showing the service URL</em></p>
 </li>
 <li>
-<p>You will now see how you can set and trap a debugger breakpoint in your service fabric application. Open the <strong>HomeController.cs</strong> file located in the <strong>Controllers</strong> folder in the <em>InventoryService</em> project. Place your cursor at the start of the return statement in the <code>public IActionResult About()</code> method and use the F9 key on your keyboard to place a breakpoint at this line.</p>
-<p><a href="Images/debug-aboutmethod_breakpoint.png" target="_blank"><img src="Images/debug-aboutmethod_breakpoint.png" alt="Setting an Application Breakpoint" style="max-width:100%;"></a></p>
-<p><em>Setting an Application Breakpoint</em></p>
+<p>Return to the Visual Studio and confirm that a Diagnostics Event window opened when you launched the app. The default templates for Service Fabric Service applications in Visual Studio 2017 include a <code>ServiceEventSource</code> class. This class registers your application and provides helper events for writing trace and diagnostic information using <a href="https://msdn.microsoft.com/library/windows/desktop/bb968803.aspx">Event Tracing for Windows</a>.</p>
+<p><a href="Images/debug-diagnosticeventswindow.png" target="_blank"><img src="Images/debug-diagnosticeventswindow.png" alt="Viewing diagnostic events" style="max-width:100%;"></a></p>
+<p><em>Viewing diagnostic events</em></p>
 </li>
 <li>
-<p>Return to your Web browser and click on the <em>About</em> link at the top of the page.</p>
-<p><a href="Images/debug-clickon_about.png" target="_blank"><img src="Images/debug-clickon_about.png" alt="Clicking the About Link" style="max-width:100%;"></a></p>
-<p><em>Clicking the About Link</em></p>
+<p>Open <strong>HomeController.cs</strong> in the "Controllers" folder of the <strong>InventoryService</strong> project. Insert a breakpoint on the <code>return</code> statement in the <code>About</code> method by clicking in the left margin or placing the cursor on that line and pressing <strong>F9</strong>.</p>
+<p><a href="Images/debug-aboutmethod_breakpoint.png" target="_blank"><img src="Images/debug-aboutmethod_breakpoint.png" alt="Inserting a breakpoint" style="max-width:100%;"></a></p>
+<p><em>Inserting a breakpoint</em></p>
 </li>
 <li>
-<p>Return to Visual Studio 2017. Notice that the application execution is indeed suspended at the breakpoint that you set, just as you would expect when debugging any other type of .NET application. Clicking the <strong>Continue</strong> button in Visual Studio 2017 (or pressing the <strong>F5</strong> key on your keyboard will resume application execution, and the <em>About</em> page should now be displayed in your Web browser.</p>
+<p>Return to your browser and click <strong>About</strong> at the top of the page.</p>
+<p><a href="Images/debug-clickon_about.png" target="_blank"><img src="Images/debug-clickon_about.png" alt="Navigating to the About page" style="max-width:100%;"></a></p>
+<p><em>Navigating to the About page</em></p>
 </li>
 <li>
-<p>The final set of steps in this exercise is to examine the <em>Service Fabric Explorer</em> Web application. The <em>Service Fabric Explorer</em> is a Web-based tool that you can use to both see and manage the status of your Service Fabric application in a cluster.</p>
-<p>With your application still running, locate the <em>Service Fabric Local Cluster Manager</em> icon in the Windows System Tray. Right-click on the icon and select <strong>Manage Local Cluster</strong> from the menu that is displayed.</p>
-<p><a href="Images/debug-systemtray_managelocalcluster.png" target="_blank"><img src="Images/debug-systemtray_managelocalcluster.png" alt="Launching the Local Cluster Manager Site" style="max-width:100%;"></a></p>
-<p><em>Launching the Local Cluster Manager Site</em></p>
-<p>This will open the <em>Service Fabric Explorer</em> for your site in your Web browser.</p>
-<p><a href="Images/debug-servicefabricexplorer.png" target="_blank"><img src="Images/debug-servicefabricexplorer.png" alt="The Service Fabric Explorer" style="max-width:100%;"></a></p>
-<p><em>The Service Fabric Explorer</em></p>
+<p>Return to Visual Studio and confirm that the breakpoint was hit. Click the <strong>Continue</strong> button (or simply press <strong>F5</strong>) to resume execution.</p>
 </li>
 <li>
-<p>The <em>Service Fabric Explorer</em> interface is broken into 2 main sections. The tree on the left side allows you to navigate through the parts that make up your cluster, and the panel on the right shows the details for what has been selected on the left.</p>
-<p>The initial display is the main cluster dashborad view. This view offers at-a-glance information about your cluster's health, including the number and status of deployed applications and the number and status of the nodes in use in the cluster. Using the section links at the top of the cluster display, you can also:</p>
-<ul>
-<li>See detailed information about the overall cluster</li>
-<li>See a map illustrating the layout of the cluster</li>
-<li>Health metrics for the cluster</li>
-<li>The application manifest that describes the application deployment in the cluster.</li>
-</ul>
+<p>The next step is to use the Service Fabric Explorer to view the status of the application as it runs in a local cluster. Right-click the <strong>Service Fabric Local Cluster Manager</strong> icon in the Windows system tray and select <strong>Manage Local Cluster</strong> from the ensuing menu.</p>
+<p><a href="Images/debug-systemtray_managelocalcluster.png" target="_blank"><img src="Images/debug-systemtray_managelocalcluster.png" alt="Launching the Local Cluster Manager" style="max-width:100%;"></a></p>
+<p><em>Launching the Local Cluster Manager</em></p>
 </li>
 <li>
-<p>You can also view information about the applications and services deployed to the cluster using the <em>Applications</em> node in the navigation tree. Click on the chevron next to the <strong>Applications</strong> link on the left-side navigation, then click on the chevron next to the <strong>ServiceFabricLabType</strong> entry, then click on the chevron next to the <strong>fabric:/ServiceFabricLab</strong> application entry, and again click on the chevron next to the <strong>fabric:/ServiceFabricLab/InventoryService</strong> service entry. Finally, click on the entry under the <strong>fabric:/ServiceFabricLab/InventoryService</strong> branch to select the running service partition.</p>
-<p><a href="Images/debug-expandtree_toservicepartition.png" target="_blank"><img src="Images/debug-expandtree_toservicepartition.png" alt="Locating the Service Fabric Service Partition" style="max-width:100%;"></a></p>
-<p>_Locating the Service Fabric Service Partition</p>
+<p>Confirm that the Service Fabric Explorer appears in a browser. This dashboard view offers at-a-glance information about your cluster's health, including the status of applications deployed to the cluster and the status of the cluster's nodes. Links at the top of the dashboard provide access to additional information, including a cluster map and detailed health metrics.</p>
+<p><a href="Images/debug-servicefabricexplorer.png" target="_blank"><img src="Images/debug-servicefabricexplorer.png" alt="Service Fabric Explorer" style="max-width:100%;"></a></p>
+<p><em>Service Fabric Explorer</em></p>
 </li>
 <li>
-<p>In the display area for the selected service partition, locate the <strong>Instances</strong> section and notice the <strong>Node Name</strong> value</p>
-<p><a href="Images/debug-partition_information.png" target="_blank"><img src="Images/debug-partition_information.png" alt="Locating the Service Fabric Service Partition" style="max-width:100%;"></a></p>
-<p><em>Locating the Service Fabric Service Partition</em></p>
+<p>Expand the <strong>Applications</strong> node in the treeview on the left and drill down until you find the running partition, whose name is a GUID. Click the running partition to select it.</p>
+<p><a href="Images/select-partition.png" target="_blank"><img src="Images/select-partition.png" alt="Selecting the running partition" style="max-width:100%;"></a></p>
+<p><em>Selecting the running partition</em></p>
 </li>
 <li>
-<p>Finally, expand the <strong>Nodes</strong> link in the left-side navigation and expand the node that corresponds to the Node Name you obtained in the previous step. Spend some time exploring the contents of this node to see some of the information that is available.</p>
-<p><a href="Images/debug-nodeinformation.png" target="_blank"><img src="Images/debug-nodeinformation.png" alt="Examining the Application Node Information" style="max-width:100%;"></a></p>
-<p><em>Examining the Application Node Information</em></p>
+<p>Find the node name in the "Instances" section on the right.</p>
+<p><a href="Images/debug-partition_information.png" target="_blank"><img src="Images/debug-partition_information.png" alt="Finding the node name" style="max-width:100%;"></a></p>
+<p><em>Finding the node name</em></p>
 </li>
 <li>
-<p>Close you Web browser. To stop your cluster, click on the <strong>Debug</strong> menu in Visual Studio 2017 and then click on <strong>Stop Debugging</strong>. By default, Visual Studio 2017 will remove your deployed application from the Service Fabric Local Cluster Manager.</p>
+<p>Expand the <strong>Nodes</strong> node in the treeview on the left. Then select the node you identified in the previous step. Spend some time exploring the information that is available.</p>
+<p><a href="Images/debug-nodeinformation.png" target="_blank"><img src="Images/debug-nodeinformation.png" alt="Viewing node information" style="max-width:100%;"></a></p>
+<p><em>Viewing node information</em></p>
+</li>
+<li>
+<p>Close your Web browser. Then return to Visual Studio and use the <strong>Debug</strong> -&gt; <strong>Stop Debugging</strong> command to stop debugging.</p>
 </li>
 </ol>
+<p>When you stop debugging, Visual Studio will stop the application and remove it from the local cluster. It will be deployed again the next time you launch it from Visual Studio.</p>
 <p><a name="Exercise3"></a></p>
-<h2>Exercise 3: Add another service in the Service Fabric Cluster</h2>
-<p>In this exercise, you will add a new Stateful Service to the Service Fabric application that you created and worked with in the previous exercises. This service will act as a repository service for a hypothetical Product Inventory system, using the Service Fabric Stateful Service Reliable Collections to hold information and exposing access to this information via RESTful Web API endpoints.</p>
+<h2>Exercise 3: Add another service to the cluster</h2>
+<p>In this exercise, you will add a new service to the Service Fabric application that you created in <a href="#Exercise1">Exercise 1</a>. This service will act as a repository for a hypothetical Product Inventory system, and it will use Service Fabric <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-reliable-collections">Stateful Service Reliable Collections</a> to maintain inventory data and make it available through RESTful Web API endpoints.</p>
 <ol>
 <li>
-<p>Open the File menu in Visual Studio 2017. In the dropdown menu, click on <strong>Add</strong> and then on <strong>New Project...</strong></p>
-<p><a href="Images/start-file_newproject.png" target="_blank"><img src="Images/start-file_newproject.png" alt="Creating a new project" style="max-width:100%;"></a></p>
-<p><em>Creating a new project</em></p>
+<p>Right-click the <strong>ServiceFabricLab</strong> solution in Solution Explorer and use the <strong>Add</strong> -&gt; <strong>New Project</strong> command to add a project to the solution. Select <strong>Class Library (.NET Framework)</strong> as the project type and name it "InventoryCommon." Then click <strong>OK</strong>.</p>
+<p><a href="Images/addservice-newclasslibrary_settings.png" target="_blank"><img src="Images/addservice-newclasslibrary_settings.png" alt="Adding a project to the solution" style="max-width:100%;"></a></p>
+<p><em>Adding a project to the solution</em></p>
 </li>
 <li>
-<p>In the <strong>New Project</strong> dialog, select the Visual C# node and then click on the Class Library (.NET Framework) entry.</p>
-<ul>
-<li>Enter <em>InventoryCommon</em> for the project <strong>Name</strong>.</li>
-<li>Leave the <strong>Location</strong> set to the default value.</li>
-<li>Click the <strong>OK</strong> button to create the project.</li>
-</ul>
-<p><a href="Images/addservice-newclasslibrary_settings.png" target="_blank"><img src="Images/addservice-newclasslibrary_settings.png" alt="New project settings" style="max-width:100%;"></a><br>
-<em>New project settings</em></p>
-<p>Delete the <em>Class1.cs</em> file from the new <em>InventoryCommon</em> project.</p>
+<p>Delete the file named <strong>Class1.cs</strong> file from the <strong>InventoryCommon</strong> project. Then right-click the project in Solution Explorer and select <strong>Add</strong> -&gt; <strong>Existing Item...</strong>.</p>
+<p><a href="Images/addservice-add_existingitem_common.png" target="_blank"><img src="Images/addservice-add_existingitem_common.png" alt="Adding items to the project" style="max-width:100%;"></a></p>
+<p><em>Adding items to the project</em></p>
 </li>
 <li>
-<p>Right-click on the InventoryCommon project entry in the Solution Explorer. In the context menu, click on Add and then on Existing Item...</p>
-<p><a href="Images/addservice-add_existingitem_common.png" target="_blank"><img src="Images/addservice-add_existingitem_common.png" alt="Add an Existing Item to the Common Project" style="max-width:100%;"></a></p>
-<p><em>Add an Existing Item to the Common Project</em></p>
+<p>In the "Add Existing Item" dialog, browse to the "Assets" folder included with this lab. Select the file named <strong>InventoryItem.cs</strong> and click <strong>Add</strong>.</p>
+<p><a href="Images/addservice-add_inventoryitemfile.png" target="_blank"><img src="Images/addservice-add_inventoryitemfile.png" alt="Adding InventoryItem.cs" style="max-width:100%;"></a></p>
+<p><em>Adding InventoryItem.cs</em></p>
+<p>This file contains an <code>InventoryItem</code> type that will be used to pass inventory items between services in the application. It also contains an <code>enum</code> named <code>InventoryItemType</code> that specifies the item type — Appliances, Flooring, etc. Later, this <code>enum</code> will be used as a key to divide the deployment into separate service partiions.</p>
 </li>
 <li>
-<p>In the <em>Add Existing Item</em> dialog, browse to the folder where this lab content is located and open the <em>Assets</em> folder. Select the <strong>InventoryItem.cs</strong> file and click on the <strong>Add</strong> button.</p>
-<p><a href="Images/addservice-add_inventoryitemfile.png" target="_blank"><img src="Images/addservice-add_inventoryitemfile.png" alt="Add the InventoryItem File" style="max-width:100%;"></a></p>
-<p><em>Add the InventoryItem File</em></p>
-<blockquote>
-<p>This file contains the definition of an <code>InventoryItem</code> type that will be exchanged between services in the application. It also contains the related <code>InventoryItemType</code> that will be used to categorize the inventory items. In a later exercise, this value will be used as a key to divide the application deployment into separate service partiions.</p>
-</blockquote>
+<p>Right-click <strong>Services</strong> in the <strong>ServiceFabricLab</strong> project, and select <strong>Add</strong> -&gt; <strong>New Service Fabric Service...</strong>..</p>
+<p><a href="Images/addservice-infoke_addnewservice.png" target="_blank"><img src="Images/addservice-infoke_addnewservice.png" alt="Adding a service" style="max-width:100%;"></a></p>
+<p><em>Adding a service</em></p>
 </li>
 <li>
-<p>In the <strong>ServiceFabricLab</strong> project, right-click on the <strong>Services</strong> node. Click <strong>Add</strong> and then click <strong>New Service Fabric Service...</strong> from the popup menus.</p>
-<p><a href="Images/addservice-infoke_addnewservice.png" target="_blank"><img src="Images/addservice-infoke_addnewservice.png" alt="Add a New Service" style="max-width:100%;"></a></p>
-<p><em>Add a New Service</em></p>
+<p>Select <strong>Stateful Service</strong> and enter "InventoryRepository" as the service name. Then click <strong>OK</strong>. This will add a new project named <strong>InventoryRepository</strong> to the solution.</p>
+<p><a href="Images/addservice-newservicefabricservice_settings.png" target="_blank"><img src="Images/addservice-newservicefabricservice_settings.png" alt="Adding a stateful service" style="max-width:100%;"></a></p>
+<p><em>Adding a stateful service</em></p>
 </li>
 <li>
-<p>In the New Service Fabric Service dialog, click on the the <strong>Stateful Service</strong> option and enter the name <strong>InventoryRepository</strong> for the Service Name. Click the <strong>OK</strong> button to close the dialog.</p>
-<p><a href="Images/addservice-newservicefabricservice_settings.png" target="_blank"><img src="Images/addservice-newservicefabricservice_settings.png" alt="New Service Fabric Service" style="max-width:100%;"></a></p>
-<p><em>New Service Fabric Service</em></p>
-<p>This will add a new <em>InventoryRepository</em> project to your Visual Studio 2017 solution.</p>
-</li>
-<li>
-<p>The next step is to configure the new service to respond to HTTP REST requests. In the Solution Explorer in Visual Studio 2017, right-click on the <strong>References</strong> node in the <strong>InventoryRepository</strong> project and click on <strong>Manage NuGet Packages...</strong> in the context menu.</p>
-</li>
-<li>
-<p>In the NuGet window in Visual Studio, select <strong>Browse</strong>. Type (or paste) <em><strong>Microsoft.AspNet.WebApi.OwinSelfHost</strong></em> into the Search box. Select the <em><strong>Microsoft.AspNet.WebApi.OwinSelfHost</strong></em> entry in the search results and click the Install button.</p>
+<p>Right-click the <strong>InventoryRepository</strong> project and select <strong>Manage NuGet Packages...</strong> from the context menu. Make sure <strong>Browse</strong> is selected in the Nuget Package Manager, and then type "Microsoft.AspNet.WebApi.OwinSelfHost" into the search box. Select <em><strong>Microsoft.AspNet.WebApi.OwinSelfHost</strong></em> from the search results and click the Install button. OK any changes shown to you and accept any licenses that are presented.</p>
 <p><a href="Images/addservice-add_ownselfhostnugetpackage.png" target="_blank"><img src="Images/addservice-add_ownselfhostnugetpackage.png" alt="Adding the OWIN Self-Host Nuget Package" style="max-width:100%;"></a></p>
 <p><em>Adding the OWIN Self-Host Nuget Package</em></p>
-<p>In the <strong>Preview</strong> dialog, click the <strong>OK</strong> button to verify the list of packages being installed, and in the <strong>License Acceptance</strong> dialog, click the <strong>I Accept</strong> button to accept the terms associated with these packages.</p>
 </li>
 <li>
 <p>When the NuGet package installation completes, right-click on the <strong>InventoryRepository</strong> project entry in the Solution Explorer. Click on <strong>Add</strong> and then click on <strong>Existing Item</strong> in the popup menus.</p>
@@ -883,7 +857,7 @@ vertical-align:1px;
 </li>
 </ol>
 <p><a name="Exercise4"></a></p>
-<h2>Exercise 4: Connect the services in a Service Fabric cluster</h2>
+<h2>Exercise 4: Connect the services in the cluster</h2>
 <p>In this exercise, you will connect the two services you have created, making requests to the <em>InventoryRepository</em> from the <em>InventoryService</em>. This will allow you to add inventory items to the catalog, as well as increase and decrease the inventory quantity for a given item.  At the end of this exercise, you will be able to launch your application and interact with it from your Web browser.</p>
 <ol>
 <li>
@@ -1414,7 +1388,7 @@ vertical-align:1px;
 <li>Configure communication between multiple services in a Service Fabric application.</li>
 <li>Leverage partitioning and Reliable Services in order to provide scalability and fault-tolerance in a Service Fabric application.</li>
 </ul>
-<p>The application you built was fairly simple - it included a front-end display service and an inventory repository service. A more complete Microservices implementation might consist of several additional services communicating with each other and leveraging the Service Fabric infrastructure to resolve locations and addresses. In some cases, individual services might be assigned to specific subsets of the cluster that Service Fabric is managing, allowing different services to scale independently — a hallmark of a true Microservices implementation.</p>
+<p>The application you built was fairly simple. It included a front-end display service and an inventory repository service. A more complete Microservices implementation might consist of several additional services communicating with each other and leveraging the Service Fabric infrastructure to resolve locations and addresses. In some cases, individual services might be assigned to specific subsets of the cluster that Service Fabric is managing, allowing different services to scale independently — a hallmark of a true Microservices implementation.</p>
 <p>As you have seen, using Azure Service Fabric it is possible to create applications that consist of several different kinds of services and to deploy them within a framework that supports both scalability and reliability.</p>
 <hr>
 <p>Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
