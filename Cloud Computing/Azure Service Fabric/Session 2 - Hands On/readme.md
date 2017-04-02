@@ -220,9 +220,9 @@ In this exercise, you will add a new service to the Service Fabric application t
 
 1. In the "Add Existing Item" dialog, browse to the "Assets" folder included with this lab. Select the file named **InventoryItem.cs** and click **Add**. 
 
-	![Adding InventoryItem.cs](Images/addservice-add_inventoryitemfile.png)
+	![Importing InventoryItem.cs](Images/addservice-add_inventoryitemfile.png)
 
-    _Adding InventoryItem.cs_
+    _Importing InventoryItem.cs_
 
 	This file contains an ```InventoryItem``` type that will be used to pass inventory items between services in the application. It also contains an ```enum``` named ```InventoryItemType``` that specifies the item type — Appliances, Flooring, etc. Later, this ```enum``` will be used as a key to divide the deployment into separate service partiions.
 
@@ -244,26 +244,22 @@ In this exercise, you will add a new service to the Service Fabric application t
 
     _Adding the OWIN Self-Host Nuget Package_
 
-1. When the NuGet package installation completes, right-click on the **InventoryRepository** project entry in the Solution Explorer. Click on **Add** and then click on **Existing Item** in the popup menus.
+1. Right-click the **InventoryRepository** project in Solution Explorer and use the **Add** -> **Existing Item** command to import **OwinCommunicationListener.cs** from this lab's "Assets" folder.
 
-	![Add an Existing Item to the Service Project](Images/addservice-add_existingitem.png)
+	![Importing OwinCommunicationListener.cs](Images/addservice-add_owincommunicationlistenerfile.png)
 
-    _Add an Existing Item to the Service Project_
+    _Importing OwinCommunicationListener.cs_
 
-1. In the *Add Existing Item* dialog, browse to the folder where this lab content is located and open the *Assets* folder. Select the **OwinCommunicationListener.cs** file and click on the **Add** button. 
+1. Open **InventoryRepository.cs** and add the following ```using``` statements at the top of the file:
 
-	![Add the OWINCommunicationListener File](Images/addservice-add_owincommunicationlistenerfile.png)
-
-    _Add the OWINCommunicationListener File_
-
-1. Open the **InventoryRepository.cs** file in Visual Studio 2017. Add the following `using` statements at the top of the file.
 	``` c#
 	using System.Fabric.Description;
 	using InventoryRepository.ServiceFabric;
 	```  
 
-1. Next, delete the entire `RunAsync` method declaration and its contents, then update the `CreateServiceReplicaListeners` method to contain the following block of code: 
-	``` c#
+1. Delete the ```RunAsync``` method and replace the contents of the ```CreateServiceReplicaListeners``` method with the following code:
+
+	```c#
 	var endpoints = Context.CodePackageActivationContext.GetEndpoints()
 	           .Where(endpoint => endpoint.Protocol == EndpointProtocol.Http || endpoint.Protocol == EndpointProtocol.Https)
 	           .Select(endpoint => endpoint.Name);
@@ -277,28 +273,26 @@ In this exercise, you will add a new service to the Service Fabric application t
 	            endpoint), 
 	        endpoint));
 	```
-	This code locates the declared HTTP or HTTPS endpoints for the current service. It then returns a new `ServiceReplicaListener` instance for each, which builds on top of the `OwinCommunicationListener` class that was in the file you just added to the project. Additionally, it indicates that the OWIN pipeline should be initialized with the `WebHostStartup` class, which was also contained in that same file. 
 
-1. The next step is to open the **ServiceManifest.xml** file in the project's **PackageRoot** folder. Locate the `<Endpoint Name="ServiceEndpoint" />` entry and replace it with the following, which configures the application to expose an HTTP endpoint on port 8081, and drives the configuration code in the previous step.
+	This code retrieves the HTTP/HTTPS endpoints for the current service. It then returns a new ```ServiceReplicaListener``` instance for each. Each ```ServiceReplicaListener``` is configured to load an ```OwinCommunicationListener``` and initialize the OWIN pipeline with an instance of ```WebHostStartup```. 
+
+1. Now open **ServiceManifest.xml** in the project's "PackageRoot" folder. Locate the ```<Endpoint Name="ServiceEndpoint" />``` element and replace it with the following statement to configure the application to expose an HTTP endpoint on port 8081:
 
 	``` xml
 	<Endpoint Name="ServiceEndpoint" Type="Input" Protocol="http" Port="8081"/>
 	```
-1. In the Solution Explorer in Visual Studio 2017, right-click on the **References** node in the **InventoryRepository** project and click on **Add References...** in the context menu.
 
-1. In the **Reference Manager** dialog, select the **Projects** node and then click the checkbox next to the **InventoryCommon** project entry. Click the **OK** button to add the reference.
+1. In Solution Explorer, right-click **References** in the **InventoryRepository** project and select **Add References...**. In the "Reference Manager" dialog, check the box next to **InventoryCommon** in the list of projects. Then click **OK**.
 
-	![Add A Reference to the InventoryCommon Project](Images/addservice-addreference_tocommonlibrary.png)
+	![Adding a reference to the InventoryCommon project](Images/addservice-addreference_tocommonlibrary.png)
 
-    _Add A Reference to the InventoryCommon Project_
+    _Adding a reference to the InventoryCommon project_
 
-1. In the Solution Explorer in Visual Studio 2017, right-click on the **InventoryRepository** project. Click on **Add** and then click on the **New Folder** in the context menus. Name the folder **Controllers**.
+1. Right-click the **InventoryRepository** project again use the **Add** -> **New Folder** command to add folder named "Controllers."
 
-1. Right-click on the *Controllers* folder. Click on **Add** and then click on **Class...** in the context menus. In the **AddNewItem - InventoryRepository** dialog, name the class **InventoryController.cs** and click the **Add** button.
+1. Right-click the "Controllers" folder. Use the **Add** -> **Class...** command to add a class file named **InventoryController.cs**. Then replace the contents of the file with the following code:
 
-1. Replace the code in the `InventoryController` class with the following block:
-
-	``` c#
+	```c#
 	using System;
 	using System.Collections.Generic;
 	using System.Threading;
@@ -324,8 +318,9 @@ In this exercise, you will add a new service to the Service Fabric application t
 	}
 	```
 
-1. Add the following GetItem(s) methods to the `InventoryController` class:
-	``` c#
+1. Add the following methods to the ```InventoryController``` class:
+
+	```c#
 	[HttpGet]
 	[Route("")]
 	public async Task<IEnumerable<InventoryItem>> GetItems()
@@ -359,14 +354,12 @@ In this exercise, you will add a new service to the Service Fabric application t
 	    }
 	}
 	```
-	In both of these methods, the Service Fabric Stateful Services' `StateMenager` is used to create a transaction scope for the operations. The next step either retrieves a `ReliableDictionary` named *"inventoryDictionary"* if it exists; otherwise the dictionary is created. 
+	
+	Each of these methods uses the Service Fabric Stateful Services' `StateManager` class to create a transaction scope, create or retrieve a ```ReliableDictionary``` object, and retrieve an item from that object. ```ReliableDictionary``` is part of the [Reliable Collection](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-reliable-collections) types offered by Service Fabric. Reliable collections support high-availability, scalability, and speed while offering a programming model that is similar to one for applications that run on a single computer rather than a cluster.
 
-	> The `ReliableDictionary` is a part of the *Reliable Collection* types offered by Service Fabric. Reliable collections support high-availability, scalability, and speed while offering a programming model that is similar to one that would be used for single-computer applications. As of this writing, there are two memebrs of the Service Fabric Reliable Collections - `ReliableDictionary` and `ReliableQueue`. You can learn more about the Service Fabric Reliable Collections [here](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-reliable-collections).
+1. Now add the following methods to the ```InventoryController``` class:
 
-	Finally, the dictionary is either iterated or searched for a specific item and the results are returned. 
- 
-1. Add the following AddNewItem method to the `InventoryController` class:
-	``` c#
+	```c#
 	[HttpPost]
 	[Route("")]
 	public async Task<InventoryItem> AddNewItem(InventoryItem item)
@@ -381,13 +374,6 @@ In this exercise, you will add a new service to the Service Fabric application t
 	    return item;
 	}
 
-	```
-
-	This code follows a very similar pattern to the GetItem(s) blocks discussed previously.
-
-1. Add the methods in the block below to add support for updating inventory quantities:
-
-	``` c#
 	[HttpPost]
 	[Route("{itemId}/addinventory/{quantity}")]
 	public Task AddInventory(Guid itemId, Int32 quantity)
@@ -422,22 +408,17 @@ In this exercise, you will add a new service to the Service Fabric application t
 	        }
 	    }
 	}
-
 	```
 	
-	> The code in the `UpdateInventoryAsync` block is different from the code shown in the previous blocks in a subtle but important way. Items stored in the Reliable Collections are immutable. In order to update an `InventoryItem` to reflect the new quantities, the items first need to be duplicated. The copy is then updated, and the original `InventoryItem` value in the dictionary is replaced with a call to `TryUpdateAsync`.    
+	The ```UpdateInventoryAsync``` method does something that is subtle but important. Items stored in Reliable Collections are immutable. In order to update an ```InventoryItem``` with a new quantity, ```UpdateInventoryAsync``` copies the original ```InventoryItem```, updates the quantity, and then replaces the original item in the dictionary with the new one by calling ```TryUpdateAsync```.    
 
-1. At this point, it would be wise to build and run your Service Fabric solution in Visual Studio using the steps presented in Exercise 2. 
+1. Launch the application again from Visual Studio. Open the Service Fabric Explorer and confirm that there are now *two* services running in the cluster.
 
-	The services are not yet communicating with each other, so you won't see any new behavior in the service itself, but you can use the Service Fabric Explorer to see the two services working in your application.
+	![Services running in the cluster](Images/addservice-check_bothservicesrunning.png)
 
-	With your application running, once again right-click on the **Service Fabric Local Cluster Manager** icon in your Windows System Tray and select **Manage Local Cluster**. Open the Applications node until you see both services running in the cluster.
+    _Services running in the cluster_
 
-	![Making Sure Both Services Are Running in the Service Fabric Explorer](Images/addservice-check_bothservicesrunning.png)
-
-    _Making Sure Both Services Are Running in the Service Fabric Explorer_
-
-	Once you have checked that both services are listed in the *Service Fabric Explorer*, stop debugging.
+Once you have confirmed that both services are shown in Service Fabric Explorer, use Visual Studio's **Stop Debugging** command to stop debugging and shut down the application.
 
 <a name="Exercise4"></a>
 ## Exercise 4: Connect the services in the cluster ##
