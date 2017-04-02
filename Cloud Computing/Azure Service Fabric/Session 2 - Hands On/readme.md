@@ -53,7 +53,7 @@ Additional information about configuring your development environment can be fou
 This hands-on lab includes the following exercises:
 
 - [Exercise 1: Create a Service Fabric solution](#Exercise1)
-- [Exercise 2: Run the Service Fabric app in the Service Fabric Local Cluster Manager](#Exercise2)
+- [Exercise 2: Run the app in the Service Fabric Local Cluster Manager](#Exercise2)
 - [Exercise 3: Add another service in the Service Fabric cluster](#Exercise3)
 - [Exercise 4: Connect the services in a Service Fabric cluster](#Exercise4)
 - [Exercise 5: Enable partitioning and show node failover](#Exercise5)
@@ -129,89 +129,77 @@ In this exercise, you will create an Azure Service Fabric application using Visu
 At this point, the application is basically a standard ASP.NET Core 1.1 MVC Web application. ASP.NET Core is a rich framework for building Web applications. Additional information about ASP.NET Core can be found [here](https://www.asp.net/core).
 
 <a name="Exercise2"></a>
-## Exercise 2: Run the Service Fabric app in the Service Fabric Local Cluster Manager ##
+## Exercise 2: Run the app in the Service Fabric Local Cluster Manager ##
 
-Now that you have created a basic Service Fabric application project in Visual Studio 2017, it's time to see the application in action. In this exercise, you will deploy your application to the Service Fabric Local Cluster Manager on your development machine and examine the running service using both Visual Studio 2017 and the Service Fabric Cluster manager.
+Now that you have created a basic Service Fabric project in Visual Studio 2017, it's time to see the application in action. In this exercise, you will deploy the application to the Service Fabric Local Cluster Manager on your development machine and examine the service using both Visual Studio 2017 and the Service Fabric Cluster Manager.
 
-1. Click on the **Start** button in Visual Studio 2017. This will deploy your Service Fabric application to your local Service Fabric cluster and then open your default Web browser to your service's URL.
+1. Click the **Start** button in Visual Studio 2017. This will deploy the Service Fabric application to a local Service Fabric cluster. This may take a couple of minutes the first time you do it.
 
-    ![Starting the Service Fabric Application from Visual Studio 2017](Images/debug-startservice_indebugger.png)
+	> If the service fails to run with a deployment error, make sure Visual Studio 2017 is running as an administrator. 
 
-     _Starting the Service Fabric Application from Visual Studio 2017_
+    ![Starting the application](Images/debug-startservice_indebugger.png)
 
-	> Note - depending on whether this is the first time you are deploying conten to your Service Fabric Local Cluster Manager, this step may take a couple minutes as the local cluster is prepared for first-time use. 
+     _Starting the application_
 
-	If the service fails to run with a deployment error,be sure to check that you are running Visual Studio 2017 as an administrator. 
+1. Confirm that a browser opens to the service URL.
 
-    ![The Service Fabric Application Running in a Web Browser](Images/debug-apprunning_inbrowser.png)
+    ![Browser showing the service URL](Images/debug-apprunning_inbrowser.png)
 
-     _The Service Fabric Application Running in a Web Browser_
+     _Browser showing the service URL_
 
-1. In addition to the application being launched in your Web browser, running your application for debugging in Visual Studio 2017 will also open a *Diagnostic Events* window within the IDE. 
+1. Return to the Visual Studio and confirm that a Diagnostics Event window opened when you launched the app. The default templates for Service Fabric Service applications in Visual Studio 2017 include a `ServiceEventSource` class. This class registers your application and provides helper events for writing trace and diagnostic information using [Event Tracing for Windows](https://msdn.microsoft.com/library/windows/desktop/bb968803.aspx).
 
-    ![The Diagnostic Events view in Visual Studio 2017](Images/debug-diagnosticeventswindow.png)
+    ![Viewing diagnostic events](Images/debug-diagnosticeventswindow.png)
 
-     _The Diagnostic Events view in Visual Studio 2017_
+     _Viewing diagnostic events_
 
-	The default templates for Service Fabric Service applications in Visual Studio 2017 include a `ServiceEventSource` class. This class registers your application and provides helper events for writing trace and diagnostic information to *Event Tracing for Windows* (ETW).
-
-	ETW is a high-performance tracing technology that is built into Windows. Your applications can leverage the code provided in *ServiceEventSource* to write application-specific diagnostic information into ETW in order to help you better understand and troubleshoot your service's behavior. More information about ETW can be found [here](https://msdn.microsoft.com/library/windows/desktop/bb968803.aspx).
-
-1. You will now see how you can set and trap a debugger breakpoint in your service fabric application. Open the **HomeController.cs** file located in the **Controllers** folder in the *InventoryService* project. Place your cursor at the start of the return statement in the `public IActionResult About()` method and use the F9 key on your keyboard to place a breakpoint at this line.
+1. Open **HomeController.cs** in the "Controllers" folder of the **InventoryService** project. Insert a breakpoint on the ```return``` statement in the ```About``` method by clicking in the left margin or placing the cursor on that line and pressing **F9**.
 	
-	![Setting an Application Breakpoint](Images/debug-aboutmethod_breakpoint.png)
+	![Inserting a breakpoint](Images/debug-aboutmethod_breakpoint.png)
 
-    _Setting an Application Breakpoint_
+    _Inserting a breakpoint_
 
-1. Return to your Web browser and click on the *About* link at the top of the page.
+1. Return to your browser and click **About** at the top of the page.
 
-	![Clicking the About Link](Images/debug-clickon_about.png)
+	![Navigating to the About page](Images/debug-clickon_about.png)
 
-    _Clicking the About Link_
+    _Navigating to the About page_
 
-1. Return to Visual Studio 2017. Notice that the application execution is indeed suspended at the breakpoint that you set, just as you would expect when debugging any other type of .NET application. Clicking the **Continue** button in Visual Studio 2017 (or pressing the **F5** key on your keyboard will resume application execution, and the *About* page should now be displayed in your Web browser. 
+1. Return to Visual Studio and confirm that the breakpoint was hit. Click the **Continue** button (or simply press **F5**) to resume execution. 
 
-1. The final set of steps in this exercise is to examine the *Service Fabric Explorer* Web application. The *Service Fabric Explorer* is a Web-based tool that you can use to both see and manage the status of your Service Fabric application in a cluster.   
+1. The next step is to use the Service Fabric Explorer to view the status of the application as it runs in a local cluster. Right-click the **Service Fabric Local Cluster Manager** icon in the Windows system tray and select **Manage Local Cluster** from the ensuing menu. 
 
-	With your application still running, locate the *Service Fabric Local Cluster Manager* icon in the Windows System Tray. Right-click on the icon and select **Manage Local Cluster** from the menu that is displayed. 
+	![Launching the Local Cluster Manager](Images/debug-systemtray_managelocalcluster.png)
 
-	![Launching the Local Cluster Manager Site](Images/debug-systemtray_managelocalcluster.png)
+    _Launching the Local Cluster Manager_
 
-    _Launching the Local Cluster Manager Site_
+1. Confirm that the Service Fabric Explorer appears in a browser. This dashboard view offers at-a-glance information about your cluster's health, including the status of applications deployed to the cluster and the status of the cluster's nodes. Links at the top of the dashboard provide access to additional information, including a cluster map and detailed health metrics.
 
-	This will open the *Service Fabric Explorer* for your site in your Web browser. 
+	![Service Fabric Explorer](Images/debug-servicefabricexplorer.png)
 
-	![The Service Fabric Explorer](Images/debug-servicefabricexplorer.png)
+    _Service Fabric Explorer_
 
-    _The Service Fabric Explorer_
+1. Expand the **Applications** node in the treeview on the left and drill down until you find the running partition, whose name is a GUID. Click the running partition to select it.
 
-1. The *Service Fabric Explorer* interface is broken into 2 main sections. The tree on the left side allows you to navigate through the parts that make up your cluster, and the panel on the right shows the details for what has been selected on the left.
+	![Selecting the running partition](Images/select-partition.png)
 
-	The initial display is the main cluster dashborad view. This view offers at-a-glance information about your cluster's health, including the number and status of deployed applications and the number and status of the nodes in use in the cluster. Using the section links at the top of the cluster display, you can also:
-	- See detailed information about the overall cluster
-	- See a map illustrating the layout of the cluster
-	- Health metrics for the cluster
-	- The application manifest that describes the application deployment in the cluster.
+    _Selecting the running partition_
 
-1. You can also view information about the applications and services deployed to the cluster using the *Applications* node in the navigation tree. Click on the chevron next to the **Applications** link on the left-side navigation, then click on the chevron next to the **ServiceFabricLabType** entry, then click on the chevron next to the **fabric:/ServiceFabricLab** application entry, and again click on the chevron next to the **fabric:/ServiceFabricLab/InventoryService** service entry. Finally, click on the entry under the **fabric:/ServiceFabricLab/InventoryService** branch to select the running service partition.
+1. Find the node name in the "Instances" section on the right.
 
-	![Locating the Service Fabric Service Partition](Images/debug-expandtree_toservicepartition.png)
+	![Finding the node name](Images/debug-partition_information.png)
 
-    _Locating the Service Fabric Service Partition
+    _Finding the node name_
 
-1. In the display area for the selected service partition, locate the **Instances** section and notice the **Node Name** value
+1. Expand the **Nodes** node in the treeview on the left. Then select the node you identified in the previous step. Spend some time exploring the information that is available.
 
-	![Locating the Service Fabric Service Partition](Images/debug-partition_information.png)
+	![Viewing node information](Images/debug-nodeinformation.png)
 
-    _Locating the Service Fabric Service Partition_
+    _Viewing node information_
 
-1. Finally, expand the **Nodes** link in the left-side navigation and expand the node that corresponds to the Node Name you obtained in the previous step. Spend some time exploring the contents of this node to see some of the information that is available.
-
-	![Examining the Application Node Information](Images/debug-nodeinformation.png)
-
-    _Examining the Application Node Information_
-
-1. Close you Web browser. To stop your cluster, click on the **Debug** menu in Visual Studio 2017 and then click on **Stop Debugging**. By default, Visual Studio 2017 will remove your deployed application from the Service Fabric Local Cluster Manager.
+1. Close your Web browser. Then return to Visual Studio and use the **Debug** -> **Stop Debugging** command to stop debugging.
+ 
+When you stop debugging, Visual Studio will stop the application and remove it from the Service Fabric Local Cluster Manager. It will be deployed again the next time you launch it from Visual Studio.
 
 <a name="Exercise3"></a>
 ## Exercise 3: Add another service in the Service Fabric Cluster ##
