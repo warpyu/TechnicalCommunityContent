@@ -473,7 +473,7 @@ vertical-align:1px;
 <hr>
 <p><a name="Overview"></a></p>
 <h2>Overview</h2>
-<p>One of the more recent trends in enterprise architecture is the <a href="https://www.martinfowler.com/articles/microservices.html">Microservices architecture pattern</a>. At its core, this pattern is a specialization of the Service Oriented Architecture pattern that gained popularity in the early 2000s, but extends that approach to focus on building small and independently deployable applications that communicate using lightweight protocols (including HTTP and TCP). This arrangement presents several advantages:</p>
+<p>One of the more recent trends in enterprise architecture is the <a href="https://www.martinfowler.com/articles/microservices.html">microservices architecture pattern</a>. At its core, this pattern is a specialization of the Service Oriented Architecture pattern that gained popularity in the early 2000s, but extends that approach to focus on building small and independently deployable applications that communicate using lightweight protocols (including HTTP and TCP). This arrangement presents several advantages:</p>
 <ul>
 <li>Services are easy to replace and maintain</li>
 <li>Services can be scaled independently</li>
@@ -653,7 +653,7 @@ vertical-align:1px;
 <p><em>Adding items to the project</em></p>
 </li>
 <li>
-<p>In the "Add Existing Item" dialog, browse to the "Assets" folder included with this lab. Select the file named <strong>InventoryItem.cs</strong> and click <strong>Add</strong>.</p>
+<p>In the "Add Existing Item" dialog, browse to the "Resources" folder included with this lab. Select the file named <strong>InventoryItem.cs</strong> and click <strong>Add</strong>.</p>
 <p><a href="Images/addservice-add_inventoryitemfile.png" target="_blank"><img src="Images/addservice-add_inventoryitemfile.png" alt="Importing InventoryItem.cs" style="max-width:100%;"></a></p>
 <p><em>Importing InventoryItem.cs</em></p>
 <p>This file contains an <code>InventoryItem</code> type that will be used to pass inventory items between services in the application. It also contains an <code>enum</code> named <code>InventoryItemType</code> that specifies the item type — Appliances, Flooring, etc. Later, this <code>enum</code> will be used as a key to divide the deployment into separate service partiions.</p>
@@ -674,7 +674,7 @@ vertical-align:1px;
 <p><em>Adding the OWIN Self-Host Nuget Package</em></p>
 </li>
 <li>
-<p>Right-click the <strong>InventoryRepository</strong> project in Solution Explorer and use the <strong>Add</strong> -&gt; <strong>Existing Item</strong> command to import <strong>OwinCommunicationListener.cs</strong> from this lab's "Assets" folder.</p>
+<p>Right-click the <strong>InventoryRepository</strong> project in Solution Explorer and use the <strong>Add</strong> -&gt; <strong>Existing Item</strong> command to import <strong>OwinCommunicationListener.cs</strong> from this lab's "Resources" folder.</p>
 <p><a href="Images/addservice-add_owincommunicationlistenerfile.png" target="_blank"><img src="Images/addservice-add_owincommunicationlistenerfile.png" alt="Importing OwinCommunicationListener.cs" style="max-width:100%;"></a></p>
 <p><em>Importing OwinCommunicationListener.cs</em></p>
 </li>
@@ -837,7 +837,7 @@ vertical-align:1px;
 <p>In this exercise, you will connect the two services so <em>InventoryService</em> can transmit requests to <em>InventoryRepository</em>. This will allow you to add inventory items to the catalog as well as increase and decrease the quantity of each item. At the end of this exercise, you will be able to launch the application and adjust inventories in your browser.</p>
 <ol>
 <li>
-<p>Right-click the <strong>InventoryService</strong> project in Solution Explorer. Select <strong>Add</strong> -&gt; <strong>Existing Item</strong> and select <strong>HttpCommunicationClient.cs</strong> in this lab's "Assets" folder. Then click <strong>Add</strong>.</p>
+<p>Right-click the <strong>InventoryService</strong> project in Solution Explorer. Select <strong>Add</strong> -&gt; <strong>Existing Item</strong> and select <strong>HttpCommunicationClient.cs</strong> in this lab's "Resources" folder. Then click <strong>Add</strong>.</p>
 <p><a href="Images/communicate-add_httpommunicationclient.png" target="_blank"><img src="Images/communicate-add_httpommunicationclient.png" alt="Importing HTTPCommunicationClient.cs" style="max-width:100%;"></a></p>
 <p><em>Importing HTTPCommunicationClient.cs</em></p>
 </li>
@@ -861,7 +861,10 @@ vertical-align:1px;
 <span class="pl-k">using</span> <span class="pl-en">InventoryCommon</span>;</pre></div>
 </li>
 <li>
-<p>Scroll to the bottom of <strong>HomeController.cs</strong> file and add the following helper classes just before the final curly-brace:</p>
+<p>Scroll to the bottom of <strong>HomeController.cs</strong> file and add the following helper cl</p>
+</li>
+<li>
+<p>asses just before the final curly-brace:</p>
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ItemListViewModel</span>
 {
     <span class="pl-k">public </span><span class="pl-en">IEnumerable</span>&lt;<span class="pl-en">InventoryItem</span>&gt; <span class="pl-en">InventoryItems</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
@@ -1221,117 +1224,84 @@ vertical-align:1px;
 <p>Once you have confirmed that you can manage inventory in this manner, use Visual Studio's <strong>Stop Debugging</strong> command to stop debugging and shut down the application.</p>
 <p><a name="Exercise5"></a></p>
 <h2>Exercise 5: Enable partitioning and show node failover</h2>
-<p>This final exercise will demonstrate some of the scalability and resiliency features built into Service Fabric. You will first update the partitioning scheme for the <em>Inventory Repository</em> service that you have previously created, in order to segment the functionality for each Inventory Item Type to a different partition within the cluster. Then you will use the Service Fabric Explorer that you first explored in Exercise 2 in order to simulate a node failure in your cluster and to see how partition replicas for Reliable Services in Service Fabric help to provide a more fault-tolerant system.</p>
+<p>Two of the motivations for using Azure Service Fabric as a platform for microservices are scalability and reliability. An important ingredient in the recipe for both is <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-concepts-partitioning">partitioning</a>. Proper partitioning spreads workloads across nodes in the cluster so no node becomes overloaded. You can't change the way a Service Fabric app is partitioned without redeploying the app, so it helpful to plan your partitioning strategy ahead of time to reduce unwanted downtime.</p>
+<p>In this exercise, you will update the partitioning scheme for the inventory-repository service to assign different item types to different partitions in the cluster. Then you will use Service Fabric Explorer to simulate a node failure and see how partition replicas help create a fault-tolerant system.</p>
 <ol>
 <li>
-<p>The first step is to update the Service Fabric runtime information for the <em>Inventory Repository</em> service. The service will maintain 3 replicas per partition for durability. Furthermore, to simulate performance considerations, the data will be partitioned across 10 distinct partitions, by each distinct Inventory Item Type.</p>
-<blockquote>
-<p>Partitioning is a useful performance technique for distributing load accross your system. As long as you select a good approach which yields a generally uniform distribution across your resources, it can help make sure that no one section of your cluster is particularly overloaded. You can learn more about partitioning in Service Fabric <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-concepts-partitioning">here</a>. One important note with Service Fabric partitions - you cannot change the partition count of a deployed Service Fabric application once it has been deployed without first tearing down the application, so it is important to plan &amp; test your partitioning strategy ahead of time or you will risk service downtime if and when you need to reset.</p>
-</blockquote>
-</li>
-<li>
-<p>In the Solution Explorer in Visual Studio 2017, locate the <strong>ServiceFabricLab</strong> project, expand the <strong>ApplicationPackageRoot</strong> folder and open the <strong>ApplicationManifest.xml</strong> file.</p>
-</li>
-<li>
-<p>In the <em>ApplicationManifest.xml</em> file, update the <code>InventoryRepository_PartitionCount</code> value to 10 and add new values for the partition low key and partition high key settings.</p>
+<p>Open <strong>ApplicationManifest.xml</strong> in the <strong>ServiceFabricLab</strong> project. Change the <code>InventoryRepository_PartitionCount</code> value to 10 and add entries for <code>Inventory_PartitionLowKey</code> and <code>Inventory_PartitionHighKey</code> as shown below. This will create 10 partitions: one for each inventory item type.</p>
 <div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">Parameter</span> <span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>InventoryRepository_PartitionCount<span class="pl-pds">"</span></span> <span class="pl-e">DefaultValue</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span> /&gt;
 &lt;<span class="pl-ent">Parameter</span> <span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>Inventory_PartitionLowKey<span class="pl-pds">"</span></span> <span class="pl-e">DefaultValue</span>=<span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span> /&gt;
 &lt;<span class="pl-ent">Parameter</span> <span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>Inventory_PartitionHighKey<span class="pl-pds">"</span></span> <span class="pl-e">DefaultValue</span>=<span class="pl-s"><span class="pl-pds">"</span>9<span class="pl-pds">"</span></span> /&gt;</pre></div>
 </li>
 <li>
-<p>Also in the  <em>ApplicationManifest.xml</em> file, locate the <code>UniformInt64Partition</code> element and update its <code>LowKey</code> and <code>HighKey</code> values to use the settings you just added:</p>
+<p>Locate the <code>UniformInt64Partition</code> element and update its <code>LowKey</code> and <code>HighKey</code> values as follows:</p>
 <div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">UniformInt64Partition</span> <span class="pl-e">PartitionCount</span>=<span class="pl-s"><span class="pl-pds">"</span>[InventoryRepository_PartitionCount]<span class="pl-pds">"</span></span> <span class="pl-e">LowKey</span>=<span class="pl-s"><span class="pl-pds">"</span>[Inventory_PartitionLowKey]<span class="pl-pds">"</span></span> <span class="pl-e">HighKey</span>=<span class="pl-s"><span class="pl-pds">"</span>[Inventory_PartitionHighKey]<span class="pl-pds">"</span></span> /&gt;</pre></div>
 </li>
 <li>
-<p>Open the <em>ApplicationParameters</em> folder and update the each of the setting XML files (there are 3 - <em>Cloud.xml</em>, <em>Local.1Node.xml</em>, and <em>Local.5Node.xml</em>) with the new <code>InventoryRepository_PartitionCount</code> value.</p>
+<p>Set <code>InventoryRepository_PartitionCount</code> to 10 in each of the XML configuration files in the "ApplicationParameters" folder — <strong>Cloud.xml</strong>, <strong>Local.1Node.xml</strong>, and <strong>Local.5Node.xml</strong>:</p>
 <div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">Parameter</span> <span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>InventoryRepository_PartitionCount<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span> /&gt;</pre></div>
-<blockquote>
-<p>These xml files are settings files that you can use to customize different values for different Service Fabric deployments. In the default configuration, you have 1 file each for the 2 deployment options that are available in your Service Fabric Local Cluster Manager, and one file for your standard Cloud deployment options. The values in these files override the corresponding <code>Parameter</code> value declared inside of the <em>ApplicationManifest.xml</em> file.</p>
-</blockquote>
+<p>These XML files contain configuration settings that you can use to customize individual Service Fabric deployments. The values in these files override the corresponding values in <strong>ApplicationManifest.xml</strong>.</p>
 </li>
 <li>
-<p>Open the <strong>HomeController.cs</strong> file located in the <strong>Controllers</strong> folder in the <em>InventoryService</em> project. Search for each instance of the code <code>new ServicePartitionKey(0)</code> and replace it with the corresponding value shown below:</p>
+<p>Open <strong>HomeController.cs</strong> in the <strong>InventoryService</strong> project's "Controllers" folder. Modify each occurrence of <code>new ServicePartitionKey(0)</code> as follows:</p>
 <ul>
 <li>In the <code>Index</code> method, replace it with <code>new ServicePartitionKey((Int64)selectedItemType)</code></li>
 <li>In the <code>AddNewInventoryItem</code> method, replace it with <code>new ServicePartitionKey((Int64)newItem.ItemType)</code></li>
-<li>In the first <code>AddInventory</code> method, replace it with <code>new ServicePartitionKey((Int64)selectedItemType)</code></li>
+<li>In the first <code>AddInventory```` method, replace it with</code>new ServicePartitionKey((Int64)selectedItemType)```</li>
 <li>In the second <code>AddInventory</code> method, replace it with <code>new ServicePartitionKey((Int64)viewModel.ItemType)</code></li>
 <li>In the first <code>RemoveInventory</code> method, replace it with <code>new ServicePartitionKey((Int64)selectedItemType)</code></li>
 <li>In the second <code>RemoveInventory</code> method, replace it with <code>new ServicePartitionKey((Int64)viewModel.ItemType)</code></li>
 </ul>
-<p>Your application is now ready to run using Service Fabric partitioning. Calls from the <em>Inventory Service</em> to the <em>Inventory Repository</em> use the currently selected inventory item type to configure a <code>ServicePartitionKey</code> value, which is used by the <code>ServicePartitionClient</code> to find the address it should use for calls to the <em>Inventory Repository</em> service.</p>
+<p>Your application is now ready to run using Service Fabric partitioning. Calls from the inventory service to the inventory repository service use the currently selected inventory item type to configure a <code>ServicePartitionKey</code> value, which is used by <code>ServicePartitionClient</code> to retrieve an address for calls.</p>
 </li>
 <li>
-<p>Once again, start debugging your application and add several inventory items, as you did in Exercise 4, starting at Step 17. Be sure you include at least one item in the <em>HandTools</em> category.</p>
+<p>Launch the application and add several inventory items as you did in <a href="#Exercise4">Exercise 4</a>. Be sure to add at least one item in the HandTools category.</p>
 </li>
 <li>
-<p>Like you did in Exercise 2, with your application still running, locate the <em>Service Fabric Local Cluster Manager</em> icon in the Windows System Tray. Right-click on the icon and select <strong>Manage Local Cluster</strong> from the menu that is displayed in order to bring open the <em>Service Fabric Explorer</em> for your site in your Web browser.</p>
+<p>Launch Service Fabric Explorer and select <strong>fabric:/ServiceFabricLab/InventoryRepository</strong> under <strong>Applications</strong>. Confirm that 10 nodes appear underneath — one for each partition that you designated.</p>
+<p><a href="Images/partition-explorer_expandservice.png" target="_blank"><img src="Images/partition-explorer_expandservice.png" alt="Selecting InventoryRepository" style="max-width:100%;"></a></p>
+<p><em>Selecting InventoryRepository</em></p>
 </li>
 <li>
-<p>In the <em>Service Fabric Explorer</em>, expand the <strong>Applications</strong> node, then the <strong>ServiceFabricLabType</strong> node, then the <strong>fabric:/ServiceFabricLab</strong> node, and then finally the <strong>fabric:/ServiceFabricLab/InventoryRepository</strong> node.</p>
-<p><a href="Images/partition-explorer_expandservice.png" target="_blank"><img src="Images/partition-explorer_expandservice.png" alt="Expanding the Service Fabric Explorer Nodes" style="max-width:100%;"></a></p>
-<p><em>Expanding the Service Fabric Explorer Nodes</em></p>
-<p>Notice that the <em>InventoryRepository</em> node has 10 children underneath it - one for each partition that has been configured for the service.</p>
+<p>Click each of the partitions until you find the one whose Low Key and High Key values are 3, which is the integer value for <code>HandTools</code> in the <code>InventoryItemType</code> enumeration. Then go to the "Replicas" section at the bottom of the page and make note of the node name for the <strong>Primary</strong> replica.</p>
+<p><a href="Images/partition-explorer_locatehandtools.png" target="_blank"><img src="Images/partition-explorer_locatehandtools.png" alt="Locating the HandTools partition" style="max-width:100%;"></a></p>
+<p><em>Locating the HandTools partition</em></p>
 </li>
 <li>
-<p>Click on each one of the partition entries underneath the <strong>fabric:/ServiceFabricLab/InventoryRepository</strong> node until you find one where the <em>Low Key</em> and <em>High Key</em> values are <strong>3</strong>, which corresponds to the value for the <code>HandTools</code> member of the <code>InventoryItemType</code> enumeration.</p>
-<p><a href="Images/partition-explorer_locatehandtools.png" target="_blank"><img src="Images/partition-explorer_locatehandtools.png" alt="Locating the HandTools Partition" style="max-width:100%;"></a></p>
-<p><em>Locating the HandTools Partition</em></p>
+<p>In the <strong>Nodes</strong> section of the treeview on the left, click the node whose name matches the one identified in the previous step.</p>
+<p><a href="Images/partition-explorer_selectprimaryreplicanode.png" target="_blank"><img src="Images/partition-explorer_selectprimaryreplicanode.png" alt="Selecting the primary replica node" style="max-width:100%;"></a></p>
+<p><em>Selecting the primary replica node</em></p>
 </li>
 <li>
-<p>Once you have located the <code>HandTools</code> partition, locate the <strong>Replicas</strong> display in the bottom of the window. These are the nodes in your cluster where the replicas for the selected partition are deployed. Find the row that corresponds to the <strong>Primary</strong> replica and make a note of the <strong>Node Name</strong> value.</p>
-<blockquote>
-<p>In the image above, you can see that <em>_Node_2</em> hosts the <em>Primary Replica</em> for the <em>HandTools</em> partition, and <em>_Node_1</em> and <em>_Node_3</em> each host <em>Active Secondary Replicas</em>.</p>
-</blockquote>
+<p>Click <strong>Actions</strong> in the upper-right corner of the page and select <strong>Deactivate (restart)</strong> from the ensuing menu.</p>
+<p><a href="Images/partition-explorer_deactivating.png" target="_blank"><img src="Images/partition-explorer_deactivating.png" alt="Deactivating the primary replica node" style="max-width:100%;"></a></p>
+<p><em>Deactivating the primary replica node</em></p>
 </li>
 <li>
-<p>Expand the <strong>Nodes</strong> section in the Service Fabric Explorer tree view on the left and click the node whose name matches the value your found in the previous step.</p>
-<p><a href="Images/partition-explorer_selectprimaryreplicanode.png" target="_blank"><img src="Images/partition-explorer_selectprimaryreplicanode.png" alt="Selecting the Primary Replica Node" style="max-width:100%;"></a></p>
-<p><em>Selecting the Primary Replica Node</em></p>
+<p>In the "Confirm Node Deactivation" dialog, type the node name into the text box click the <strong>Deactivate (restart)</strong> button to confirm that you wish to deactivate the node.</p>
+<p><a href="Images/partition-explorer_confirmdeactivate.png" target="_blank"><img src="Images/partition-explorer_confirmdeactivate.png" alt="Confirming deactivation" style="max-width:100%;"></a></p>
+<p><em>Confirming deactivation</em></p>
+<p>This will deactivate the node. The process will take a couple minutes, during which Service Fabric will detect the non-functional node and rebalance the partitions and replicas across the remaining partitions.</p>
 </li>
 <li>
-<p>Locate and then click on the <strong>Actions</strong> dropdown in the top right corner of the page shown for the selected node. In the context menu that is displayed, click on <strong>Deactivate (restart)</strong></p>
-<p><a href="Images/partition-explorer_deactivating.png" target="_blank"><img src="Images/partition-explorer_deactivating.png" alt="Deactivating the Primary Replica Node" style="max-width:100%;"></a></p>
-<p><em>Deactivating the Primary Replica Node</em></p>
+<p>When Service Fabric Explorer reports that it has detected problems with the cluster, click the partition again. Confirm that the primary replica has been moved to another node.</p>
+<p><a href="Images/partition-explorer_afterdeactivation.png" target="_blank"><img src="Images/partition-explorer_afterdeactivation.png" alt="The rebalanced partition" style="max-width:100%;"></a></p>
+<p><em>The rebalanced partition</em></p>
 </li>
 <li>
-<p>In the <em>Confirm Node Deactivation</em> dialog, type the name of the node into the text box as per the instructions and then click on the <strong>Deactivate (restart)</strong> button.</p>
-<p><a href="Images/partition-explorer_confirmdeactivate.png" target="_blank"><img src="Images/partition-explorer_confirmdeactivate.png" alt="Confirming Node Deactivation" style="max-width:100%;"></a></p>
-<p><em>Confirming Node Deactivation</em></p>
-<p>This will kick deactivate the node you selected. The process will take a couple minutes, during which Service Fabric will detect the non-functional node and rebalance the partitions and replicas across the remaining partitions.</p>
+<p>Switch to the browser window in which the service is displayed. Select <strong>HandTools</strong> from the drop-down list and click <strong>Select</strong>. This will transmit a request from the inventory service to the inventory-repository service using a new URL for the partition.</p>
+<p><a href="Images/partition-browse_afternodefailure.png" target="_blank"><img src="Images/partition-browse_afternodefailure.png" alt="Displaying HandTool items" style="max-width:100%;"></a></p>
+<p><em>Displaying HandTool items</em></p>
 </li>
 <li>
-<p>The Service Fabric Explorer will update to show that it has detected problems with the current cluster.</p>
-<p>Click once again on the partition identifier that you previously selected in Step 10. You will also be able to see the updated Replica distribution for your partition.</p>
-<p><a href="Images/partition-explorer_afterdeactivation.png" target="_blank"><img src="Images/partition-explorer_afterdeactivation.png" alt="The Service Fabric Explorer After Deactivation" style="max-width:100%;"></a></p>
-<p><em>The Service Fabric Explorer After Deactivation</em></p>
-<p>In the picture above, you can see that the _Node_1 now hosts the Primary Replica for the HandTools partition.</p>
-</li>
-<li>
-<p>Switch to the browser window for your service. If it isn't already selected, select <strong>HandTools</strong> from the <strong>SelectedItemType</strong> pulldown and click on the <strong>Select</strong> button. This will make a request from your <em>InventoryService Service</em> to the <em>InventoryRepository Service</em>, fetching and then using the new URL for the node where your HandTools partition is housed.</p>
-<p><a href="Images/partition-browse_afternodefailure.png" target="_blank"><img src="Images/partition-browse_afternodefailure.png" alt="Using the Service Fabric Service After Node Failure" style="max-width:100%;"></a></p>
-<p><em>Using the Service Fabric Service After Node Failure</em></p>
-</li>
-<li>
-<p>Return to the Service Fabric Explorer and click on the node entry that you deactivated in Step 13. Locate and then click on the <strong>Actions</strong> dropdown in the top right corner of the page shown for the selected node. In the context menu that is displayed, click on <strong>Activate</strong>.</p>
-<p>Once again, Service Fabric will notice a change to the nodes that it is managing, and will rebalance its partition replicas to take advantage of the now-available node.</p>
-<p>After a few seconds, the warnings and errors in the Service Fabric Explorer will disappear and will reflect the now-stable status of the cluster.</p>
-</li>
-<li>
-<p>Close your browser and stop debugging in Visual Studio 2017.</p>
+<p>Return to Service Fabric Explorer and click the node that you deactivated in Step 10. Then click <strong>Actions</strong> and select <strong>Activate</strong> from the menu. Once more, Service Fabric will notice a change to the nodes that it is managing, and will rebalance the partition replicas to take advantage of the newly available node.</p>
+<p>Confirm that after a few seconds, the warnings and errors in Service Fabric Explorer disappear and reflect the now-stable status of the cluster.</p>
 </li>
 </ol>
+<p>Finish up by using Visual Studio's <strong>Stop Debugging</strong> command to shut down the application for the final time.</p>
 <p><a name="Summary"></a></p>
 <h2>Summary</h2>
-<p>In this hands-on lab, you learned how to:</p>
-<ul>
-<li>Create a new Service Fabric application using Visual Studio 2017.</li>
-<li>Use the debugging and diagnostic tools provided by both Visual Studio and Service Fabric itself to run and monitor your Service Fabric application.</li>
-<li>Configure communication between multiple services in a Service Fabric application.</li>
-<li>Leverage partitioning and Reliable Services in order to provide scalability and fault-tolerance in a Service Fabric application.</li>
-</ul>
-<p>The application you built was fairly simple. It included a front-end display service and an inventory repository service. A more complete Microservices implementation might consist of several additional services communicating with each other and leveraging the Service Fabric infrastructure to resolve locations and addresses. In some cases, individual services might be assigned to specific subsets of the cluster that Service Fabric is managing, allowing different services to scale independently — a hallmark of a true Microservices implementation.</p>
-<p>As you have seen, using Azure Service Fabric it is possible to create applications that consist of several different kinds of services and to deploy them within a framework that supports both scalability and reliability.</p>
+<p>The application you built was fairly simple. It included an app to provide a Web front-end and a service for storing inventory. A more complete microservices implementation might include several such services, each performing a critical task for the overall application, and each communicating with the others and leveraging Service Fabric to resolve locations and addresses. In some cases, individual services might be assigned to specific subsets of the cluster that Service Fabric is managing, allowing different services to scale independently — a hallmark of a true microservices implementation.</p>
 <hr>
 <p>Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
 </body>
