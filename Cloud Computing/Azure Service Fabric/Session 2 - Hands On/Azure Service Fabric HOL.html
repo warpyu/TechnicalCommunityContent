@@ -834,26 +834,23 @@ vertical-align:1px;
 <p>Once you have confirmed that both services are shown in Service Fabric Explorer, use Visual Studio's <strong>Stop Debugging</strong> command to stop debugging and shut down the application.</p>
 <p><a name="Exercise4"></a></p>
 <h2>Exercise 4: Connect the services in the cluster</h2>
-<p>In this exercise, you will connect the two services you have created, making requests to the <em>InventoryRepository</em> from the <em>InventoryService</em>. This will allow you to add inventory items to the catalog, as well as increase and decrease the inventory quantity for a given item.  At the end of this exercise, you will be able to launch your application and interact with it from your Web browser.</p>
+<p>In this exercise, you will connect the two services so <em>InventoryService</em> can transmit requests to <em>InventoryRepository</em>. This will allow you to add inventory items to the catalog as well as increase and decrease the quantity of each item. At the end of this exercise, you will be able to launch the application and adjust inventories in your browser.</p>
 <ol>
 <li>
-<p>Right-click on the <strong>InventoryService</strong> project entry in the Solution Explorer. Click on <strong>Add</strong> and then click on <strong>Existing Item</strong> in the popup menus.</p>
+<p>Right-click the <strong>InventoryService</strong> project in Solution Explorer. Select <strong>Add</strong> -&gt; <strong>Existing Item</strong> and select <strong>HttpCommunicationClient.cs</strong> in this lab's "Assets" folder. Then click <strong>Add</strong>.</p>
+<p><a href="Images/communicate-add_httpommunicationclient.png" target="_blank"><img src="Images/communicate-add_httpommunicationclient.png" alt="Importing HTTPCommunicationClient.cs" style="max-width:100%;"></a></p>
+<p><em>Importing HTTPCommunicationClient.cs</em></p>
 </li>
 <li>
-<p>In the <em>Add Existing Item</em> dialog, browse to the folder where this lab content is located and open the <em>Assets</em> folder. Select the <strong>HttpCommunicationClient.cs</strong> file and click on the <strong>Add</strong> button.</p>
-<p><a href="Images/communicate-add_httpommunicationclient.png" target="_blank"><img src="Images/communicate-add_httpommunicationclient.png" alt="Add the HTTPCommunicationClient File" style="max-width:100%;"></a></p>
-<p><em>Add the HTTPCommunicationClient File</em></p>
+<p>Right-click <strong>Dependencies</strong> in the <strong>InventoryService</strong> project, and then click <strong>Add Reference...</strong>..</p>
+<p><a href="Images/communicate-addreference.png" target="_blank"><img src="Images/communicate-addreference.png" alt="Adding a reference to the InventoryService project" style="max-width:100%;"></a></p>
+<p><em>Adding a reference to the InventoryService project</em></p>
 </li>
 <li>
-<p>Right-click on the <strong>Dependencies</strong> node in the <strong>InventoryService</strong> project and then click on the <strong>Add Reference...</strong> item in the context menu.</p>
-<p><a href="Images/communicate-addreference.png" target="_blank"><img src="Images/communicate-addreference.png" alt="Add a Reference in the InventoryService Project" style="max-width:100%;"></a></p>
-<p><em>Add a Reference in the InventoryService Project</em></p>
+<p>Check the box next to the <strong>InventoryCommon</strong> project and click <strong>OK</strong> to add the project reference.</p>
 </li>
 <li>
-<p>In the <strong>Reference Manager</strong> dialog, select the <strong>Projects</strong> node and then click the checkbox next to the <strong>InventoryCommon</strong> project entry. Click the <strong>OK</strong> button to add the reference.</p>
-</li>
-<li>
-<p>Open the <em>HomeController.cs</em> file from the <em>Controllers</em> folder in the <em>InventoryService</em> project. Add the following <code>using</code> entries at the top of the file:</p>
+<p>Open <strong>HomeController.cs</strong> in the <strong>InventoryService</strong> project's "Controllers" folder and dd the following <code>using</code> statements at the top of the file:</p>
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">System.Fabric</span>;
 <span class="pl-k">using</span> <span class="pl-en">System.Net.Http</span>;
 <span class="pl-k">using</span> <span class="pl-en">System.Text</span>;
@@ -864,7 +861,7 @@ vertical-align:1px;
 <span class="pl-k">using</span> <span class="pl-en">InventoryCommon</span>;</pre></div>
 </li>
 <li>
-<p>Scroll to the bottom of the <em>HomeController.cs</em> file and add the following helper classes just before the final curly-brace:</p>
+<p>Scroll to the bottom of <strong>HomeController.cs</strong> file and add the following helper classes just before the final curly-brace:</p>
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ItemListViewModel</span>
 {
     <span class="pl-k">public </span><span class="pl-en">IEnumerable</span>&lt;<span class="pl-en">InventoryItem</span>&gt; <span class="pl-en">InventoryItems</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
@@ -881,14 +878,14 @@ vertical-align:1px;
 }</pre></div>
 </li>
 <li>
-<p>Next, and the following field definitions at the start of the <code>HomeController</code> class:</p>
+<p>Next, add the following field definitions at the start of the <code>HomeController</code> class:</p>
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">readonly</span> <span class="pl-en">HttpCommunicationClientFactory</span> _clientFactory 
 	= new <span class="pl-en">HttpCommunicationClientFactory</span>(<span class="pl-en">new</span> <span class="pl-smi">ServicePartitionResolver</span>(() =&gt; <span class="pl-k">new</span> <span class="pl-en">FabricClient</span>()));
 <span class="pl-k">private</span> <span class="pl-k">readonly</span> <span class="pl-en">Uri</span> <span class="pl-en">_serviceUri</span> = <span class="pl-k">new</span> <span class="pl-en">Uri</span>(<span class="pl-pds">$"</span>{FabricRuntime.GetActivationContext().ApplicationName}<span class="pl-s">/InventoryRepository</span><span class="pl-pds">"</span>);</pre></div>
-<p>These values will be used by the code in the <em>InventoryService</em> to locate and communicate with the endpoints exposed by the <em>InventoryRepository</em> service.</p>
+<p>These values will be used by the code in <strong>InventoryService</strong> to locate and call the endpoints exposed by the <strong>InventoryRepository</strong> service.</p>
 </li>
 <li>
-<p>Replace the existing <code>Index</code> method with the following block of code:</p>
+<p>Replace the existing <code>Index</code> method with the following method:</p>
 <div class="highlight highlight-source-cs"><pre>[HttpGet]
 <span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-en">Task</span>&lt;<span class="pl-en">IActionResult</span>&gt; <span class="pl-en">Index</span>(<span class="pl-en">InventoryItemType</span>? <span class="pl-smi">selectedItemType</span>)
 {
@@ -925,15 +922,11 @@ vertical-align:1px;
     <span class="pl-k">return</span> View(viewModel);
 }
 </pre></div>
-<p>This version of the <code>Index</code> method first checks to see if an <em>InventoryItemType</em> selection has been made. The user interface in this application will display the inventory items based on the currently selected item type. If no selection has been made, it simply passes an empty list to the view for display.</p>
-<p>If a selection has been made, a call is made to the InventoryRepository to retrieve the available catalog items in that category. To make the request, an instance of the <code>ServicePatitionClient</code> class is used via a call to the <code>InvokeWithRetryAsync</code> method it provides. The <code>ServicePartitionClient</code> class simpliefies access with stateful services in Service Fabric by resolving partition endpoint addresses for you. It also provides the <code>InvokeWithRetryAsync</code> method which, as the name suggests, further facilitates calling the indicated endpoint by managing retries in the event that transient errors occur.</p>
-<p>The call is made to the inventory endpoint, and if a valid reponse code is received, the response JSON is converted into a list of <code>InventoryItem</code>s. Finally, the returned list is filtered, and then this is colected and passed to the view for display.</p>
-<blockquote>
-<p>Note that the filtering of the returned list to a given item type on the client end of the request is not a pattern you would use in production, but is instead done for simplicity in this Exercise. In the next exercise you will see how you can eliminate this step by using the Partitioning support in Service Fabric.</p>
-</blockquote>
+<p>The new <code>Index</code> method checks to see if an <code>InventoryItemType</code> selection has been made. If an inventory type is selected, a call goes out to <code>ServicePartitionClient.InvokeWithRetryAsync</code> to retrieve the inventory items of that type from the Inventory service. The results are then made available to the view.</p>
+<p>Note that filtering the returned list by item type on the client is not a pattern you would use in production, but is instead done for expediency. In the next exercise, you will learn how to improve on this by using Service Fabric's partitioning support.</p>
 </li>
 <li>
-<p>Now open the <em>Views</em> folder in the project, then open the <em>Index.html</em> file from the <em>Home</em> subfolder under the <em>Views</em> folder. Replace its content with the code block below:</p>
+<p>Now open <strong>Index.cshtml</strong> in the project's "Views\Home" folder and replace its contents with the following markup:</p>
 <div class="highlight highlight-text-html-basic"><pre>@model InventoryService.Controllers.ItemListViewModel
 
 @{
@@ -1003,10 +996,10 @@ vertical-align:1px;
         &lt;/<span class="pl-ent">a</span>&gt;
     &lt;/<span class="pl-ent">div</span>&gt;
 &lt;/<span class="pl-ent">div</span>&gt;</pre></div>
-<p>This markup provides the user interface elements for selecting the current inventory item types, the table where the items are displayed, and a button to add a new inventory item to the catalog.</p>
+<p>This markup provides a user interface for selecting inventory types, viewing inventory items, and adding new inventory to the catalog.</p>
 </li>
 <li>
-<p>Return to the <em>HomeController.cs file</em>. After the end of the <code>Index</code> method, add the following block of code:</p>
+<p>Return to <strong>HomeController.cs</strong>. After the <code>Index</code> method, add the following methods:</p>
 <div class="highlight highlight-source-cs"><pre>[HttpGet]
 <span class="pl-k">public</span> <span class="pl-en">IActionResult</span> <span class="pl-en">AddNewInventoryItem</span>(<span class="pl-en">InventoryItemType</span> <span class="pl-smi">itemType</span>)
 {
@@ -1035,21 +1028,15 @@ vertical-align:1px;
 
     <span class="pl-k">return</span> RedirectToAction(<span class="pl-s"><span class="pl-pds">"</span>Index<span class="pl-pds">"</span></span>, new { SelectedItemType = newItem.ItemType });
 }</pre></div>
-<p>These two methods handle adding a new inventory item to the catalog. The first <code>AddInventoryItem</code> method simply sets up a blank item with the currently selected inventory item type.</p>
-<p>The second method uses the same <code>ServicePartitionClient</code> class and retry approach to communicate with the InventoryService endpoint that supports adding a new inventory item. If the item is successfully added, the browser is redirected to the home page that includes the inventory table with the current inventory type value pre-selected.</p>
+<p>These methods allow new inventory to be added the catalog. The first creates a blank item. The second uses <code>ServicePartitionClient</code> to call the Inventry service and pass it a new inventory item. If the item is successfully added, the user is redirected to the home page and shown all the items of that type.</p>
 </li>
 <li>
-<p>Right-click on the <em>Home</em> subfolder of the <em>Views</em> folder in the project. Click on <strong>Add</strong> and then on <strong>New Item...</strong> in the context menu.</p>
-<p><a href="Images/communicate-add_newitemtoviewshomefolder.png" target="_blank"><img src="Images/communicate-add_newitemtoviewshomefolder.png" alt="Add New Item to the Home View Folder" style="max-width:100%;"></a></p>
-<p><em>Add New Item to the Home View Folder</em></p>
+<p>Right-click the "Home" folder in the project's "Views" folder and use the <strong>Add</strong> -&gt; <strong>New Item...</strong> command to add an <strong>MVC View Page</strong> named <strong>AddNewInventoryItem.cshtml</strong>.</p>
+<p><a href="Images/communicate-add_newinventoryitemview.png" target="_blank"><img src="Images/communicate-add_newinventoryitemview.png" alt="Adding a new view" style="max-width:100%;"></a></p>
+<p><em>Adding a new view</em></p>
 </li>
 <li>
-<p>In the Add New Item - InventoryService dialog, click on <strong>MVC View Page</strong>, name the file <strong>AddNewInventoryItem.cshtml</strong>, and then click on the <strong>Add</strong> button to add the file.</p>
-<p><a href="Images/communicate-add_newinventoryitemview.png" target="_blank"><img src="Images/communicate-add_newinventoryitemview.png" alt="Add the AddNewInventoryItem View" style="max-width:100%;"></a></p>
-<p><em>Add the AddNewInventoryItem View</em></p>
-</li>
-<li>
-<p>Replace the markup in the new view file with the following block:</p>
+<p>Replace the contents of <strong>AddNewInventoryItem.cshtml</strong> with the following statements:</p>
 <div class="highlight highlight-text-html-basic"><pre>@model InventoryCommon.InventoryItem
 
 @{
@@ -1078,10 +1065,9 @@ vertical-align:1px;
         &lt;/<span class="pl-ent">form</span>&gt;
     &lt;/<span class="pl-ent">div</span>&gt;
 &lt;/<span class="pl-ent">div</span>&gt;</pre></div>
-<p>This markup provides the user interface elements needed to build the new inventory item, and calls the creation method when the <em>Add Inventory Item</em> button is clicked.</p>
 </li>
 <li>
-<p>Return again to the <em>HomeController.cs file</em>. After the end of the second <code>AddNewInventoryItem</code> method, add the following block of code:</p>
+<p>Return to <strong>HomeController.cs</strong> and add the following methods to the <code>HomeController</code> class:</p>
 <div class="highlight highlight-source-cs"><pre>[HttpGet]
 <span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-en">Task</span>&lt;<span class="pl-en">IActionResult</span>&gt; <span class="pl-en">AddInventory</span>(<span class="pl-en">Guid</span> <span class="pl-smi">itemId</span>, <span class="pl-en">InventoryItemType</span> <span class="pl-smi">selectedItemType</span>)
 {
@@ -1129,12 +1115,9 @@ vertical-align:1px;
     }, CancellationToken.None);
 
     <span class="pl-k">return</span> RedirectToAction(<span class="pl-s"><span class="pl-pds">"</span>Index<span class="pl-pds">"</span></span>, new { SelectedItemType = viewModel.ItemType });
-}</pre></div>
-<p>This code adds a pair of <code>AddInventory</code> methods whose purpose and implementation are very similar to the code for the <code>AddNewInventoryItem</code> methods.</p>
-</li>
-<li>
-<p>Add the following block of code after the code for the <code>AddInventory</code> methods that you just added:</p>
-<div class="highlight highlight-source-cs"><pre>[HttpGet]
+}
+
+[HttpGet]
 <span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-en">Task</span>&lt;<span class="pl-en">IActionResult</span>&gt; <span class="pl-en">RemoveInventory</span>(<span class="pl-en">Guid</span> <span class="pl-smi">itemId</span>, <span class="pl-en">InventoryItemType</span> <span class="pl-smi">selectedItemType</span>)
 {
     <span class="pl-k">var</span> <span class="pl-en">partitionKey </span>= <span class="pl-k">new</span> <span class="pl-en">ServicePartitionKey</span>(0);
@@ -1182,10 +1165,9 @@ vertical-align:1px;
 
     <span class="pl-k">return</span> RedirectToAction(<span class="pl-s"><span class="pl-pds">"</span>Index<span class="pl-pds">"</span></span>, new { SelectedItemType = viewModel.ItemType });
 }</pre></div>
-<p>This will add the complementary <code>RemoveInventory</code> methods.</p>
 </li>
 <li>
-<p>Finally, following the steps you used to add the <code>AddNewInventoryItem.cshtml</code> view file, add a new <code>UpdateInventoryQuantity.cshtml</code> view file. Replace the default markup it contains with the following:</p>
+<p>Repeat Step 10 to add a view named <strong>UpdateInventoryQuantity.cshtml</strong> to the "Views\Home" folder. Then replace the file's contents with the following statements:</p>
 <div class="highlight highlight-text-html-basic"><pre>@model InventoryService.Controllers.InventoryQuantityViewModel
 
 @{
@@ -1214,45 +1196,29 @@ vertical-align:1px;
         &lt;/<span class="pl-ent">form</span>&gt;
     &lt;/<span class="pl-ent">div</span>&gt;
 &lt;/<span class="pl-ent">div</span>&gt;</pre></div>
-<p>This markup defines a form that you can use to either increase or deecrease the inventory quantity for a given inventory item.</p>
+<p>This markup defines a form that you can use to either increase or decrease the inventory quantity for a given inventory item.</p>
 </li>
 <li>
-<p>At this point, your service Fabric inventory application should be ready to go, hosting both user interface and repository services. Like you did in Exercise 2, start debugging the application by clicking on the <strong>Start</strong> button in Visual Studio 2017. This will once again deploy your Service Fabric application to your local Service Fabric cluster and then open your default Web browser to your service's URL.</p>
-<p><a href="Images/communicate-run_firstapprun.png" target="_blank"><img src="Images/communicate-run_firstapprun.png" alt="Initial Application Display" style="max-width:100%;"></a></p>
-<p><em>Initial Application Display</em></p>
+<p>Launch the application again from Visual Studio. Confirm that page shown in the browser resembles the one below.</p>
+<p><a href="Images/communicate-run_firstapprun.png" target="_blank"><img src="Images/communicate-run_firstapprun.png" alt="UI for managing inventory" style="max-width:100%;"></a></p>
+<p><em>UI for managing inventory</em></p>
 </li>
 <li>
-<p>Click on the <strong>SelectedItemType</strong> dropdown and select <strong>HeatingCooling</strong>, then click on the <strong>Select</strong> button.</p>
+<p>Select <strong>HeatingCooling</strong> from the drop-down list and click the <strong>Select</strong> button. Click the <strong>Add New Product</strong> button and use the form to add an air conditioner to the catalog.</p>
 </li>
 <li>
-<p>Now that you have an inventory type selected, you can start adding some inventory. Click on the <strong>Add New Product</strong> button and complete the new inventory item form:</p>
-<ul>
-<li>Set the <em>Name</em> to <strong>Air Conditioner</strong></li>
-<li>Click on the <strong>Add Inventory Item</strong> button to add the new item. Your browser will be redirected back to inventory listing page.</li>
-</ul>
+<p>Now select <strong>HandTools</strong> from the drop-down list and add a hammer and a screwdriver to the catalog.</p>
+<p><a href="Images/communicate-show_handtools.png" target="_blank"><img src="Images/communicate-show_handtools.png" alt="HandTools inventory showing 0 hammers and 0 screwdrivers" style="max-width:100%;"></a></p>
+<p><em>HandTools inventory showing 0 hammers and 0 screwdrivers</em></p>
 </li>
 <li>
-<p>Notice that you now have an entry in the table. Click on the <strong>SelectedItemType</strong> dropdown once again and select <strong>HandTools</strong>, then click on the <strong>Select</strong> button.</p>
-<ul>
-<li>Add a <strong>Hammer</strong> as a new new <em>Handtools</em> product.</li>
-<li>Add a <strong>Screwdriver</strong> as a new *Handtools product.</li>
-</ul>
-<p><a href="Images/communicate-show_handtools.png" target="_blank"><img src="Images/communicate-show_handtools.png" alt="Inventory Listing Showing Hand-Tools" style="max-width:100%;"></a></p>
-<p><em>Inventory Listing Showing Hand-Tools</em></p>
+<p>Click <strong>Increase</strong> in the hammer row. In the "Add Inventory" page, set <strong>Quantity</strong> to <strong>10</strong> and click the <strong>Add Inventory</strong> button. Confirm that you are redirected to the home page and that the catalog now shows 10 hammers.</p>
 </li>
 <li>
-<p>Click on the <strong>Increase</strong> link on the <em>Hammer</em> row. In the <em>Add Inventory</em> page, set the <strong>Quantity</strong> to <strong>10</strong> and click on the <strong>Add Inventory</strong> button. You browser will once again be redirected to the inventory listing page. Notice the updated quantity for hammers.</p>
-</li>
-<li>
-<p>Repeat the previous instruction, but instead click on the <strong>Decrease</strong> link and leave the <strong>Quantity</strong> to <strong>1</strong> when you click on the <strong>Remove Inventory</strong> button. Observe the updated quantity on the inventory listing page.</p>
-<blockquote>
-<p>Bear in mind that in order to keep the demo lab simple, the inventory service has very little validation logic. In a production application, for example, you would include checks in the Remove Inventory function to be sure that you could not remove more than the available. inventory, among others.</p>
-</blockquote>
-</li>
-<li>
-<p>Close your browser and stop the debugger in Visual Studio 2017.</p>
+<p>Now click <strong>Decrease</strong> in the hammer row and decrease the quantity of hammers to 1.</p>
 </li>
 </ol>
+<p>Once you have confirmed that you can manage inventory in this manner, use Visual Studio's <strong>Stop Debugging</strong> command to stop debugging and shut down the application.</p>
 <p><a name="Exercise5"></a></p>
 <h2>Exercise 5: Enable partitioning and show node failover</h2>
 <p>This final exercise will demonstrate some of the scalability and resiliency features built into Service Fabric. You will first update the partitioning scheme for the <em>Inventory Repository</em> service that you have previously created, in order to segment the functionality for each Inventory Item Type to a different partition within the cluster. Then you will use the Service Fabric Explorer that you first explored in Exercise 2 in order to simulate a node failure in your cluster and to see how partition replicas for Reliable Services in Service Fabric help to provide a more fault-tolerant system.</p>
