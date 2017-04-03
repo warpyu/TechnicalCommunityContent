@@ -6,29 +6,30 @@
 <a name="Overview"></a>
 ## Overview ##
 
-One of the more recent trends in enterprise architecture is the [microservices architecture pattern](https://www.martinfowler.com/articles/microservices.html). At its core, this pattern is a specialization of the Service Oriented Architecture pattern that gained popularity in the early 2000s, but extends that approach to focus on building small and independently deployable applications that communicate using lightweight protocols (including HTTP and TCP). This arrangement presents several advantages:
+One of the recent trends in enterprise architecture is the [microservices architecture pattern](https://www.martinfowler.com/articles/microservices.html). At its core, this pattern is a specialization of the [Service Oriented Architecture](https://en.wikipedia.org/wiki/Service-oriented_architecture) pattern that gained popularity in the early 2000s, but extends that approach to building small and independently deployable applications and services that communicate using lightweight protocols (including HTTP and TCP). This arrangement presents several advantages:
 
 - Services are easy to replace and maintain
 - Services can be scaled independently
-- Different programming tools and techniques can be employed in different parts of a solution
+- Different programming tools and techniques can be employed in different services
 
-[Azure Service Fabric](https://azure.microsoft.com/en-us/services/service-fabric/) is a solution that supports developing and coordinating multiple services running on a cluster of virtual machines. While Service Fabric can be used to implement a variety of architectural patterns, it is ideally suited to developing and orchestrating microservice-based solutions.  
+[Azure Service Fabric](https://azure.microsoft.com/en-us/services/service-fabric/) is a platform that supports developing and coordinating multiple services running on a cluster of virtual machines. While Service Fabric can be used to implement a variety of architectural patterns, it is ideally suited to developing and orchestrating microservice-based solutions.  
 
 Azure Service Fabric deployments can exist on-premises, in the cloud in Microsoft Azure, and even in other vendors' clouds. In Azure, however, Service Fabric offers a first-class platform whose benefits are not easily duplicated in other environments. As such, Service Fabric offers a robust platform for managing solutions as well as APIs for writing them.
 
-It is important to note that while Service Fabric is one of the newer platform offerings within Microsoft Azure, it has been used internally by Microsoft for several years to power Microsoft Cloud services that include Azure SQL Database, DocumentDB, Cortana, Microsoft Power BI, Microsoft Intune, Azure Event hHbs, Azure IoT Hub, Skype for Business, among others. Additional information about Azure Service Fabric and its history can be found [here](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-overview).
+It is important to note that while Service Fabric is one of the newer platform offerings within Microsoft Azure, it has been used internally by Microsoft for several years to power cloud services that include Azure SQL Database, DocumentDB, Cortana, Microsoft Power BI, Microsoft Intune, Azure Event hHbs, Azure IoT Hub, and Skype for Business, among others. Additional information about Azure Service Fabric and its history can be found [here](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-overview).
 
-In this lab, you will learn how to use Azure Service Fabric to build applications formed from microservices. You will use Visual Studio 2017 to create an Azure Service Fabric application consisting of two services. The first service will be a Stateless Service which serves as the user interface (UI) tier for the inventory portion of a hypothetical catalog company. The second service will be a Stateful Service and will provide RESTFul access to the inventory items. Once both of these services have been created and connected together, you will see first-hand how Azure Service Fabric provides scalability and resilience for the services it manages.
+In this lab, you will use Visual Studio 2017 to create an Azure Service Fabric application consisting of two services. The first service will be a stateless service — in reality, an ASP.NET Core Web app — that provides a user interface (UI) for managing the inventory of a hypothetical catalog company. The second service will be a stateful service that stores inventory items and provides RESTFul access to them. By deploying both of these services and connecting them together, you will see first-hand what Azure Service Fabric is all about and how it facilitates scalability and resilience for the services it manages.
 
 <a name="Objectives"></a>
 ### Objectives ###
 
 In this hands-on lab, you will learn how to:
 
-- Create a new Service Fabric application using Visual Studio 2017.
-- Use the debugging and diagnostic tools provided by both Visual Studio and Service Fabric itself to run and monitor your Service Fabric application.
-- Configure communication between multiple services in a Service Fabric application. 
-- Leverage partitioning and Reliable Services in order to provide scalability and fault-tolerance in a Service Fabric application.
+- Create a Service Fabric application using Visual Studio 2017
+- Deploy a Service Fabric application from Visual Studio and test it on a local cluster
+- Use Service Fabric Explorer to monitor a running Service Fabric application
+- Write code that allows one service to communicate with another
+- Use partitioning and Reliable Services to makes  Service Fabric applications scalable and fault-tolerant
 
 <a name="Prerequisites"></a>
 ### Prerequisites ###
@@ -45,7 +46,7 @@ You can configure PowerShell correctly by running it as administrator and execut
 
 ```Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force -Scope CurrentUser```
 
-Additional information about configuring your development environment can be found [here](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-get-started).
+Additional information about configuring your development environment for Azure Service Fabric can be found [here](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-get-started).
 
 <a name="Exercises"></a>
 ## Exercises ##
@@ -56,7 +57,7 @@ This hands-on lab includes the following exercises:
 - [Exercise 2: Run the app in a local cluster](#Exercise2)
 - [Exercise 3: Add another service to the cluster](#Exercise3)
 - [Exercise 4: Connect the services in the cluster](#Exercise4)
-- [Exercise 5: Enable partitioning and show node failover](#Exercise5)
+- [Exercise 5: Enable partitioning and demonstrate node failover](#Exercise5)
 
 Estimated time to complete this lab: **60** minutes.
 
@@ -65,7 +66,7 @@ Estimated time to complete this lab: **60** minutes.
 
 In this exercise, you will create an Azure Service Fabric application using Visual Studio 2017. Before you begin, make sure your development environment is configured with the tools and options specified in the [Prerequisites](#Prerequisites).
 
-1. Start Visual Studio 2017 as an administrator. This elevation of privilege is required in order for Visual Studio to work with the *Service Fabric Local Cluster Manager*, which allows you to deploy, run, and debug Service Fabric applications on your development machine.
+1. Start Visual Studio 2017 as an administrator. This elevation of privilege is required in order for Visual Studio to work with the *Service Fabric Local Cluster Manager*, which lets you deploy, run, and debug Service Fabric applications on your development machine.
 
 	> To start Visual Studio as an administrator in Windows 10, type "Visual Studio 2017" into the Windows search bar. Then right-click **Visual Studio 2017** and select **Run as administrator**. When prompted to confirm that you want to run Visual Studio as administrator, answer **Yes**.
 
@@ -93,19 +94,17 @@ In this exercise, you will create an Azure Service Fabric application using Visu
 
      _Creating an ASP.NET Core Web app_
 
-1. Go to Solution Explorer and confirm that the solution is structured like the one below. The solution should contain two projects named **InventoryService** and **ServiceFabricLab**. Service Fabric solutions consist of one or more Service Fabric Service projects, as well as a Service Fabric Application project.
+1. Go to Solution Explorer and confirm that the solution is structured like the one below. The solution should contain two projects named **InventoryService** and **ServiceFabricLab**. Service Fabric solutions consist of one or more Service Fabric service projects, as well as a Service Fabric application project.
 
     ![Viewing the solution in Solution Explorer](Images/start-solutionexplorer.png)
 
      _Viewing the solution in Solution Explorer_
 
-	**ServiceFabricLab** is the Service Fabric Application project. This project does not contain any code, but instead contains links to the services that are included in your Service Fabric application and information describing how the application will be packaged and deployed.
-
-	One of the more important elements contained in the Service Fabric Application project is the *application manifest* file. This file is named **ApplicationManifest.xml** and is located in the "ApplicationPackageRoot" folder. The application manifest is an XML file that describes your configuration to Service Fabric.
+	**ServiceFabricLab** is the Service Fabric application project. This project does not contain any code, but instead contains links to the services that are included in your Service Fabric application and information describing how the application will be packaged and deployed. One of the more important elements of this project is the *application manifest*. This file is named **ApplicationManifest.xml** and is located in the "ApplicationPackageRoot" folder. The application manifest is an XML file that describes your configuration to Service Fabric.
 	
-	**InventoryService** is a Stateless Service Fabric Service project. If you examine the project properties for this project, you will see it is actually a .NET Core Console Application. This is a self-hosted Web application (one that does not rely on IIS as an external HTTP Server), which hosts the *WebListener* server within the processes managed by the Service Fabric runtime. Additional information about *WebListener* can be found [here](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/weblistener). 
+	**InventoryService** is a stateless Service Fabric service project. If you examine the project properties, you will see that it is actually a .NET Core Console Application. This is a self-hosted Web application (one that does not rely on an external HTTP Server), which hosts the *WebListener* server within the processes managed by the Service Fabric runtime. Additional information about *WebListener* can be found [here](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/weblistener). 
 
-1. Open **Program.cs** in the **InventoryService** project. This file contains the following code, which registers the Inventory Service with the Service Fabric runtime. The `InventoryService` class is an instance of the `StatelessService` class defined in the Service Fabric SDK:
+1. Open **Program.cs** in the **InventoryService** project. This file contains the following code, which registers the inventory service with the Service Fabric runtime. The `InventoryService` class is an instance of the `StatelessService` class defined in the Service Fabric SDK:
 
 	```c#
 	ServiceRuntime.RegisterServiceAsync("InventoryServiceType",
@@ -131,23 +130,23 @@ At this point, the application is basically a standard ASP.NET Core 1.1 MVC Web 
 <a name="Exercise2"></a>
 ## Exercise 2: Run the app in a local cluster ##
 
-Now that you have created a basic Service Fabric project in Visual Studio 2017, it's time to see the application in action. In this exercise, you will deploy the application to a local cluster managed by the Service Fabric Local Cluster Manager and examine it in Visual Studio and in the Service Fabric Explorer.
+Now that you have created a basic Service Fabric project in Visual Studio 2017, it's time to see the application in action. In this exercise, you will deploy the application to a local cluster managed by the Service Fabric Local Cluster Manager and examine it in Visual Studio and in the [Service Fabric Explorer](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-visualizing-your-cluster).
 
 1. Click the **Start** button in Visual Studio 2017. This will deploy the Service Fabric application to a local Service Fabric cluster. This may take a couple of minutes the first time you do it.
 
-	> If the service fails to run with a deployment error, make sure Visual Studio 2017 is running as an administrator. 
+	> If the deployment fails, make sure Visual Studio 2017 is running as an administrator AND that PowerShell 3.0 or higher is installed with the execution policy set to "Unrestricted" for the administrative user.
 
     ![Starting the application](Images/debug-startservice_indebugger.png)
 
      _Starting the application_
 
-1. Confirm that a browser opens to the service URL.
+1. Confirm that a browser opens and shows the inventory service.
 
-    ![Browser showing the service URL](Images/debug-apprunning_inbrowser.png)
+    ![Browser showing the inventory service](Images/debug-apprunning_inbrowser.png)
 
-     _Browser showing the service URL_
+     _Browser showing the inventory service_
 
-1. Return to the Visual Studio and confirm that a Diagnostics Event window opened when you launched the app. The default templates for Service Fabric Service applications in Visual Studio 2017 include a `ServiceEventSource` class. This class registers your application and provides helper events for writing trace and diagnostic information using [Event Tracing for Windows](https://msdn.microsoft.com/library/windows/desktop/bb968803.aspx).
+1. Return to the Visual Studio and confirm that a Diagnostics Event window opened when you launched the app. The default templates for Service Fabric service applications in Visual Studio 2017 include a ```ServiceEventSource``` class. This class registers your application and provides helper events for writing trace and diagnostic information using [Event Tracing for Windows](https://msdn.microsoft.com/library/windows/desktop/bb968803.aspx).
 
     ![Viewing diagnostic events](Images/debug-diagnosticeventswindow.png)
 
@@ -159,7 +158,7 @@ Now that you have created a basic Service Fabric project in Visual Studio 2017, 
 
     _Inserting a breakpoint_
 
-1. Return to your browser and click **About** at the top of the page.
+1. Return to the browser and click **About** at the top of the page.
 
 	![Navigating to the About page](Images/debug-clickon_about.png)
 
@@ -167,19 +166,19 @@ Now that you have created a basic Service Fabric project in Visual Studio 2017, 
 
 1. Return to Visual Studio and confirm that the breakpoint was hit. Click the **Continue** button (or simply press **F5**) to resume execution. 
 
-1. The next step is to use the Service Fabric Explorer to view the status of the application as it runs in a local cluster. Right-click the **Service Fabric Local Cluster Manager** icon in the Windows system tray and select **Manage Local Cluster** from the ensuing menu. 
+1. The next step is to use the Service Fabric Explorer to view the status of the application as it runs on a local cluster. Right-click the **Service Fabric Local Cluster Manager** icon in the Windows system tray and select **Manage Local Cluster** from the ensuing menu. 
 
 	![Launching the Local Cluster Manager](Images/debug-systemtray_managelocalcluster.png)
 
     _Launching the Local Cluster Manager_
 
-1. Confirm that the Service Fabric Explorer appears in a browser. This dashboard view offers at-a-glance information about your cluster's health, including the status of applications deployed to the cluster and the status of the cluster's nodes. Links at the top of the dashboard provide access to additional information, including a cluster map and detailed health metrics.
+1. Confirm that Service Fabric Explorer appears in a browser. This dashboard view offers at-a-glance information about your cluster's health, including the status of applications deployed to the cluster and the status of the cluster's nodes. Links at the top of the dashboard provide access to additional information, including a cluster map and detailed health metrics.
 
 	![Service Fabric Explorer](Images/debug-servicefabricexplorer.png)
 
     _Service Fabric Explorer_
 
-1. Expand the **Applications** node in the treeview on the left and drill down until you find the running partition, whose name is a GUID. Click the running partition to select it.
+1. Expand the **Applications** node in the treeview on the left and drill down until you find the running partition, whose name is a GUID. Click the partition to select it.
 
 	![Selecting the running partition](Images/select-partition.png)
 
@@ -204,7 +203,7 @@ When you stop debugging, Visual Studio will stop the application and remove it f
 <a name="Exercise3"></a>
 ## Exercise 3: Add another service to the cluster ##
 
-In this exercise, you will add a new service to the Service Fabric application that you created in [Exercise 1](#Exercise1). This service will act as a repository for a hypothetical Product Inventory system, and it will use Service Fabric [Stateful Service Reliable Collections](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-reliable-collections) to maintain inventory data and make it available through RESTful Web API endpoints.
+In this exercise, you will add a new service to the Service Fabric application. This service will act as a repository for a hypothetical product-inventory system, and it will use Service Fabric [Stateful Service Reliable Collections](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-reliable-collections) to maintain inventory data and make it available through RESTful Web API endpoints.
 
 1. Right-click the **ServiceFabricLab** solution in Solution Explorer and use the **Add** -> **New Project** command to add a project to the solution. Select **Class Library (.NET Framework)** as the project type and name it "InventoryCommon." Then click **OK**.    
 
@@ -238,7 +237,7 @@ In this exercise, you will add a new service to the Service Fabric application t
 
     _Adding a stateful service_
 
-1. Right-click the **InventoryRepository** project and select **Manage NuGet Packages...** from the context menu. Make sure **Browse** is selected in the Nuget Package Manager, and then type "Microsoft.AspNet.WebApi.OwinSelfHost" into the search box. Select ***Microsoft.AspNet.WebApi.OwinSelfHost*** from the search results and click the Install button. OK any changes shown to you and accept any licenses that are presented.
+1. Right-click the **InventoryRepository** project and select **Manage NuGet Packages...** from the context menu. Make sure **Browse** is selected in the Nuget Package Manager, and then type "Microsoft.AspNet.WebApi.OwinSelfHost" into the search box. Select **Microsoft.AspNet.WebApi.OwinSelfHost** from the search results and click the Install button. OK any changes shown to you and accept any licenses that are presented.
 
 	![Adding the OWIN Self-Host Nuget Package](Images/addservice-add_ownselfhostnugetpackage.png)
 
@@ -274,7 +273,7 @@ In this exercise, you will add a new service to the Service Fabric application t
 	        endpoint));
 	```
 
-	This code retrieves the HTTP/HTTPS endpoints for the current service. It then returns a new ```ServiceReplicaListener``` instance for each. Each ```ServiceReplicaListener``` is configured to load an ```OwinCommunicationListener``` and initialize the OWIN pipeline with an instance of ```WebHostStartup```. 
+	This code retrieves the HTTP/HTTPS endpoints for the current service and returns a new ```ServiceReplicaListener``` instance for each. Each ```ServiceReplicaListener``` is configured to load an ```OwinCommunicationListener``` and initialize the OWIN pipeline with an instance of ```WebHostStartup```. 
 
 1. Now open **ServiceManifest.xml** in the project's "PackageRoot" folder. Locate the ```<Endpoint Name="ServiceEndpoint" />``` element and replace it with the following statement to configure the application to expose an HTTP endpoint on port 8081:
 
@@ -355,7 +354,7 @@ In this exercise, you will add a new service to the Service Fabric application t
 	}
 	```
 	
-	Each of these methods uses the Service Fabric Stateful Services' `StateManager` class to create a transaction scope, create or retrieve a ```ReliableDictionary``` object, and retrieve an item from that object. ```ReliableDictionary``` is part of the [Reliable Collection](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-reliable-collections) types offered by Service Fabric. Reliable collections support high-availability, scalability, and speed while offering a programming model that is similar to one for applications that run on a single computer rather than a cluster.
+	Each of these methods uses the Service Fabric Stateful Services' `StateManager` class to create a transaction scope, create or retrieve a ```ReliableDictionary``` object, and retrieve an item from that object. ```ReliableDictionary``` is part of the [Reliable Collection](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-reliable-collections) types offered by Service Fabric. Reliable collections support high availability, scalability, and speed while offering a programming model that is similar to one for applications that run on a single computer rather than a cluster.
 
 1. Now add the following methods to the ```InventoryController``` class:
 
@@ -423,7 +422,7 @@ Once you have confirmed that both services are shown in Service Fabric Explorer,
 <a name="Exercise4"></a>
 ## Exercise 4: Connect the services in the cluster ##
 
-In this exercise, you will connect the two services so *InventoryService* can transmit requests to *InventoryRepository*. This will allow you to add inventory items to the catalog as well as increase and decrease the quantity of each item. At the end of this exercise, you will be able to launch the application and adjust inventories in your browser.
+In this exercise, you will connect the two services so the inventory service (which provides the UI) can transmit requests to inventory-repository service. This will allow you to add inventory items to the catalog as well as increase and decrease the quantity of each item. At the end of this exercise, you will be able to launch the application and adjust inventories in your browser.
 
 1. Right-click the **InventoryService** project in Solution Explorer. Select **Add** -> **Existing Item** and select **HttpCommunicationClient.cs** in this lab's "Resources" folder. Then click **Add**. 
 
@@ -439,7 +438,7 @@ In this exercise, you will connect the two services so *InventoryService* can tr
 
 1. Check the box next to the **InventoryCommon** project and click **OK** to add the project reference.
 
-1. Open **HomeController.cs** in the **InventoryService** project's "Controllers" folder and dd the following ```using``` statements at the top of the file:
+1. Open **HomeController.cs** in the **InventoryService** project's "Controllers" folder and add the following ```using``` statements at the top of the file:
 
 	```c#
 	using System.Fabric;
@@ -452,8 +451,7 @@ In this exercise, you will connect the two services so *InventoryService* can tr
 	using InventoryCommon;
 	``` 
 
-1. Scroll to the bottom of **HomeController.cs** file and add the following helper cl
-2. asses just before the final curly-brace:
+1. Scroll to the bottom of **HomeController.cs** file and add the following helper classes just before the final curly-brace:
 
 	```c#
 	public class ItemListViewModel
@@ -603,7 +601,7 @@ In this exercise, you will connect the two services so *InventoryService* can tr
 
 	This markup provides a user interface for selecting inventory types, viewing inventory items, and adding new inventory to the catalog.
 
-1. Return to **HomeController.cs**. After the `Index` method, add the following methods:
+1. Return to **HomeController.cs**. After the ```Index``` method, add the following methods:
 
 	```c#
 	[HttpGet]
@@ -636,7 +634,7 @@ In this exercise, you will connect the two services so *InventoryService* can tr
 	}
 	```
 
-	These methods allow new inventory to be added the catalog. The first creates a blank item. The second uses ```ServicePartitionClient``` to call the Inventry service and pass it a new inventory item. If the item is successfully added, the user is redirected to the home page and shown all the items of that type.
+	These methods allow new inventory to be added the catalog. The first creates a blank item. The second uses ```ServicePartitionClient``` to call the inventory service and pass it a new inventory item. If the item is successfully added, the user is redirected to the home page and shown all items of that type.
 
 1. Right-click the "Home" folder in the project's "Views" folder and use the **Add** -> **New Item...** command to add an **MVC View Page** named **AddNewInventoryItem.cshtml**.
 
@@ -813,7 +811,7 @@ In this exercise, you will connect the two services so *InventoryService* can tr
 	
 	This markup defines a form that you can use to either increase or decrease the inventory quantity for a given inventory item.
 
-1. Launch the application again from Visual Studio. Confirm that page shown in the browser resembles the one below.
+1. Launch the application again from Visual Studio. Confirm that the page shown in the browser resembles the one below.
 
 	![UI for managing inventory](Images/communicate-run_firstapprun.png)
 
@@ -831,10 +829,12 @@ In this exercise, you will connect the two services so *InventoryService* can tr
 
 1. Now click **Decrease** in the hammer row and decrease the quantity of hammers to 1.
 
-Once you have confirmed that you can manage inventory in this manner, use Visual Studio's **Stop Debugging** command to stop debugging and shut down the application.
+1. Once you have confirmed that you can manage inventory in this manner, use Visual Studio's **Stop Debugging** command to stop debugging and shut down the application.
+
+Although the application that you deployed has only two services, the same pattern can be used to create more complex applications consisting of tens or even hundreds of services. And using Service Fabric to knit these services together makes some interesting scenarios possible.
 
 <a name="Exercise5"></a>
-## Exercise 5: Enable partitioning and show node failover ##
+## Exercise 5: Enable partitioning and demonstrate node failover ##
 
 Two of the motivations for using Azure Service Fabric as a platform for microservices are scalability and reliability. An important ingredient in the recipe for both is [partitioning](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-concepts-partitioning). Proper partitioning spreads workloads across nodes in the cluster so no node becomes overloaded. You can't change the way a Service Fabric app is partitioned without redeploying the app, so it helpful to plan your partitioning strategy ahead of time to reduce unwanted downtime.
 
@@ -866,20 +866,20 @@ In this exercise, you will update the partitioning scheme for the inventory-repo
 
 	- In the ```Index``` method, replace it with ```new ServicePartitionKey((Int64)selectedItemType)```
 	- In the ```AddNewInventoryItem``` method, replace it with ```new ServicePartitionKey((Int64)newItem.ItemType)```
-	- In the first ```AddInventory```` method, replace it with ```new ServicePartitionKey((Int64)selectedItemType)```
+	- In the first ```AddInventory``` method, replace it with ```new ServicePartitionKey((Int64)selectedItemType)```
 	- In the second ```AddInventory``` method, replace it with ```new ServicePartitionKey((Int64)viewModel.ItemType)```
 	- In the first ```RemoveInventory``` method, replace it with ```new ServicePartitionKey((Int64)selectedItemType)```
 	- In the second ```RemoveInventory``` method, replace it with ```new ServicePartitionKey((Int64)viewModel.ItemType)```
 
-	Your application is now ready to run using Service Fabric partitioning. Calls from the inventory service to the inventory repository service use the currently selected inventory item type to configure a ```ServicePartitionKey``` value, which is used by ```ServicePartitionClient``` to retrieve an address for calls.
+	Your application is now ready to run using Service Fabric partitioning. Calls from the inventory service to the inventory-repository service use the currently selected inventory item type to configure a ```ServicePartitionKey``` value, which is used by ```ServicePartitionClient``` to retrieve an address for calls.
   
-1. Launch the application and add several inventory items as you did in [Exercise 4](#Exercise4). Be sure to add at least one item in the HandTools category.
+1. Launch the application and add several inventory items as you did at the end of [Exercise 4](#Exercise4). Be sure to add at least one item in the HandTools category.
 
-1. Launch Service Fabric Explorer and select **fabric:/ServiceFabricLab/InventoryRepository** under **Applications**. Confirm that 10 nodes appear underneath — one for each partition that you designated.
+1. Launch Service Fabric Explorer and select **fabric:/ServiceFabricLab/InventoryRepository** under **Applications**. Confirm that 10 nodes appear underneath — one for each partition that you created.
 
-	![Selecting InventoryRepository](Images/partition-explorer_expandservice.png)
+	![Selecting the inventory-repository service](Images/partition-explorer_expandservice.png)
 
-    _Selecting InventoryRepository_
+    _Selecting the inventory-repository service_
 
 1. Click each of the partitions until you find the one whose Low Key and High Key values are 3, which is the integer value for ```HandTools``` in the ```InventoryItemType``` enumeration. Then go to the "Replicas" section at the bottom of the page and make note of the node name for the **Primary** replica.
 
@@ -905,7 +905,7 @@ In this exercise, you will update the partitioning scheme for the inventory-repo
 
     _Confirming deactivation_
 
-	This will deactivate the node. The process will take a couple minutes, during which Service Fabric will detect the non-functional node and rebalance the partitions and replicas across the remaining partitions.
+	Deactivation will take a couple minutes, during which Service Fabric will detect the non-functional node and rebalance the partitions and replicas across the remaining partitions.
 
 1. When Service Fabric Explorer reports that it has detected problems with the cluster, click the partition again. Confirm that the primary replica has been moved to another node. 
 
@@ -921,7 +921,7 @@ In this exercise, you will update the partitioning scheme for the inventory-repo
 
 1. Return to Service Fabric Explorer and click the node that you deactivated in Step 10. Then click **Actions** and select **Activate** from the menu. Once more, Service Fabric will notice a change to the nodes that it is managing, and will rebalance the partition replicas to take advantage of the newly available node.
 
-	Confirm that after a few seconds, the warnings and errors in Service Fabric Explorer disappear and reflect the now-stable status of the cluster.
+1. Confirm that after a few seconds, the warnings and errors in Service Fabric Explorer disappear and reflect the now-stable status of the cluster.
 
 Finish up by using Visual Studio's **Stop Debugging** command to shut down the application for the final time.
 
