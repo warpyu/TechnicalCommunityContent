@@ -1,0 +1,63 @@
+﻿<Page
+    x:Class="PdfReviewer.ReviewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PdfReviewer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.BottomAppBar>
+        <CommandBar IsOpen="True" IsSticky="True" RequestedTheme="Dark" Background="Black">
+            <AppBarButton Icon="Cancel" Label="Cancel" Click="OnCancelClick" />
+            <AppBarButton Icon="Undo" Label="Undo" Click="OnUndoClick" />
+            <AppBarButton Icon="Save" Label="Save" Click="OnSaveClick" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid x:Name="mainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Margin="10,0" x:Name="titleLabel" FontWeight="Bold" Text="Annotations"/>
+        <TextBlock Margin="10,0" x:Name="subtitleLabel" Grid.Row="1" Text="Use the Ink Canvas toolbar to make annotations to your document. Tap 'Save' when complete."/>
+
+        <Border Grid.Row="2" BorderBrush="DarkGray" BorderThickness="1" Margin="10">
+            <Grid>
+                <Image Source="{Binding PageImage}" Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <InkCanvas x:Name="inkCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <InkToolbar VerticalAlignment="Top" TargetInkCanvas="{x:Bind inkCanvas}" />
+                
+            </Grid>
+            
+        </Border>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="mainGrid.Margin" Value="40" />
+                        <Setter Target="titleLabel.Style" Value="{ThemeResource TitleTextBlockStyle}" />
+                        <Setter Target="subtitleLabel.Style" Value="{ThemeResource SubtitleTextBlockStyle}" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NarrowLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="mainGrid.Margin" Value="10" />
+                        <Setter Target="titleLabel.Style" Value="{ThemeResource SubtitleTextBlockStyle}" />
+                        <Setter Target="subtitleLabel.Style" Value="{ThemeResource BodyTextBlockStyle}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>
