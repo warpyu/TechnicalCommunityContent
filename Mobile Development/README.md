@@ -1,5 +1,3 @@
-**Customer Journey Page:**
-
 **Mobile Application Development**
 
 **Introduction**
@@ -38,7 +36,7 @@ There’s also free training available:
 
 Want more? Kick back and watch this presentation by Xamarin co-founder Miguel de Icaza.
 
-<img src="./media/image1.jpg" width="300" height="168" />
+[<img src="./media/image1.jpg" width="300" height="168" />](https://www.youtube.com/watch?v=ZGhylUb4jqU)
 
 ***Elevate your app.***
 
@@ -82,7 +80,7 @@ Here’s some additional fodder as you craft your program justification:
 
 -   Show what Alaska Airlines has to say about using Xamarin for one of their recent mobile app development projects.
 
-    <img src="./media/image2.jpg" width="300" height="168" />
+    [<img src="./media/image2.jpg" width="300" height="168" />](https://www.youtube.com/watch?v=1T_ayXu_bsE)
 
 **Solutions in Practice**
 
