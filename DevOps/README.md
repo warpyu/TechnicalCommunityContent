@@ -1,3 +1,10 @@
+# DevOps #
+
+Explore the sub-folders to find community-ready presentation materials on the following topics:
+
+- [DevOps](Devops/README.md)
+ 
+
 **Introduction**
 
 Implementing DevOps practices is no small task. There’s Infrastructure as Code, Continuous Deployment, Release Management, and so much more to consider. So where do you even begin?
