@@ -1,5 +1,3 @@
-DRAFT - IN PROGRESS
-
 # Community Content - Cognitive Services #
 
 ## Session Content ##

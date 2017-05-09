@@ -1,5 +1,3 @@
-DRAFT - IN PROGRESS
-
 # Community Content - Conversations as a Platform #
 
 ## Session Content ##

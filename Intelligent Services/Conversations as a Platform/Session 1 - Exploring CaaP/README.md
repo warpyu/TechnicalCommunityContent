@@ -1,5 +1,3 @@
-IN PROGRESS
-
 # Session 1 - Exploring Conversations as a Platform #
 ---
 
