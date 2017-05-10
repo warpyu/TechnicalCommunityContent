@@ -1,4 +1,9 @@
-**Internet of Things**
+# Internet of Things #
+
+Explore the sub-folders to find community-ready presentation materials on the following topics:
+
+- [Azure Stream Analytics](Azure Stream Analytics/README.md)
+- [Azure IoT Suite](Azure IoT Suite/README.md)
 
 **Introduction**
 
