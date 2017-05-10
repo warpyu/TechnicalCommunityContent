@@ -2,8 +2,8 @@
 
 Explore the sub-folders to find community-ready presentation materials on the following topics:
 
-- [Azure Stream Analytics](Azure Stream Analytics/README.md)
-- [Azure IoT Suite](Azure IoT Suite/README.md)
+- [Azure IoT Suite](Azure%20IoT%20Suite/README.md)
+- [Azure Stream Analytics](Azure%20Stream$20Analytics/README.md)
 
 **Introduction**
 
