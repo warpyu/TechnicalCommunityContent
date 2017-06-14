@@ -1,0 +1,3 @@
+<h1>Widget Tool</h1>
+<widget-table [widgets]="widgets" (onSaveWidget)="saveWidget($event)" (onDeleteWidget)="deleteWidget($event)"></widget-table>
+<widget-form (onSubmit)="saveWidget($event)"></widget-form>

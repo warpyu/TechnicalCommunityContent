@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-US" Name="FactoidCommandSet_en-us">
+    <AppName>Factoid</AppName>
+    <Example>Tell me an interesting fact</Example>
+
+    <Command Name="TellMeFactCommand">
+      <Example>Tell me an interesting fact</Example>
+      <ListenFor>Tell me [a] [an] [interesting] fact</ListenFor>
+      <Feedback>Finding you an interesting fact</Feedback>
+      <VoiceCommandService Target="GeneralCommandService"/>
+    </Command>
+    
+  </CommandSet>
+</VoiceCommands>

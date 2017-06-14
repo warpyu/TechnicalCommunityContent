@@ -1,0 +1,22 @@
+﻿<Application
+    x:Class="Factoid.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Factoid"
+    RequestedTheme="Light">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="AppMainAccentColor">#FF298FCC</Color>
+
+            <local:HasContextToEnabledConverter x:Key="HasContextToEnabledConverter" />
+            <local:IsFavoriteBackgroundConverter x:Key="IsFavoriteBackgroundConverter" />
+            <local:IsFavoriteThemeConverter x:Key="IsFavoriteThemeConverter" />
+            <local:FavoriteSymbolConverter x:Key="FavoriteSymbolConverter" />
+            <local:FavoriteLabelConverter x:Key="FavoriteLabelConverter" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>

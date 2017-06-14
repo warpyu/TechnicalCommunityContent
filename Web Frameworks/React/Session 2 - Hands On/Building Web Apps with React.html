@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Building Web Apps with React</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+</head>
+<body>
+<p><a name="HOLTitle"></a></p>
+<h1>Building Web Apps with React</h1>
+<hr>
+<p><a name="Overview"></a></p>
+<h2>Overview</h2>
+<p>Modern user interface (UI) development is rooted in the concept of components. Components link presentation logic to model data. Typically, components implement individual parts of the UI, and are composed into higher-order components to construct holistic UIs. The goal is to create "UI parts" which are reusable, decoupled from one another, and individually testable. Many platforms, languages, frameworks, and libraries support component-based UI development. For JavaScript developers, one of the most popular UI frameworks is <a href="https://facebook.github.io/react/">React</a>.</p>
+<p>React is an open-source framework created by Facebook. React's claim to fame is performance, and how quickly it updates the DOM in response to model changes. React uses a JavaScript derivative named <a href="https://jsx.github.io/">JSX</a> to implement presentation logic. JSX looks similar to HTML, but is really just an alternative syntax for creating React elements. Transpilers such as <a href="https://babeljs.io/">Babel</a> and <a href="http://www.typescriptlang.org/">TypeScript</a> compile JSX into native JavaScript.</p>
+<p>One of the most important concepts in React programming is that of state management. React organizes component data into three categories: props, state and context. This tutorial focuses on props and state. <em>Props</em> represent the immutable data passed into a component from a parent component, while <em>state</em> represents mutable data managed by the component itself. Learning React — and learning about proper state management — is a great way to get acquainted with modern UI development and provides a foundation for becoming proficient with other popular component libraries such as <a href="https://angular.io/">Angular</a>.</p>
+<p>In this lab, you will use React and <a href="https://code.visualstudio.com/">Visual Studio Code</a> to build an application for managing a collection of widgets. Data will be loaded locally at first, then later from a REST service, and displayed in an HTML table rendered by React components. After implementing basic functionality for creating and listing widgets, you will add functionality for editing and deleting widgets.</p>
+<p><a name="Objectives"></a></p>
+<h3>Objectives</h3>
+<p>In this hands-on lab, you will learn how to:</p>
+<ul>
+<li>Create and render React components</li>
+<li>Work with component data, including props and state</li>
+<li>Compose components into higher-order components</li>
+<li>Integrate REST services into React applications</li>
+</ul>
+<p><a name="Prerequisites"></a></p>
+<h3>Prerequisites</h3>
+<p>The following are required to complete this hands-on lab:</p>
+<ul>
+<li><a href="http://code.visualstudio.com/">Visual Studio Code</a></li>
+<li><a href="https://nodejs.org/en/">Node.js</a> version 7.0 or higher</li>
+</ul>
+<hr>
+<p><a name="Exercises"></a></p>
+<h2>Exercises</h2>
+<p>This hands-on lab includes the following exercises:</p>
+<ul>
+<li><a href="#Exercise1">Exercise 1: Create a static widget table</a></li>
+<li><a href="#Exercise2">Exercise 2: Pass widget data via props</a></li>
+<li><a href="#Exercise3">Exercise 3: Add a form for adding widgets</a></li>
+<li><a href="#Exercise4">Exercise 4: Decompose WidgetTool into discrete components</a></li>
+<li><a href="#Exercise5">Exercise 5: Add support for editing and deleting widgets</a></li>
+<li><a href="#Exercise6">Exercise 6: Connect to a REST service</a></li>
+</ul>
+<p>Estimated time to complete this lab: <strong>60</strong> minutes.</p>
+<p><a name="Exercise1"></a></p>
+<h2>Exercise 1: Create a static widget table</h2>
+<p>Rather than start from scratch, you will begin with a "hello world" project that has been created for you. This will enable you to start learning quickly without spending time creating boilerplate infrastructure. In this exercise, you will copy the starter project to a local folder and use Visual Studio Code to modify it to display a table of widgets. As you do, you will get a first look at the React component model.</p>
+<ol>
+<li>
+<p>Find the "resources" folder that accompanies this lab, and then open the "react-vscode-starter" folder inside the "resources" folder. Copy the contents of the "react-vscode-starter" folder to a local folder on your hard disk (the "project folder").</p>
+</li>
+<li>
+<p>Open a terminal or Command Prompt window and use a <strong>cd</strong> command to change to the project folder that you copied the starter project into.</p>
+</li>
+<li>
+<p>If you are running Windows, execute the following command in the Command Prompt window to open Visual Studio Code in the project folder:</p>
+<pre><code>code .
+</code></pre>
+<p>If you are running Linux or macOS instead, use this command instead:</p>
+<pre><code>open -a "Visual Studio Code" .
+</code></pre>
+</li>
+<li>
+<p>Confirm that Visual Studio Code starts and shows the project files in the Explorer pane on the left.</p>
+<p><a href="Images/vscode.png" target="_blank"><img src="Images/vscode.png" alt="Visual Studio Code showing the starter project" style="max-width:100%;"></a></p>
+<p><em>Visual Studio Code showing the starter project</em></p>
+</li>
+<li>
+<p>Select <strong>Integrated Terminal</strong> from Visual Studio Code's <strong>View</strong> menu to open the integrated terminal. In the integrated terminal, run the following command to install the packages that the app will use:</p>
+<pre><code>npm install
+</code></pre>
+<p><a href="Images/npm-install.png" target="_blank"><img src="Images/npm-install.png" alt="Installing packages" style="max-width:100%;"></a></p>
+<p><em>Installing packages</em></p>
+<blockquote>
+<p>During the install, you may receive warning messages regrading deprecations. These warnings can be ignored. If you receive an actual error message (usually displayed in red and labeled "ERR"), delete the "node_modules" folder in the project folder and try again.</p>
+</blockquote>
+</li>
+<li>
+<p>Once the install has completed, run the following command in the integrated terminal to start the development web server:</p>
+<pre><code>npm start
+</code></pre>
+<blockquote>
+<p>The development web server is powered by the popular module bundler utility <a href="https://webpack.github.io/">Webpack 2</a>. As part of the bundling process, Webpack watches the file system for changes to the source code files, and processes them as changes are made. The processing primarily consists of transpiling code, which is necessary to convert JSX code to JavaScript.</p>
+</blockquote>
+</li>
+<li>
+<p>To verify that the development environment and the application are working correctly, open a web browser and navigate to <a href="http://localhost:3000">http://localhost:3000</a>. Confirm that a "Hello World" page appears.</p>
+<p><a href="Images/hello-world-browser.png" target="_blank"><img src="Images/hello-world-browser.png" alt="The starter app running in a browser" style="max-width:100%;"></a></p>
+<p><em>The starter app running in a browser</em></p>
+</li>
+<li>
+<p>Return to Visual Studio Code and open <strong>app.js</strong> in the project's "src/js" folder. Delete the contents of the file, and then save. When you save the file, check the terminal window and verify that Webpack recompiled it.</p>
+<p><a href="Images/webpack-compile.png" target="_blank"><img src="Images/webpack-compile.png" alt="Successful recompilation" style="max-width:100%;"></a></p>
+<p><em>Successful recompilation</em></p>
+</li>
+<li>
+<p>Add the following code to <strong>app.js</strong>, and then save the file.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> <span class="pl-smi">React</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">ReactDOM</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-dom<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">class</span> <span class="pl-en">WidgetTool</span> <span class="pl-k">extends</span> <span class="pl-e">React</span>.<span class="pl-smi">Component</span> {
+
+    <span class="pl-en">render</span>() {
+        <span class="pl-k">return</span> <span class="pl-smi">React</span>.<span class="pl-c1">createElement</span>(<span class="pl-s"><span class="pl-pds">'</span>h1<span class="pl-pds">'</span></span>, <span class="pl-c1">null</span>, <span class="pl-s"><span class="pl-pds">'</span>Widget Tool<span class="pl-pds">'</span></span>);
+    }
+}
+
+<span class="pl-smi">ReactDOM</span>.<span class="pl-en">render</span>(
+    <span class="pl-smi">React</span>.<span class="pl-c1">createElement</span>(WidgetTool),
+    <span class="pl-c1">document</span>.<span class="pl-c1">querySelector</span>(<span class="pl-s"><span class="pl-pds">'</span>main<span class="pl-pds">'</span></span>)
+);</pre></div>
+<p>The code that you just added to <strong>app.js</strong> defines a new React component and renders it in a web page. React components are defined with JavaScript classes. Syntactically, JavaScript classes are similar to C# and Java classes. But under the hood, JavaScript classes are much different; they use prototype inheritance instead of classical inheritance.</p>
+<p>All React components inherit from the <code>React.Component</code> class. React uses prototype inheritance to configure classes as components. All React component classes must implement a <code>render</code> function. The <code>render</code> function returns a tree of React elements which are rendered into the browser DOM.</p>
+<p>React can be used to create components on many platforms, including iOS and Android. Because of this cross-platform flexibility, the core React library is decoupled from the platform-specific UI renderers. Because the exercises in this lab use a web browser, the ReactDOM package does the rendering.</p>
+<p>The <code>import</code> syntax is from the ES2015 modules specification. Because Babel is being used to transpile the JavaScript code, ES2015 modules are used even though they are not currently supported natively in any JavaScript engine.</p>
+</li>
+<li>
+<p>Switch back to your browser, and observe that the web page refreshed automatically. Automatic refreshing is known as <em>live reload</em>, and it's a feature of Webpack 2's web development server.</p>
+<p><a href="Images/live-reload.png" target="_blank"><img src="Images/live-reload.png" alt="The web page following a live reload" style="max-width:100%;"></a></p>
+<p><em>The web page following a live reload</em></p>
+</li>
+<li>
+<p>To create React elements, React provides a <code>createElement</code> function. The function's first parameter accepts either an HTML element name or another React component class. The second argument is a <code>props</code> object, which allows data to be passed into the component. The final argument represents the child content of the element. The child content can be either a string or another React element (or set of elements).</p>
+<p>While a single call to <code>React.createElement</code> is simple enough, most components output lots of elements, making the code that renders the output tedious to write. To solve this problem, a new language named JSX (JavaScript Syntax Extension) was created. The Babel transpiler compiles JSX code into ordinary JavaScript, essentially emitting <code>React.createElement</code> calls.</p>
+<p>To demonstrate, replace the code in <strong>app.js</strong> with the following code and then save the file:</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span><span class="pl-smi"> ReactDOM</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">'</span>react-dom<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">class</span> <span class="pl-en">WidgetTool</span> <span class="pl-k">extends</span> <span class="pl-en">React</span><span class="pl-k">.</span><span class="pl-smi">Component</span> {
+
+    <span class="pl-en">render</span>() {
+<span class="pl-c">        <span class="pl-c">//</span> return React.createElement('h1', null, 'Widget Tool');</span>
+<span class="pl-k">        return</span> &lt;<span class="pl-ent">h1</span>&gt;Widget Tool&lt;/<span class="pl-ent">h1</span>&gt;;
+    }
+}
+
+<span class="pl-smi">ReactDOM</span><span class="pl-k">.</span><span class="pl-en">render</span>(
+<span class="pl-c">    <span class="pl-c">//</span> React.createElement(WidgetTool),</span>
+    &lt;<span class="pl-ent"><span class="pl-c1">WidgetTool</span></span> /&gt;,
+<span class="pl-c1">    document</span><span class="pl-k">.</span><span class="pl-en">querySelector</span>(<span class="pl-s"><span class="pl-pds">'</span>main<span class="pl-pds">'</span></span>)
+);</pre></div>
+<p>The final result in the web browser is exactly the same. The only difference is that JSX is easier to read and write when it comes to generating complex DOMs.</p>
+</li>
+<li>
+<p>The next step is to expand the <code>WidgetTool</code> component to display a table of static widget data. Replace the <code>return</code> statement in the <code>render</code> function with the following code:</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">return</span> &lt;<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">h1</span>&gt;Widget Tool&lt;/<span class="pl-ent">h1</span>&gt;
+    &lt;<span class="pl-ent">table</span>&gt;
+        &lt;<span class="pl-ent">thead</span>&gt;
+            &lt;<span class="pl-ent">tr</span>&gt;
+                &lt;<span class="pl-ent">th</span>&gt;Name&lt;/<span class="pl-ent">th</span>&gt;
+                &lt;<span class="pl-ent">th</span>&gt;Description&lt;/<span class="pl-ent">th</span>&gt;
+                &lt;<span class="pl-ent">th</span>&gt;Color&lt;/<span class="pl-ent">th</span>&gt;
+                &lt;<span class="pl-ent">th</span>&gt;Size&lt;/<span class="pl-ent">th</span>&gt;
+                &lt;<span class="pl-ent">th</span>&gt;Quantity&lt;/<span class="pl-ent">th</span>&gt;
+            &lt;/<span class="pl-ent">tr</span>&gt;
+        &lt;/<span class="pl-ent">thead</span>&gt;
+        &lt;<span class="pl-ent">tbody</span>&gt;
+            &lt;<span class="pl-ent">tr</span>&gt;
+                &lt;<span class="pl-ent">td</span>&gt;Test Widget&lt;/<span class="pl-ent">td</span>&gt;
+                &lt;<span class="pl-ent">td</span>&gt;A test widget.&lt;/<span class="pl-ent">td</span>&gt;
+                &lt;<span class="pl-ent">td</span>&gt;blue&lt;/<span class="pl-ent">td</span>&gt;
+                &lt;<span class="pl-ent">td</span>&gt;medium&lt;/<span class="pl-ent">td</span>&gt;
+                &lt;<span class="pl-ent">td</span>&gt;10&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;/<span class="pl-ent">tr</span>&gt;
+        &lt;/<span class="pl-ent">tbody</span>&gt;
+    &lt;/<span class="pl-ent">table</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;;</pre></div>
+<blockquote>
+<p>Because JSX transpiles to function calls, only one top-level element may be returned. That's why the modified <code>return</code> statement returns a <code>div</code> element wrapping an <code>h1</code> and a <code>table</code>.</p>
+</blockquote>
+</li>
+<li>
+<p>Switch to the web browser and confirm that a static table of widget data appears under "Widget Tool."</p>
+<p><a href="Images/static-widget-table.png" target="_blank"><img src="Images/static-widget-table.png" alt="Output from the modified WidgetTool component" style="max-width:100%;"></a></p>
+<p><em>Output from the modified WidgetTool component</em></p>
+</li>
+</ol>
+<p>You now have a working development environment and have seen live reload at work. You have also seen what a basic React component looks like. That's a good start, but it barely scratches the surface of the React component model.</p>
+<p><a name="Exercise2"></a></p>
+<h2>Exercise 2: Pass widget data via props</h2>
+<p>In the previous exercise, a static table of widget data was displayed. In this exercise, the widget data will be passed into the component via <code>props</code>. Props hold parameters passed to components, and roughly correspond to attributes on HTML elements. Understanding <code>props</code> is a key step in becoming a React programmer. Let's dive in.</p>
+<ol>
+<li>
+<p>Add the following array declaration above the <code>WidgetTool</code> class declaration in <strong>app.js</strong>:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">widgetData</span> <span class="pl-k">=</span> [{
+    id<span class="pl-k">:</span> <span class="pl-c1">1</span>, name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Small Red Widget<span class="pl-pds">'</span></span>, description<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>A small, red widget.<span class="pl-pds">'</span></span>,
+    color<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span>, size<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>small<span class="pl-pds">'</span></span>, quantity<span class="pl-k">:</span> <span class="pl-c1">2</span>
+},{
+    id<span class="pl-k">:</span> <span class="pl-c1">2</span>, name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Medium Blue Widget<span class="pl-pds">'</span></span>, description<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>A medium, blue widget.<span class="pl-pds">'</span></span>,
+    color<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>blue<span class="pl-pds">'</span></span>, size<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>medium<span class="pl-pds">'</span></span>, quantity<span class="pl-k">:</span> <span class="pl-c1">15</span>
+}];</pre></div>
+<p>This array will be used to populate the <code>WidgetTool</code> component via props.</p>
+</li>
+<li>
+<p>Update the <code>ReactDOM.render</code> function at the bottom of <strong>app.js</strong> to pass the array of widgets into the <code>WidgetTool</code> component via props:</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-smi">ReactDOM</span><span class="pl-k">.</span><span class="pl-en">render</span>(
+<span class="pl-c">    <span class="pl-c">//</span> React.createElement(WidgetTool, { widgets: widgetData }),</span>
+    &lt;<span class="pl-ent"><span class="pl-c1">WidgetTool</span></span> <span class="pl-e">widgets</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widgetData</span></span><span class="pl-pse">}</span> /&gt;,
+<span class="pl-c1">    document</span><span class="pl-k">.</span><span class="pl-en">querySelector</span>(<span class="pl-s"><span class="pl-pds">'</span>main<span class="pl-pds">'</span></span>)
+);</pre></div>
+<p>The comment shows the equivalent code if it were written to call <code>React.createElement</code> directly.</p>
+</li>
+<li>
+<p>To utilize the array of widgets within the component, the <code>props</code> property on the component instance will have a <code>widgets</code> property pointing to the array of widgets. Add the following statement to the <code>render</code> function before the <code>return</code> statement:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">this</span>.<span class="pl-smi">props</span>.<span class="pl-smi">widgets</span>);</pre></div>
+</li>
+<li>
+<p>Switch to the web browser, open the developer console, and reload the web page. Then examine the widget data shown in the console.</p>
+<p><a href="Images/widget-data-props.png" target="_blank"><img src="Images/widget-data-props.png" alt="Console log showing WidgetTool props" style="max-width:100%;"></a></p>
+<p><em>Console log showing WidgetTool props</em></p>
+</li>
+<li>
+<p>A React component's <code>props</code> data is special. It represents information passed in from the outside. The <code>props</code> data (including primitive data stored directly on the <code>props</code> object as well as <em>all</em> objects referenced from <code>props</code>) is considered immutable. React enforces this on the <code>props</code> property by freezing the object. But this immutability extends to all objects referenced by <code>props</code>, or referenced by other objects that are ultimately referenced by <code>props</code>.</p>
+<p>To drive home this point, add the following code to the <code>render</code> function before the <code>return</code> statement. Then save the file.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">Object</span>.<span class="pl-en">isFrozen</span>(<span class="pl-c1">this</span>.<span class="pl-smi">props</span>));</pre></div>
+</li>
+<li>
+<p>Reload the page in the browser, and observe the console output. Is <code>props</code> frozen or not?</p>
+<p><a href="Images/props-frozen.png" target="_blank"><img src="Images/props-frozen.png" alt="Testing props for immutability" style="max-width:100%;"></a></p>
+<p><em>Testing props for immutability</em></p>
+</li>
+<li>
+<p>Next, the widget data on <code>props</code> will be used to dynamically build the table content. In <strong>app.js</strong>, replace the <code>tbody</code> element with the following statements:</p>
+<div class="highlight highlight-source-js-jsx"><pre>&lt;<span class="pl-ent">tbody</span>&gt;
+    <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widgets</span><span class="pl-k">.</span><span class="pl-en">map</span>(<span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span> &lt;<span class="pl-ent">tr</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">name</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">description</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">color</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">size</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">quantity</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">    &lt;/<span class="pl-ent">tr</span>&gt;)</span><span class="pl-pse">}</span>
+&lt;/<span class="pl-ent">tbody</span>&gt;</pre></div>
+<p>The <code>map</code> function iterates over the array of widget objects, creating a new array of table rows populated with widget data.</p>
+</li>
+<li>
+<p>Switch back to the browser. The table is now being dynamically generated by data passed in via <code>props</code>.</p>
+<p><a href="Images/dynamic-widget-data.png" target="_blank"><img src="Images/dynamic-widget-data.png" alt="Table populated dynamically from props" style="max-width:100%;"></a></p>
+<p><em>Table populated dynamically from props</em></p>
+</li>
+<li>
+<p>While the code you added in the previous step works, there is a warning message in the console. When React renders sibling elements dynamically, it wants key values linking the elements to corresponding fields in the model. This link between elements and model data helps React update the DOM more efficiently when the model changes. To facilitate this linkage, the <code>key</code> prop is used. When setting the <code>key</code> prop, it is best to use a unique property of each object such as an <code>id</code>.</p>
+<p>Update the code in <strong>app.js</strong> to use a <code>key</code> prop for the table row, and save the file:</p>
+<div class="highlight highlight-source-js-jsx"><pre>&lt;<span class="pl-ent">tbody</span>&gt;
+    <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widgets</span><span class="pl-k">.</span><span class="pl-en">map</span>(<span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span> &lt;<span class="pl-ent">tr</span> <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">id</span></span><span class="pl-pse">}</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">name</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">description</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">color</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">size</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">quantity</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">    &lt;/<span class="pl-ent">tr</span>&gt;)</span><span class="pl-pse">}</span>
+&lt;/<span class="pl-ent">tbody</span>&gt;</pre></div>
+</li>
+<li>
+<p>Switch back to the browser and confirm that the console warning has disappeared.</p>
+</li>
+<li>
+<p>The final step in working with <code>props</code> is to add prop validation to the React component. React provides run-time validation to ensure that a component's <code>props</code> requirements are met. Add the following code to the top of the <code>WidgetTool</code> class in <strong>app.js</strong>, and save the file.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">static</span> propTypes <span class="pl-k">=</span> {
+    widgets<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-en">arrayOf</span>(<span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-c1">shape</span>({
+        id<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">number</span>,
+        name<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">string</span>,
+        description<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-c1">description</span>,
+        color<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">string</span>,
+        size<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">string</span>,
+        quantity<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">number</span>,
+    })).<span class="pl-smi">isRequired</span>
+}</pre></div>
+<p>This pattern is known as a <em>property declaration</em>. The property declaration syntax allows for simple value properties to be defined within the class structure (typically only accessor properties and functions are permitted). The <code>static</code> keyword defines the property directly on the class (really a constructor function under the hood), and not on the component instance.</p>
+<p>The <code>React.PropTypes</code> object provides a number of predefined validators such as <code>number</code> and <code>string</code> which can be used to define props' data types. It also lets you specify whether the props are required. While beyond the scope of this lab, custom validators can defined as well.</p>
+<p><a href="Images/prop-types-validation-error.png" target="_blank"><img src="Images/prop-types-validation-error.png" alt="Props validation warning" style="max-width:100%;"></a></p>
+<p><em>Props validation warning</em></p>
+</li>
+</ol>
+<p>Note that <code>propTypes</code> validation only runs in development mode. In production mode, the validation is not enforced (no warnings are displayed in the console). When the <code>props</code> are invalid in development mode, an error message is displayed in the console.</p>
+<p><a name="Exercise3"></a></p>
+<h2>Exercise 3: Add a form for adding widgets</h2>
+<p>Most web applications use forms to collect user input. React uses a <em>controlled component</em> approach to collecting form data and keeping the model synchronized with the UI. In this exercise, you will add a form to the app that enables users to create new widgets. And you will learn about component <code>state</code>, which is another fundamentally important concept in React programming.</p>
+<ol>
+<li>
+<p>Handling form input requires the ability to mutate data. Component <code>props</code> are immutable, which means form input cannot be stored there. Instead, a new kind of component data, <code>state</code>, needs to be used. Configuring <code>state</code> for a component requires adding a constructor to that component.</p>
+<p>Add the following constructor to the <code>WidgetTool</code> class between the <code>propTypes</code> declaration and the <code>render</code> function:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">constructor</span>(<span class="pl-smi">props</span>) {
+    <span class="pl-c1">super</span>(props);
+
+    <span class="pl-c1">this</span>.<span class="pl-smi">state</span> <span class="pl-k">=</span> {
+        widgets<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">props</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">concat</span>(),
+        name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+        description<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+        color<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+        size<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+        quantity<span class="pl-k">:</span> <span class="pl-c1">0</span>,
+    };
+}</pre></div>
+<p>The component state will contain the widget array, which new widgets will be added to. The state definition includes one property for each control in the form: <code>name</code>, <code>description</code>, and so on. These properties will be used to collect data entered by the user.</p>
+</li>
+<li>
+<p>Add the following JSX code to the <code>render</code> function after the closing <code>&lt;/table&gt;</code> tag.</p>
+<div class="highlight highlight-source-js-jsx"><pre>&lt;<span class="pl-ent">form</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-name-input<span class="pl-pds">"</span></span>&gt;Name:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-name-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>
+            <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">name</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-description-input<span class="pl-pds">"</span></span>&gt;Description:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-description-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>
+            <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">description</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-color-input<span class="pl-pds">"</span></span>&gt;Color:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-color-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>color<span class="pl-pds">"</span></span>
+            <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">color</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-size-input<span class="pl-pds">"</span></span>&gt;Size:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-size-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>size<span class="pl-pds">"</span></span>
+            <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">size</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-quantity-input<span class="pl-pds">"</span></span>&gt;Quantity:&lt;/<span class="pl-ent">label</span>&gt;
+        &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>number<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-quantity-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>quantity<span class="pl-pds">"</span></span>
+            <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">quantity</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> <span class="pl-e">onClick</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onClick</span></span><span class="pl-pse">}</span>&gt;Add Widget&lt;/<span class="pl-ent">button</span>&gt;
+&lt;/<span class="pl-ent">form</span>&gt;</pre></div>
+<p>Observe the <code>htmlFor</code> prop on each <code>label</code> element. Because JSX is translated into function calls and props are translated into JavaScript objects, and because <code>for</code> is a reserved word in JavaScript, React requires that the <code>for</code> attribute of the <code>label</code> element be written as <code>htmlFor</code>.</p>
+<p>The <code>value</code> attribute of each <code>input</code> element maps to a <code>state</code> property of the same name. The assignment of the <code>value</code> attribute designates the <code>input</code> element as a controlled component in React. Wired to each <code>input</code> element is an <code>onChange</code> event handler. React updates the <code>input</code> control by firing the <code>onChange</code> event on each keystroke. The <code>onChange</code> event handler updates the underlying state, which in turn updates the <code>input</code> control. This unidirectional flow of data is critical to how React works.</p>
+</li>
+<li>
+<p>The next step is to implement the <code>onChange</code> function referenced in the <code>input</code> elements. You will use a class arrow function to make it easier to retain the value of <code>this</code> when passing the reference to the <code>onChange</code> event handler. Add the following code to the <code>WidgetTool</code> component class in <strong>app.js</strong> between the <code>constructor</code> and <code>render</code> functions:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">onChange</span> <span class="pl-k">=</span> <span class="pl-smi">e</span> <span class="pl-k">=&gt;</span> {
+    <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({
+        [<span class="pl-smi">e</span>.<span class="pl-smi">currentTarget</span>.<span class="pl-c1">name</span>]<span class="pl-k">:</span> <span class="pl-smi">e</span>.<span class="pl-smi">currentTarget</span>.<span class="pl-c1">type</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>number<span class="pl-pds">'</span></span>
+            <span class="pl-k">?</span> <span class="pl-c1">Number</span>(<span class="pl-smi">e</span>.<span class="pl-smi">currentTarget</span>.<span class="pl-c1">value</span>)
+            <span class="pl-k">:</span> <span class="pl-smi">e</span>.<span class="pl-smi">currentTarget</span>.<span class="pl-c1">value</span>
+    });
+}</pre></div>
+<p>The <code>setState</code> function updates the state with the new value, and triggers the component to render itself. On each keystroke, the state is updated, and the component rerenders. On the surface this may sound inefficient, but this is the beauty of React. React uses a process called <em>reconciliation</em> to determine the most efficient way of updating the DOM. In this case, only the <code>value</code> property of the <code>input</code> element gets updated. The component is not rerendered from scratch.</p>
+<p>The syntax <code>[e.currentTarget.name]</code> in unfamiliar to many JavaScript developers. The square brackets mean the property name is determined at run-time based on the value of the expression within the brackets. In this case, the property name is determined by the <code>input</code> control's <code>name</code> prop. This allows multiple <code>input</code> controls to share one <code>onChange</code> function.</p>
+</li>
+<li>
+<p>Once the form has been filled out, the data in it needs to be converted into a widget and added to the array of widgets. That's the purpose of the <code>onClick</code> handler attached to the <code>button</code> control. Add the following code to the <code>WidgetTool</code> class after the <code>onChange</code> function added in the previous step. Then save the file.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">onClick</span> <span class="pl-k">=</span> () <span class="pl-k">=&gt;</span> {
+    <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({
+        widgets<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">concat</span>({
+            name<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-c1">name</span>,
+            description<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-c1">description</span>,
+            color<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-c1">color</span>,
+            size<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-c1">size</span>,
+            quantity<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-smi">quantity</span>,
+        }),
+        name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+        description<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+        color<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+        size<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+        quantity<span class="pl-k">:</span> <span class="pl-c1">0</span>,
+    });
+}</pre></div>
+<p>Treating arrays as immutable improves the performance of React applications. While a full explanation is beyond the scope of this lab, it's best to use immutable array functions such as <code>slice</code> and <code>concat</code> instead of array-mutating functions such as <code>push</code>, <code>pop</code>, and <code>splice</code>. To add the new widget, the <code>onClick</code> function you added creates a new widget object from the data collected from the form, and adds the object to the widget array using <code>concat</code>, which produces a new array. Finally, <code>onClick</code> clears the form fields.</p>
+</li>
+<li>
+<p>One final step is to tweak <code>WidgetTool</code> to list widgets using <code>state</code> rather than <code>props</code>. Find the following line of code in the <code>render</code> function:</p>
+<div class="highlight highlight-source-js"><pre>{<span class="pl-c1">this</span>.<span class="pl-smi">props</span>.<span class="pl-smi">widgets</span>.<span class="pl-en">map</span>(<span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span> <span class="pl-k">&lt;</span>tr key<span class="pl-k">=</span>{<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>}<span class="pl-k">&gt;</span></pre></div>
+<p>And change it to look like this:</p>
+<div class="highlight highlight-source-js"><pre>{<span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-smi">widgets</span>.<span class="pl-en">map</span>(<span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span> <span class="pl-k">&lt;</span>tr key<span class="pl-k">=</span>{<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>}<span class="pl-k">&gt;</span></pre></div>
+<blockquote>
+<p>If you check the developer console after adding a widget, you will see a key error. The error occurs because the new widget has not been assigned an id. You can ignore this error for now. It will go away when you connect the app to a REST service in Exercise 6 because the service will generate ids.</p>
+</blockquote>
+</li>
+<li>
+<p>Switch back to the web browser, and use the form to add a widget.</p>
+<p><a href="Images/filling-out-the-form.png" target="_blank"><img src="Images/filling-out-the-form.png" alt="Creating a new widget" style="max-width:100%;"></a></p>
+<p><em>Creating a new widget</em></p>
+</li>
+<li>
+<p>Click the <strong>Add Widget</strong> button and confirm that a new widget is added to the list and the form is cleared.</p>
+<p><a href="Images/widget-added.png" target="_blank"><img src="Images/widget-added.png" alt="Widget added" style="max-width:100%;"></a></p>
+<p><em>Widget added</em></p>
+</li>
+</ol>
+<p>Knowing how to write components that handle form input is an important step on the road to becoming a React programmer. Equally important is knowing how to decompose large, complex UI components into smaller, more manageable components. That is the subject of the next exercise.</p>
+<p><a name="Exercise4"></a></p>
+<h2>Exercise 4: Decompose WidgetTool into discrete components</h2>
+<p>Thus far, the application you are building codes all of the UI pieces as one component. In this exercise, you will decompose the UI into several components.</p>
+<ol>
+<li>
+<p>Select the "src/js" folder in the Explorer pane, and click the <strong>New Folder</strong> button to create a new folder. Name the folder "components."</p>
+<p><a href="Images/new-folder.png" target="_blank"><img src="Images/new-folder.png" alt="Adding a &quot;components&quot; folder" style="max-width:100%;"></a></p>
+<p><em>Adding a "components" folder</em></p>
+</li>
+<li>
+<p>In the "src/js/components" folder, create a new file named <strong>widget-table.js</strong>.</p>
+</li>
+<li>
+<p>Add the following code to <strong>widget-table.js</strong>. Then save the file.</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">WidgetTable</span> <span class="pl-k">extends</span> <span class="pl-en">React</span><span class="pl-k">.</span><span class="pl-smi">Component</span> {
+
+<span class="pl-k">    static</span> <span class="pl-smi">propTypes</span> <span class="pl-k">=</span> {
+<span class="pl-c1">        <span class="pl-s">widgets</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-en">arrayOf</span>(<span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-en">shape</span>({
+<span class="pl-c1">            <span class="pl-s">id</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">number</span>,
+<span class="pl-c1">            <span class="pl-s">name</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">string</span>,
+<span class="pl-c1">            <span class="pl-s">description</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">description</span>,
+<span class="pl-c1">            <span class="pl-s">color</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">string</span>,
+<span class="pl-c1">            <span class="pl-s">size</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">string</span>,
+<span class="pl-c1">            <span class="pl-s">quantity</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">number</span>,
+        }))<span class="pl-k">.</span><span class="pl-smi">isRequired</span>
+    }
+
+    <span class="pl-en">render</span>() {
+<span class="pl-k">        return</span> &lt;<span class="pl-ent">table</span>&gt;
+            &lt;<span class="pl-ent">thead</span>&gt;
+                &lt;<span class="pl-ent">tr</span>&gt;
+                    &lt;<span class="pl-ent">th</span>&gt;Name&lt;/<span class="pl-ent">th</span>&gt;
+                    &lt;<span class="pl-ent">th</span>&gt;Description&lt;/<span class="pl-ent">th</span>&gt;
+                    &lt;<span class="pl-ent">th</span>&gt;Color&lt;/<span class="pl-ent">th</span>&gt;
+                    &lt;<span class="pl-ent">th</span>&gt;Size&lt;/<span class="pl-ent">th</span>&gt;
+                    &lt;<span class="pl-ent">th</span>&gt;Quantity&lt;/<span class="pl-ent">th</span>&gt;
+                &lt;/<span class="pl-ent">tr</span>&gt;
+            &lt;/<span class="pl-ent">thead</span>&gt;
+            &lt;<span class="pl-ent">tbody</span>&gt;
+                <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widgets</span><span class="pl-k">.</span><span class="pl-en">map</span>(<span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span> &lt;<span class="pl-ent">tr</span> <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">id</span></span><span class="pl-pse">}</span>&gt;</span>
+<span class="pl-s1">                    &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">name</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">                    &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">description</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">                    &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">color</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">                    &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">size</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">                    &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">quantity</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;</span>
+<span class="pl-s1">                &lt;/<span class="pl-ent">tr</span>&gt;)</span><span class="pl-pse">}</span>
+            &lt;/<span class="pl-ent">tbody</span>&gt;
+        &lt;/<span class="pl-ent">table</span>&gt;;
+    }
+}</pre></div>
+<p>In the <code>WidgetTool</code> class, the widgets displayed in the table were stored in the <code>state</code> object. When decomposing a larger component into smaller components, the latter are often coded without state, meaning the <code>props</code> are used to display the data. Using <code>props</code> instead of <code>state</code> is a best practice. In general, very few components should have state, while most components should render with <code>props</code> only. This approach to organizing data flow greatly simplifies React applications.</p>
+</li>
+<li>
+<p>Now that <code>WidgetTable</code> has been defined, <code>WidgetTool</code> needs to import the new <code>WidgetTable</code> component and pass its state as props to <code>WidgetTable</code>. Whether data is <code>props</code> or <code>state</code> is determined by the context in which it is used. Often, a parent's <code>state</code> is passed as <code>props</code> to the child component.</p>
+<p>Add the following statement after the imports at the top of <strong>app.js</strong>:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">WidgetTable</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./components/widget-table<span class="pl-pds">'</span></span>;</pre></div>
+</li>
+<li>
+<p>Now replace the <code>table</code> element in the <code>render</code> function with the following statement, which utilizes the <code>WidgetTable</code> component:</p>
+<div class="highlight highlight-source-js-jsx"><pre>&lt;<span class="pl-ent"><span class="pl-c1">WidgetTable</span></span> <span class="pl-e">widgets</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">widgets</span></span><span class="pl-pse">}</span> /&gt;</pre></div>
+</li>
+<li>
+<p>The next step is to define a <code>WidgetForm</code> component to replace the <code>form</code> element. Unlike the <code>WidgetTable</code> component, the <code>WidgetForm</code> component will need to manage state. Application state will be divided between <code>WidgetTool</code> and <code>WidgetForm</code>. The <code>WidgetTool</code> component will manage the state of the widgets array. The <code>WidgetForm</code> component will manage the state of the form's <code>input</code> controls.</p>
+<p>Create a new file in the project's "src/js/components" folder named <strong>widget-form.js</strong>. Then add the following code and save the file.</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">WidgetForm</span> <span class="pl-k">extends</span> <span class="pl-en">React</span><span class="pl-k">.</span><span class="pl-smi">Component</span> {
+
+<span class="pl-k">    static</span> <span class="pl-smi">propTypes</span> <span class="pl-k">=</span> {
+<span class="pl-c1">        <span class="pl-s">onSubmit</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">func</span>
+    };
+
+    <span class="pl-en">constructor</span>(<span class="pl-smi">props</span>) {
+        <span class="pl-en">super</span>(<span class="pl-smi">props</span>);
+
+<span class="pl-c1">        this</span><span class="pl-k">.</span><span class="pl-smi">state</span> <span class="pl-k">=</span> {
+<span class="pl-c1">            <span class="pl-s">name</span>:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+<span class="pl-c1">            <span class="pl-s">description</span>:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+<span class="pl-c1">            <span class="pl-s">color</span>:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+<span class="pl-c1">            <span class="pl-s">size</span>:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+<span class="pl-c1">            <span class="pl-s">quantity</span>:</span> <span class="pl-c1">0</span>,
+        };
+    }
+
+    <span class="pl-en">onChange</span> <span class="pl-k">=</span> <span class="pl-smi">e</span> <span class="pl-k">=&gt;</span> {
+<span class="pl-c1">        this</span><span class="pl-k">.</span><span class="pl-en">setState</span>({
+            [<span class="pl-smi">e</span><span class="pl-k">.</span><span class="pl-smi">currentTarget</span><span class="pl-k">.</span><span class="pl-smi">name</span>]:<span class="pl-smi"> e</span><span class="pl-k">.</span><span class="pl-smi">currentTarget</span><span class="pl-k">.</span><span class="pl-smi">type</span><span class="pl-k"> ===</span> <span class="pl-s"><span class="pl-pds">'</span>number<span class="pl-pds">'</span></span>
+                <span class="pl-k">?</span><span class="pl-c1"> Number</span>(<span class="pl-smi">e</span><span class="pl-k">.</span><span class="pl-smi">currentTarget</span><span class="pl-k">.</span><span class="pl-smi">value</span>)
+                <span class="pl-k">:</span><span class="pl-smi"> e</span><span class="pl-k">.</span><span class="pl-smi">currentTarget</span><span class="pl-k">.</span><span class="pl-smi">value</span>
+        });
+    }
+
+<span class="pl-smi">    onClick</span><span class="pl-k"> =</span> () <span class="pl-k">=&gt;</span> {
+
+<span class="pl-c1">        this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-en">onSubmit</span>({
+<span class="pl-c1">            <span class="pl-s">name</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">name</span>,
+<span class="pl-c1">            <span class="pl-s">description</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">description</span>,
+<span class="pl-c1">            <span class="pl-s">color</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">color</span>,
+<span class="pl-c1">            <span class="pl-s">size</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">size</span>,
+<span class="pl-c1">            <span class="pl-s">quantity</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">quantity</span>,
+        });
+
+<span class="pl-c1">        this</span><span class="pl-k">.</span><span class="pl-en">setState</span>({
+<span class="pl-c1">            <span class="pl-s">name</span>:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+<span class="pl-c1">            <span class="pl-s">description</span>:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+<span class="pl-c1">            <span class="pl-s">color</span>:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+<span class="pl-c1">            <span class="pl-s">size</span>:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
+<span class="pl-c1">            <span class="pl-s">quantity</span>:</span> <span class="pl-c1">0</span>,
+        });
+    }
+
+    <span class="pl-en">render</span>() {
+<span class="pl-k">        return</span> &lt;<span class="pl-ent">form</span>&gt;
+            &lt;<span class="pl-ent">div</span>&gt;
+                &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-name-input<span class="pl-pds">"</span></span>&gt;Name:&lt;/<span class="pl-ent">label</span>&gt;
+                &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-name-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>
+                    <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">name</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+            &lt;/<span class="pl-ent">div</span>&gt;
+            &lt;<span class="pl-ent">div</span>&gt;
+                &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-description-input<span class="pl-pds">"</span></span>&gt;Description:&lt;/<span class="pl-ent">label</span>&gt;
+                &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-description-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>
+                    <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">description</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+            &lt;/<span class="pl-ent">div</span>&gt;
+            &lt;<span class="pl-ent">div</span>&gt;
+                &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-color-input<span class="pl-pds">"</span></span>&gt;Color:&lt;/<span class="pl-ent">label</span>&gt;
+                &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-color-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>color<span class="pl-pds">"</span></span>
+                    <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">color</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+            &lt;/<span class="pl-ent">div</span>&gt;
+            &lt;<span class="pl-ent">div</span>&gt;
+                &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-size-input<span class="pl-pds">"</span></span>&gt;Size:&lt;/<span class="pl-ent">label</span>&gt;
+                &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-size-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>size<span class="pl-pds">"</span></span>
+                    <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">size</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+            &lt;/<span class="pl-ent">div</span>&gt;
+            &lt;<span class="pl-ent">div</span>&gt;
+                &lt;<span class="pl-ent">label</span> <span class="pl-e">htmlFor</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-quantity-input<span class="pl-pds">"</span></span>&gt;Quantity:&lt;/<span class="pl-ent">label</span>&gt;
+                &lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>number<span class="pl-pds">"</span></span> <span class="pl-e">id</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>widget-quantity-input<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>quantity<span class="pl-pds">"</span></span>
+                    <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">quantity</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;
+            &lt;/<span class="pl-ent">div</span>&gt;
+            &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> <span class="pl-e">onClick</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onClick</span></span><span class="pl-pse">}</span>&gt;Add Widget&lt;/<span class="pl-ent">button</span>&gt;
+        &lt;/<span class="pl-ent">form</span>&gt;;
+    }
+}</pre></div>
+</li>
+<li>
+<p>Now add the following statement to the imports in <strong>app.js</strong> to import the <code>WidgetTable</code> component:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">WidgetForm</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./components/widget-form<span class="pl-pds">'</span></span>;</pre></div>
+</li>
+<li>
+<p>The <code>WidgetTool</code> constructor needs to be updated so that it only manages the widget array state. Replace the <code>WidgetTool</code> constructor in <strong>app.js</strong> with the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">constructor</span>(<span class="pl-smi">props</span>) {
+    <span class="pl-c1">super</span>(props);
+
+    <span class="pl-c1">this</span>.<span class="pl-smi">state</span> <span class="pl-k">=</span> {
+        widgets<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">props</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">concat</span>(),
+    };
+}</pre></div>
+</li>
+<li>
+<p>The <code>onChange</code> function can be removed, and the <code>onClick</code> function can be replaced with a <code>saveWidget</code> function. Replace the <code>onChange</code> and <code>onClick</code> functions in <strong>app.js</strong> with the following code:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">saveWidget</span> <span class="pl-k">=</span> <span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span> {
+    <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({
+        widgets<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">concat</span>(widget),
+    });
+}</pre></div>
+</li>
+<li>
+<p>Finally, replace the <code>form</code> element in the <code>render</code> function with the following statement, and save the file.</p>
+<div class="highlight highlight-source-js-jsx"><pre>&lt;<span class="pl-ent"><span class="pl-c1">WidgetForm</span></span> <span class="pl-e">onSubmit</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">saveWidget</span></span><span class="pl-pse">}</span> /&gt;</pre></div>
+</li>
+<li>
+<p>Switch back to the browser and add a new widget. Confirm that the UI works exactly as before and that the new widget is successfully added to validate the changes that you made in this exercise.</p>
+</li>
+</ol>
+<p>Using several smaller components rather than one monolithic component promotes reusability and makes React code more readable and more maintainable. But thus far, users can only add widgets; they can't modify or delete widgets. It is time to fix that.</p>
+<p><a name="Exercise5"></a></p>
+<h2>Exercise 5: Add support for editing and deleting widgets</h2>
+<p>In this exercise, you will modify the widget table to support deletions and inline editing.</p>
+<ol>
+<li>
+<p>To enable inline editing of widgets, the widget table needs a view row and an edit row. You will start by defining a new <code>WidgetTableViewRow</code> component to encapsulate view rows. Create a new file in the "src/js/components" folder named <strong>widget-table-view-row.js</strong> and add the following code before saving the file:</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">WidgetTableViewRow</span> <span class="pl-k">extends</span> <span class="pl-en">React</span><span class="pl-k">.</span><span class="pl-smi">Component</span> {
+
+<span class="pl-k">    static</span> <span class="pl-smi">propTypes</span> <span class="pl-k">=</span> {
+<span class="pl-c1">        <span class="pl-s">widget</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-en">shape</span>({
+<span class="pl-c1">            <span class="pl-s">id</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">number</span>,
+<span class="pl-c1">            <span class="pl-s">name</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">string</span>,
+<span class="pl-c1">            <span class="pl-s">description</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">description</span>,
+<span class="pl-c1">            <span class="pl-s">color</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">string</span>,
+<span class="pl-c1">            <span class="pl-s">size</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">string</span>,
+<span class="pl-c1">            <span class="pl-s">quantity</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">number</span>,
+        })<span class="pl-k">.</span><span class="pl-smi">isRequired</span>,
+<span class="pl-c1">        <span class="pl-s">onEdit</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">func</span><span class="pl-k">.</span><span class="pl-smi">isRequired</span>,
+<span class="pl-c1">        <span class="pl-s">onDelete</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">func</span><span class="pl-k">.</span><span class="pl-smi">isRequired</span>,
+    };
+
+    <span class="pl-en">render</span>() {
+<span class="pl-k">        return</span> &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">name</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">description</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">color</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">size</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;<span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">quantity</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;
+                &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> <span class="pl-e">onClick</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1">() <span class="pl-k">=&gt;</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-en">onEdit</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">id</span>)</span><span class="pl-pse">}</span>&gt;Edit&lt;/<span class="pl-ent">button</span>&gt;
+                &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> <span class="pl-e">onClick</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1">() <span class="pl-k">=&gt;</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-en">onDelete</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">id</span>)</span><span class="pl-pse">}</span>&gt;Delete&lt;/<span class="pl-ent">button</span>&gt;
+            &lt;/<span class="pl-ent">td</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;;
+    }
+}</pre></div>
+<p>View rows feature <strong>Edit</strong> and <strong>Delete</strong> buttons enabling widgets to be edited and deleted. To facilitate this, <code>WidgetTable</code> will need to pass in <code>onEdit</code> and <code>onDelete</code> event handlers. <code>onEdit</code> will switch the row to edit mode by displaying input fields. <code>onDelete</code> will delete the widget from the array and remove it from the table.</p>
+</li>
+<li>
+<p>Now implement a <code>WidgetTableEditRow</code> component by adding a file named <strong>widget-table-edit-row.js</strong> to the "src/js/components" folder and adding the following code. Then save the file.</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">WidgetTableEditRow</span> <span class="pl-k">extends</span> <span class="pl-en">React</span><span class="pl-k">.</span><span class="pl-smi">Component</span> {
+
+<span class="pl-k">    static</span> <span class="pl-smi">propTypes</span> <span class="pl-k">=</span> {
+<span class="pl-c1">        <span class="pl-s">widget</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-en">shape</span>({
+<span class="pl-c1">            <span class="pl-s">id</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">number</span>,
+<span class="pl-c1">            <span class="pl-s">name</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">string</span>,
+<span class="pl-c1">            <span class="pl-s">description</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">description</span>,
+<span class="pl-c1">            <span class="pl-s">color</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">string</span>,
+<span class="pl-c1">            <span class="pl-s">size</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">string</span>,
+<span class="pl-c1">            <span class="pl-s">quantity</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">number</span>,
+        })<span class="pl-k">.</span><span class="pl-smi">isRequired</span>,
+<span class="pl-c1">        <span class="pl-s">onSave</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">func</span><span class="pl-k">.</span><span class="pl-smi">isRequired</span>,
+<span class="pl-c1">        <span class="pl-s">onCancel</span>:</span> <span class="pl-smi">React</span><span class="pl-k">.</span><span class="pl-smi">PropTypes</span><span class="pl-k">.</span><span class="pl-smi">func</span><span class="pl-k">.</span><span class="pl-smi">isRequired</span>,
+    };
+
+    <span class="pl-en">constructor</span>(<span class="pl-smi">props</span>) {
+        <span class="pl-en">super</span>(<span class="pl-smi">props</span>);
+
+<span class="pl-c1">        this</span><span class="pl-k">.</span><span class="pl-smi">state</span> <span class="pl-k">=</span> {
+<span class="pl-c1">            <span class="pl-s">name</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">name</span>,
+<span class="pl-c1">            <span class="pl-s">description</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">description</span>,
+<span class="pl-c1">            <span class="pl-s">color</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">color</span>,
+<span class="pl-c1">            <span class="pl-s">size</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">size</span>,
+<span class="pl-c1">            <span class="pl-s">quantity</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">quantity</span>,
+        };
+    }
+
+    <span class="pl-en">onChange</span> <span class="pl-k">=</span> <span class="pl-smi">e</span> <span class="pl-k">=&gt;</span> {
+<span class="pl-c1">        this</span><span class="pl-k">.</span><span class="pl-en">setState</span>({
+            [<span class="pl-smi">e</span><span class="pl-k">.</span><span class="pl-smi">currentTarget</span><span class="pl-k">.</span><span class="pl-smi">name</span>]:<span class="pl-smi"> e</span><span class="pl-k">.</span><span class="pl-smi">currentTarget</span><span class="pl-k">.</span><span class="pl-smi">type</span><span class="pl-k"> ===</span> <span class="pl-s"><span class="pl-pds">'</span>number<span class="pl-pds">'</span></span>
+                <span class="pl-k">?</span><span class="pl-c1"> Number</span>(<span class="pl-smi">e</span><span class="pl-k">.</span><span class="pl-smi">currentTarget</span><span class="pl-k">.</span><span class="pl-smi">value</span>)
+                <span class="pl-k">:</span><span class="pl-smi"> e</span><span class="pl-k">.</span><span class="pl-smi">currentTarget</span><span class="pl-k">.</span><span class="pl-smi">value</span>
+        });
+    }
+
+<span class="pl-smi">    saveWidget</span><span class="pl-k"> =</span> () <span class="pl-k">=&gt;</span> {
+<span class="pl-c1">        this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-en">onSave</span>(<span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">assign</span>({<span class="pl-c1"> <span class="pl-s">id</span>:</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">id</span> },<span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">state</span>));
+    }
+
+    <span class="pl-en">render</span>() {
+<span class="pl-k">        return</span> &lt;<span class="pl-ent">tr</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>
+                <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">name</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>
+                <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">description</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>color<span class="pl-pds">"</span></span>
+                <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">color</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>size<span class="pl-pds">"</span></span>
+                <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">size</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>number<span class="pl-pds">"</span></span> <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>quantity<span class="pl-pds">"</span></span>
+                <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">quantity</span></span><span class="pl-pse">}</span> <span class="pl-e">onChange</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">onChange</span></span><span class="pl-pse">}</span> /&gt;&lt;/<span class="pl-ent">td</span>&gt;
+            &lt;<span class="pl-ent">td</span>&gt;
+                &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> <span class="pl-e">onClick</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">saveWidget</span></span><span class="pl-pse">}</span>&gt;Save&lt;/<span class="pl-ent">button</span>&gt;
+                &lt;<span class="pl-ent">button</span> <span class="pl-e">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>button<span class="pl-pds">"</span></span> <span class="pl-e">onClick</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">onCancel</span></span><span class="pl-pse">}</span>&gt;Cancel&lt;/<span class="pl-ent">button</span>&gt;
+            &lt;/<span class="pl-ent">td</span>&gt;
+        &lt;/<span class="pl-ent">tr</span>&gt;;
+    }
+}</pre></div>
+<p>The <code>constructor</code> function initializes <code>state</code> with the widget data of the row being edited. The <code>saveWidget</code> function captures the updated widget data, producing a new widget object with the original widget id retrieved from <code>props</code>.</p>
+</li>
+<li>
+<p>The <code>WidgetTable</code> component needs to be updated to use the new row components. When a widget is being edited, <code>WidgetTableEditRow</code> will be displayed. Otherwise, <code>WidgetTableViewRow</code> will be used. Begin by adding the following statements after the existing <code>import</code> statement in <strong>widget-table.js</strong>:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">WidgetTableViewRow</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./widget-table-view-row<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">WidgetTableEditRow</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>./widget-table-edit-row<span class="pl-pds">'</span></span>;</pre></div>
+</li>
+<li>
+<p>The <code>propTypes</code> declaration for the <code>WidgetTable</code> component needs be updated to pass through the various functions for interacting with the widget table rows, as well as the <code>id</code> of the widget to be edited. To that end, add the following <code>propTypes</code> to the <code>WidgetTable</code> component:</p>
+<div class="highlight highlight-source-js"><pre>onEdit<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">func</span>.<span class="pl-smi">isRequired</span>,
+onDelete<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">func</span>.<span class="pl-smi">isRequired</span>,
+onSave<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">func</span>.<span class="pl-smi">isRequired</span>,
+onCancel<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">func</span>.<span class="pl-smi">isRequired</span>,
+editRowId<span class="pl-k">:</span> <span class="pl-smi">React</span>.<span class="pl-smi">PropTypes</span>.<span class="pl-smi">number</span>.<span class="pl-smi">isRequired</span>,</pre></div>
+</li>
+<li>
+<p>To choose between the <code>WidgetTableViewRow</code> and <code>WidgetTableEditRow</code> components, logic needs to be added to the <code>widgets.map</code> function to compare the widget id to <code>editRowId</code> and display a <code>WidgetTableEditRow</code> if the ids are equal, or a <code>WidgetTableViewRow</code> if they are not. In <strong>widget-table.js</strong>, replace the <code>tbody</code> element in the <code>render</code> function with the following <code>tbody</code>:</p>
+<div class="highlight highlight-source-js-jsx"><pre>&lt;<span class="pl-ent">tbody</span>&gt;
+    <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">widgets</span><span class="pl-k">.</span><span class="pl-en">map</span>(<span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span></span>
+<span class="pl-s1"><span class="pl-smi">        widget</span><span class="pl-k">.</span><span class="pl-smi">id</span><span class="pl-k"> ===</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">editRowId</span></span>
+<span class="pl-s1">            <span class="pl-k">?</span> &lt;<span class="pl-ent"><span class="pl-c1">WidgetTableEditRow</span></span> <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">id</span></span><span class="pl-pse">}</span> <span class="pl-e">widget</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">                <span class="pl-e">onSave</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">onSave</span></span><span class="pl-pse">}</span> <span class="pl-e">onCancel</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">onCancel</span></span><span class="pl-pse">}</span> /&gt;</span>
+<span class="pl-s1">            <span class="pl-k">:</span> &lt;<span class="pl-ent"><span class="pl-c1">WidgetTableViewRow</span></span> <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span><span class="pl-k">.</span><span class="pl-smi">id</span></span><span class="pl-pse">}</span> <span class="pl-e">widget</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">widget</span></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">                <span class="pl-e">onDelete</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">onDelete</span></span><span class="pl-pse">}</span> <span class="pl-e">onEdit</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">onEdit</span></span><span class="pl-pse">}</span> /&gt;</span>
+<span class="pl-s1">    )</span><span class="pl-pse">}</span>
+&lt;/<span class="pl-ent">tbody</span>&gt;</pre></div>
+</li>
+<li>
+<p>Now return to the <code>WidgetTool</code> class in <strong>app.js</strong> and add an <code>editRowId</code> property to the <code>state</code> object in the constructor:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">this</span>.<span class="pl-smi">state</span> <span class="pl-k">=</span> {
+    widgets<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">props</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">concat</span>(),
+    editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span>,
+};</pre></div>
+</li>
+<li>
+<p>Add the following functions to the <code>WidgetTool</code> class to support editing a row, deleting a row, and canceling a row edit:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">editWidget</span> <span class="pl-k">=</span> <span class="pl-smi">widgetId</span> <span class="pl-k">=&gt;</span> {
+    <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({
+        editRowId<span class="pl-k">:</span> widgetId
+    });
+}
+
+<span class="pl-en">deleteWidget</span> <span class="pl-k">=</span> <span class="pl-smi">widgetId</span> <span class="pl-k">=&gt;</span> {
+    <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({
+        widgets<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-smi">widgets</span>.<span class="pl-en">filter</span>(<span class="pl-smi">w</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">w</span>.<span class="pl-c1">id</span> <span class="pl-k">!==</span> widgetId),
+        editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span>,
+    }); 
+}
+
+<span class="pl-en">cancelWidget</span> <span class="pl-k">=</span> () <span class="pl-k">=&gt;</span> {
+    <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({
+        editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span>,
+    });
+}</pre></div>
+</li>
+<li>
+<p>Now replace the existing <code>saveWidget</code> function with the one below to support widget insertion and replacement:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">saveWidget</span> <span class="pl-k">=</span> <span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-k">const</span> <span class="pl-c1">widgets</span> <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-smi">widgets</span>;
+
+    <span class="pl-k">if</span> (<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>) {
+        <span class="pl-k">const</span> <span class="pl-c1">widgetIndex</span> <span class="pl-k">=</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-smi">widgets</span>.<span class="pl-en">findIndex</span>(<span class="pl-smi">w</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">w</span>.<span class="pl-c1">id</span> <span class="pl-k">===</span> <span class="pl-smi">widget</span>.<span class="pl-c1">id</span>);
+        <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({
+            widgets<span class="pl-k">:</span> [ <span class="pl-k">...</span><span class="pl-smi">widgets</span>.<span class="pl-c1">slice</span>(<span class="pl-c1">0</span>, widgetIndex), widget, <span class="pl-k">...</span><span class="pl-smi">widgets</span>.<span class="pl-c1">slice</span>(widgetIndex <span class="pl-k">+</span> <span class="pl-c1">1</span>) ],
+            editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        });
+    } <span class="pl-k">else</span> {
+        <span class="pl-smi">widget</span>.<span class="pl-c1">id</span> <span class="pl-k">=</span> <span class="pl-smi">widgets</span>.<span class="pl-en">reduce</span>((<span class="pl-smi">maxId</span>, { id }) <span class="pl-k">=&gt;</span> <span class="pl-c1">Math</span>.<span class="pl-c1">max</span>(maxId, id), <span class="pl-c1">0</span>) <span class="pl-k">+</span> <span class="pl-c1">1</span>;
+        <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({
+            widgets<span class="pl-k">:</span> <span class="pl-c1">this</span>.<span class="pl-smi">state</span>.<span class="pl-smi">widgets</span>.<span class="pl-c1">concat</span>(widget),
+            editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        });
+    }
+}</pre></div>
+</li>
+<li>
+<p>Finally, replace the existing <code>render</code> function with the one below to pass the <code>editRowId</code> property and the class functions <code>editWidget</code>, <code>deleteWidget</code>, <code>cancelWidget</code>, and <code>saveWidget</code> to the <code>WidgetTable</code> component:</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-en">render</span>() {
+
+<span class="pl-k">    return</span> &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">h1</span>&gt;Widget Tool&lt;/<span class="pl-ent">h1</span>&gt;
+        &lt;<span class="pl-ent"><span class="pl-c1">WidgetTable</span></span> <span class="pl-e">widgets</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">widgets</span></span><span class="pl-pse">}</span> <span class="pl-e">editRowId</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span><span class="pl-k">.</span><span class="pl-smi">editRowId</span></span><span class="pl-pse">}</span>
+            <span class="pl-e">onEdit</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">editWidget</span></span><span class="pl-pse">}</span> <span class="pl-e">onCancel</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">cancelWidget</span></span><span class="pl-pse">}</span>
+            <span class="pl-e">onDelete</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">deleteWidget</span></span><span class="pl-pse">}</span> <span class="pl-e">onSave</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">saveWidget</span></span><span class="pl-pse">}</span> /&gt;
+        &lt;<span class="pl-ent"><span class="pl-c1">WidgetForm</span></span> <span class="pl-e">onSubmit</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">saveWidget</span></span><span class="pl-pse">}</span> /&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;;
+}</pre></div>
+</li>
+<li>
+<p>With the changes complete, it is time to test. Use the <strong>File</strong> -&gt; <strong>Save All</strong> command to save all of your changes. Then switch back to the browser and try editing and deleting widgets. Also test the edit-cancellation feature by editing a widget, changing data in the form, and then clicking <strong>Cancel</strong>. Confirm that the data was not changed in the widget array.</p>
+<p><a href="Images/widget-table-edit-delete.png" target="_blank"><img src="Images/widget-table-edit-delete.png" alt="The modified UI with Edit and Delete buttons" style="max-width:100%;"></a></p>
+<p><em>The modified UI with Edit and Delete buttons</em></p>
+</li>
+</ol>
+<p>The app is almost complete, but one important step remains: connecting it to a REST service.</p>
+<p><a name="Exercise6"></a></p>
+<h2>Exercise 6: Connect to a REST service</h2>
+<p>The final exercise will have you connect the <code>WidgetTool</code> component to a REST service that manages widgets and supports classic CRUD operations. The REST service is provided for you in the starter project and was implemented using the <a href="https://github.com/typicode/json-server">JSON Server</a> library, which creates REST services from JSON files. It's a fast and simple way to create a REST service for development purposes.</p>
+<ol>
+<li>
+<p>Open <strong>app.js</strong> and delete the <code>const widgetData</code> variable declaration. It isn't needed any more because widgets will be loaded from the REST service.</p>
+</li>
+<li>
+<p>Also in <strong>app.js</strong>, remove the <code>static propTypes</code> declaration from the <code>WidgetTools</code> component.</p>
+</li>
+<li>
+<p>Replace the <code>ReactDOM.render</code> function at the bottom of <strong>app.js</strong> with the following function to remove the <code>widgets</code> prop from the <code>WidgetTool</code> declaration:</p>
+<div class="highlight highlight-source-js-jsx"><pre><span class="pl-smi">ReactDOM</span><span class="pl-k">.</span><span class="pl-en">render</span>(
+<span class="pl-c">    <span class="pl-c">//</span> React.createElement(WidgetTool, { widgets: widgetData }),</span>
+    &lt;<span class="pl-ent"><span class="pl-c1">WidgetTool</span></span> /&gt;,
+<span class="pl-c1">    document</span><span class="pl-k">.</span><span class="pl-en">querySelector</span>(<span class="pl-s"><span class="pl-pds">'</span>main<span class="pl-pds">'</span></span>)
+);</pre></div>
+</li>
+<li>
+<p>Update the <code>WidgetTool</code> constructor to initialize the <code>widgets</code> property on the state to an empty array literal:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">this</span>.<span class="pl-smi">state</span> <span class="pl-k">=</span> {
+    widgets<span class="pl-k">:</span> [],
+    editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span>,
+};</pre></div>
+</li>
+<li>
+<p>Like most component systems, React supports various functions that allow you to inject code at critical points in a component's lifetime. One of those functions is <code>componentDidMount</code>, which executes when a component is loaded, or "mounted." Add the following function to the <code>WidgetTool</code> component to load widgets from the REST service when the component loads:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">componentDidMount</span>() {
+    <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets<span class="pl-pds">'</span></span>)
+        .<span class="pl-en">then</span>(<span class="pl-smi">res</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>())
+        .<span class="pl-en">then</span>(<span class="pl-smi">widgets</span> <span class="pl-k">=&gt;</span> <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({ widgets }));
+}</pre></div>
+<p>Observe how <code>setState</code> is invoked within the <code>then</code> callback to set the <code>widgets</code> on the <code>state</code> object. Once the state is set, the component renders the downloaded widget data.</p>
+</li>
+<li>
+<p>The REST service also supports saving widgets, which is needed when a new widget is added or an existing widget is edited. Replace the <code>saveWidget</code> function in the <code>WidgetTool</code> component with the following implementation, and then save your changes.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">saveWidget</span> <span class="pl-k">=</span> <span class="pl-smi">widget</span> <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-k">let</span> widgetSavePromise <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+
+    <span class="pl-k">if</span> (<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>) {
+        widgetSavePromise <span class="pl-k">=</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets/<span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-c1">encodeURIComponent</span>(<span class="pl-smi">widget</span>.<span class="pl-c1">id</span>), {
+            method<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>PUT<span class="pl-pds">'</span></span>,
+            headers<span class="pl-k">:</span> { <span class="pl-s"><span class="pl-pds">'</span>Content-Type<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>application/json<span class="pl-pds">'</span></span> },
+            body<span class="pl-k">:</span> <span class="pl-c1">JSON</span>.<span class="pl-en">stringify</span>(widget),
+        });
+    } <span class="pl-k">else</span> {
+        widgetSavePromise <span class="pl-k">=</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets<span class="pl-pds">'</span></span>, {
+            method<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>POST<span class="pl-pds">'</span></span>,
+            headers<span class="pl-k">:</span> { <span class="pl-s"><span class="pl-pds">'</span>Content-Type<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>application/json<span class="pl-pds">'</span></span> },
+            body<span class="pl-k">:</span> <span class="pl-c1">JSON</span>.<span class="pl-en">stringify</span>(widget),
+        });
+    }
+
+    widgetSavePromise
+        .<span class="pl-en">then</span>(() <span class="pl-k">=&gt;</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets<span class="pl-pds">'</span></span>))
+        .<span class="pl-en">then</span>(<span class="pl-smi">res</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>())
+        .<span class="pl-en">then</span>(<span class="pl-smi">widgets</span> <span class="pl-k">=&gt;</span> <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({ widgets, editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span> }));
+}</pre></div>
+<p>Replacing a widget is accomplished by issuing a <code>PUT</code> command with a URL containing the widget id. The request body is formatted as a JSON string. Inserting a widget is a simple matter of transmitting a <code>POST</code> containing the widget data. Each time a widget is replaced or inserted, the widget list is reloaded.</p>
+</li>
+<li>
+<p>Now replace the <code>deleteWidget</code> function in the <code>WidgetTool</code> component with the function below, and save:</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-en">deleteWidget</span> <span class="pl-k">=</span> <span class="pl-smi">widgetId</span> <span class="pl-k">=&gt;</span> {
+
+    <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets/<span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-c1">encodeURIComponent</span>(widgetId), {
+        method<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>DELETE<span class="pl-pds">'</span></span>,
+    })
+        .<span class="pl-en">then</span>(() <span class="pl-k">=&gt;</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>http://localhost:3000/widgets<span class="pl-pds">'</span></span>))
+        .<span class="pl-en">then</span>(<span class="pl-smi">res</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">res</span>.<span class="pl-en">json</span>())
+        .<span class="pl-en">then</span>(<span class="pl-smi">widgets</span> <span class="pl-k">=&gt;</span> <span class="pl-c1">this</span>.<span class="pl-en">setState</span>({ widgets, editRowId<span class="pl-k">:</span> <span class="pl-c1">0</span> }));
+}</pre></div>
+<p>The new <code>deleteWidget</code> function issues a <code>DELETE</code> request containing a widget id to the REST service.</p>
+</li>
+<li>
+<p>Switch to your browser one more time and try inserting, editing, and deleting widgets. Confirm that the app behaves as expected.</p>
+</li>
+</ol>
+<p>Try opening multiple browsers to <a href="http://localhost:3000">http://localhost:3000</a>. Delete a widget in one browser, and then refresh the page in the other. Does the widget you deleted disappear from the other browser? Why or why not? Does the same hold true when you edit and insert widgets, too?</p>
+<h2>Summary</h2>
+<p>This is a great start if you are new to React because it demonstrates some of the most important concepts in React programming. Feel free to enhance the application on your own. You could, for example, add input-validation logic to the form, add error handling to calls placed to the REST service, or simplify state management by introducing libraries such as <a href="http://redux.js.org/">Redux</a>. For an excellent introduction to combining React and Redux, see <a href="https://onsen.io/blog/react-state-management-redux-store/">https://onsen.io/blog/react-state-management-redux-store/</a>, or watch the video entitled <a href="https://wintellectnow.com/Videos/Watch?videoId=using-react-with-redux">Using React with Redux</a> by React guru Eric Greene.</p>
+<hr>
+<p>Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
